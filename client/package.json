@@ -7,15 +7,9 @@
   "author": "Plugga Tech",
   "license": "ISC",
   "scripts": {
-    "postinstall": "plugga init",
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview",
-    "update": "plugga update",
-    "test": "plugga test",
-    "test:run": "plugga test --run",
-    "test:g": "plugga test --run .g.",
-    "test:vg": "plugga test --run .vg."
+    "preview": "vite preview"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
@@ -32,7 +26,6 @@
     "yup": "^1.0.2"
   },
   "devDependencies": {
-    "@plugga-tech/react-webshop-ts": "^1.0.10",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react-swc": "^3.2.0",
