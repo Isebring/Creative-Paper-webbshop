@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+.swiper-pagination-bullet {
+  background-color: #ffff !important;
+  width: 1rem !important;
+  height: 1rem !important;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #ffff !important;
+}

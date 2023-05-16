@@ -1,0 +1,52 @@
+{
+  "name": "@plugga-tech/react-webshop-ts",
+  "description": "En inlämningsuppgift där de studerande bygger en webbshop i react & ts.",
+  "version": "1.0.0",
+  "type": "module",
+  "keywords": [],
+  "author": "Plugga Tech",
+  "license": "ISC",
+  "scripts": {
+    "postinstall": "plugga init",
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "update": "plugga update",
+    "test": "plugga test",
+    "test:run": "plugga test --run",
+    "test:g": "plugga test --run .g.",
+    "test:vg": "plugga test --run .vg."
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@mantine/core": "^6.0.2",
+    "@mantine/form": "^6.0.2",
+    "@mantine/hooks": "^6.0.2",
+    "@mantine/modals": "^6.0.2",
+    "@mantine/notifications": "^6.0.2",
+    "@tabler/icons-react": "^2.10.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.8.2",
+    "swiper": "^9.1.0",
+    "yup": "^1.0.2"
+  },
+  "devDependencies": {
+    "@plugga-tech/react-webshop-ts": "^1.0.10",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@vitejs/plugin-react-swc": "^3.2.0",
+    "cypress": "^12.7.0",
+    "start-server-and-test": "^2.0.0",
+    "typescript": "^4.9.5",
+    "vite": "^4.1.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/plugga-tech/react-webshop-ts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/plugga-tech/react-webshop-ts/issues"
+  },
+  "homepage": "https://github.com/plugga-tech/react-webshop-ts#readme"
+}
