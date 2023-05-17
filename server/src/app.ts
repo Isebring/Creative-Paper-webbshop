@@ -1,6 +1,6 @@
 import console from 'console';
 import cookieSession from 'cookie-session';
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 
 const Joi = require('joi');
 export const app = express();
@@ -17,15 +17,7 @@ app.use(
 );
 
 // ERROR HANDLER
-app.use((err, req, res, next) => {
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.error(err);
-  if (Joi.isError(err)) {
-    if (err.message.includes('errors occurred')) {
-      res.status(400).json(err.details[0].message);
-    } else {
-      res.status(400).json(err.message);
-    }
-  } else {
-    res.status(500).json(err.message);
-  }
+  res.status(500).json(err.message);
 });
