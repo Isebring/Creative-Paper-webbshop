@@ -11,8 +11,7 @@ interface Props {
 
 function CartProduct({ cartItem }: Props) {
   const { products } = useContext(ProductContext);
-  const { increaseCartQuantity, decreaseCartQuantity, removeFromCart } =
-    useShoppingCart();
+  const { increaseCartQuantity, decreaseCartQuantity } = useShoppingCart();
   products.find((i) => i.id === cartItem.id);
 
   return (
