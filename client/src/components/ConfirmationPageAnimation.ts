@@ -1,6 +1,6 @@
 import { useMantineTheme } from '@mantine/core';
 
-function initBackgroundAnimation() {
+function InitBackgroundAnimation() {
   const theme = useMantineTheme();
   const canvas = document.createElement('canvas');
   const customSvgPath =
@@ -15,7 +15,7 @@ function initBackgroundAnimation() {
   const ctx: CanvasRenderingContext2D = canvas.getContext(
     '2d'
   ) as CanvasRenderingContext2D;
-  let particles: Particle[] = [];
+  const particles: Particle[] = [];
 
   class Particle {
     x: number;
@@ -95,4 +95,4 @@ function initBackgroundAnimation() {
   }
 }
 
-export default initBackgroundAnimation;
+export default InitBackgroundAnimation;
