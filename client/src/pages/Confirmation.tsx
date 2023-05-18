@@ -1,7 +1,7 @@
 import { Card, Container, Divider, List, Text, Title } from '@mantine/core';
 import { useContext } from 'react';
 import { FormValues } from '../components/CheckoutForm';
-import initBackgroundAnimation from '../components/ConfirmationPageAnimation';
+import InitBackgroundAnimation from '../components/ConfirmationPageAnimation';
 import { ProductContext } from '../contexts/ProductContext';
 import { useShoppingCart } from '../contexts/ShoppingCartContext';
 
@@ -21,7 +21,7 @@ function Confirmation() {
       return total;
     }, 0);
   }
-  initBackgroundAnimation();
+  InitBackgroundAnimation();
   return (
     <Container size="md" mt="xl" mb="xl">
       {lastOrder && formData && (
