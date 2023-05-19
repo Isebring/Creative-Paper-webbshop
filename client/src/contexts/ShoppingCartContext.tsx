@@ -20,12 +20,12 @@ interface Order {
   cartProducts: (CartItem | { formData: FormValues })[];
 }
 
-export function useShoppingCart() {
-  return useContext(ShoppingCartContext);
-}
+// export function useShoppingCart() {
+//   return useContext(ShoppingCartContext);
+// }
 
 export const ShoppingCartContext = createContext<ShoppingCartContext>(
-  null as any
+  null as never,
 );
 
 interface Props {
@@ -36,14 +36,14 @@ function ShoppingCartProvider({ children }: Props) {
   const { products } = useContext(ProductContext);
   const [cartProducts, setCartProducts] = useLocalStorage<CartItem[]>(
     'cart',
-    []
+    [],
   );
 
   const [orders, setOrders] = useLocalStorage<Order[]>('Orders:', []);
 
   const cartQuantity = cartProducts.reduce(
     (quantity, product) => product.quantity + quantity,
-    0
+    0,
   );
 
   function getProductQuantity(id: string) {

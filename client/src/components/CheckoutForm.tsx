@@ -2,7 +2,7 @@ import { Box, Button, Group, TextInput, Title } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import { useNavigate } from 'react-router';
 import * as Yup from 'yup';
-import { useShoppingCart } from '../contexts/ShoppingCartContext';
+import { useShoppingCart } from '../contexts/UseShoppingCart';
 
 export interface FormValues {
   fullName: string;

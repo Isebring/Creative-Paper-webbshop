@@ -1,5 +1,5 @@
 import { createContext, ReactNode } from 'react';
-import { Product, products as mockedProducts } from '../../data/index';
+import { products as mockedProducts, Product } from '../../data/index';
 import useLocalStorage from '../hooks/useLocalStorage';
 
 interface ContextValue {
@@ -9,7 +9,7 @@ interface ContextValue {
   updateProduct: (product: Product) => void;
 }
 
-export const ProductContext = createContext<ContextValue>(null as any);
+export const ProductContext = createContext<ContextValue>(null as never);
 
 interface Props {
   children: ReactNode;
@@ -18,7 +18,7 @@ interface Props {
 function ProductProvider({ children }: Props) {
   const [products, setProducts] = useLocalStorage<Product[]>(
     'products',
-    mockedProducts
+    mockedProducts,
   );
 
   function deleteProduct(id: string) {
@@ -33,7 +33,7 @@ function ProductProvider({ children }: Props) {
 
   const updateProduct = (updatedProduct: Product) => {
     const newProducts = products.map((product) =>
-      product.id === updatedProduct.id ? updatedProduct : product
+      product.id === updatedProduct.id ? updatedProduct : product,
     );
 
     setProducts(newProducts);

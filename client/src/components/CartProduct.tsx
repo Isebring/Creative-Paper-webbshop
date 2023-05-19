@@ -3,7 +3,7 @@ import { IconMinus, IconPlus } from '@tabler/icons-react';
 import { useContext } from 'react';
 import { CartItem } from '../../data/index';
 import { ProductContext } from '../contexts/ProductContext';
-import { useShoppingCart } from '../contexts/ShoppingCartContext';
+import { useShoppingCart } from '../contexts/UseShoppingCart';
 
 interface Props {
   cartItem: CartItem;
@@ -11,8 +11,7 @@ interface Props {
 
 function CartProduct({ cartItem }: Props) {
   const { products } = useContext(ProductContext);
-  const { increaseCartQuantity, decreaseCartQuantity, removeFromCart } =
-    useShoppingCart();
+  const { increaseCartQuantity, decreaseCartQuantity } = useShoppingCart();
   products.find((i) => i.id === cartItem.id);
 
   return (

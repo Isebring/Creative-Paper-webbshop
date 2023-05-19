@@ -12,7 +12,7 @@ import { notifications } from '@mantine/notifications';
 import { IconShoppingCartPlus } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 import { Product } from '../../data/index';
-import { useShoppingCart } from '../contexts/ShoppingCartContext';
+import { useShoppingCart } from '../contexts/UseShoppingCart';
 
 export interface Props {
   product: Product;
