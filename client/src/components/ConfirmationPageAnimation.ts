@@ -13,7 +13,7 @@ function InitBackgroundAnimation() {
   document.body.appendChild(canvas);
 
   const ctx: CanvasRenderingContext2D = canvas.getContext(
-    '2d'
+    '2d',
   ) as CanvasRenderingContext2D;
   const particles: Particle[] = [];
 
@@ -29,7 +29,7 @@ function InitBackgroundAnimation() {
       y: number,
       size: number,
       speedX: number,
-      speedY: number
+      speedY: number,
     ) {
       this.x = x;
       this.y = y;
@@ -69,7 +69,7 @@ function InitBackgroundAnimation() {
       particles.map((particle) => {
         particle.update();
         return particle.draw();
-      })
+      }),
     );
 
     requestAnimationFrame(animateParticles);
