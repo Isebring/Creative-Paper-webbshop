@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import CartProduct from '../components/CartProduct';
 import CheckoutForm from '../components/CheckoutForm';
 import { ProductContext } from '../contexts/ProductContext';
-import { useShoppingCart } from '../contexts/ShoppingCartContext';
+import { useShoppingCart } from '../contexts/UseShoppingCart';
 
 function Cart() {
   const { cartProducts, cartQuantity } = useShoppingCart();
@@ -123,7 +123,7 @@ function Cart() {
                 <Text weight={500} size={18}>
                   {cartProducts.map((cartproduct) => {
                     const product = products.find(
-                      (i) => i.id === cartproduct.id
+                      (i) => i.id === cartproduct.id,
                     );
                     return (
                       <Box
@@ -147,7 +147,7 @@ function Cart() {
                   total:{' '}
                   {cartProducts.reduce((total, cartProduct) => {
                     const product = products.find(
-                      (i) => i.id === cartProduct.id
+                      (i) => i.id === cartProduct.id,
                     );
                     return total + (product?.price || 0) * cartProduct.quantity;
                   }, 0)}

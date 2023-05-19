@@ -3,14 +3,14 @@ import { useContext } from 'react';
 import { FormValues } from '../components/CheckoutForm';
 import InitBackgroundAnimation from '../components/ConfirmationPageAnimation';
 import { ProductContext } from '../contexts/ProductContext';
-import { useShoppingCart } from '../contexts/ShoppingCartContext';
+import { useShoppingCart } from '../contexts/UseShoppingCart';
 
 function Confirmation() {
   const { products } = useContext(ProductContext);
   const { orders } = useShoppingCart();
   const lastOrder = orders[orders.length - 1];
   const formData = lastOrder.cartProducts.find(
-    (item): item is { formData: FormValues } => 'formData' in item
+    (item): item is { formData: FormValues } => 'formData' in item,
   )?.formData;
   function calculateLastOrderTotal() {
     return lastOrder.cartProducts.reduce((total, item) => {
@@ -52,7 +52,7 @@ function Confirmation() {
                     {product.title} - {product.price} € - Quantity:{' '}
                     {product.quantity}
                   </List.Item>
-                )
+                ),
             )}
           </List>
           <Divider mt="lg" mb="sm" size="xs" />
