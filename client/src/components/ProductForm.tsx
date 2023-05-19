@@ -41,7 +41,7 @@ function ProductForm({
       image: '',
       title: '',
       description: '',
-      price: 0,
+      price: '' as never,
       secondImage: '',
       summary: [],
       rating: 0,
@@ -52,7 +52,8 @@ function ProductForm({
     if (isEditing && product) {
       form.setValues(product);
     }
-  }, [product, isEditing, form.setValues, form]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product, isEditing, form.setValues]);
 
   const handleSubmit = (values: Product) => {
     const editedProduct = { ...values, id: product?.id || '' };
