@@ -41,7 +41,7 @@ function ProductForm({
       image: '',
       title: '',
       description: '',
-      price: '' as any,
+      price: 0,
       secondImage: '',
       summary: [],
       rating: 0,
@@ -52,7 +52,7 @@ function ProductForm({
     if (isEditing && product) {
       form.setValues(product);
     }
-  }, [product, isEditing, form.setValues]);
+  }, [product, isEditing, form.setValues, form]);
 
   const handleSubmit = (values: Product) => {
     const editedProduct = { ...values, id: product?.id || '' };
