@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "dev": "nodemon src/server.ts"
+    "dev": "nodemon src/server.ts",
+    "format": "prettier --check \"src/**/*.{ts,tsx}\""
   },
   "dependencies": {
     "cookie-session": "^2.0.0",
@@ -9,6 +10,7 @@
     "joi": "^17.9.2",
     "mongodb": "^5.5.0",
     "mongoose": "^7.1.1",
+    "prettier": "^2.8.8",
     "socket.io": "^4.6.1"
   },
   "devDependencies": {
