@@ -10,7 +10,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "npx eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+    "lint": "npx eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "format": "prettier --check \"src/**/*.{ts,tsx}\""
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
@@ -20,6 +21,7 @@
     "@mantine/modals": "^6.0.2",
     "@mantine/notifications": "^6.0.2",
     "@tabler/icons-react": "^2.10.0",
+    "prettier": "^2.8.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.2",
