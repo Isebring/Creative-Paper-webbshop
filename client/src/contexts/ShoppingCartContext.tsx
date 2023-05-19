@@ -25,7 +25,7 @@ interface Order {
 // }
 
 export const ShoppingCartContext = createContext<ShoppingCartContext>(
-  null as any,
+  null as never,
 );
 
 interface Props {
