@@ -1,6 +1,7 @@
-import { Box, Button, Center, TextInput, Title } from '@mantine/core';
+import styled from '@emotion/styled';
+import { Box, Button, Center, Text, TextInput, Title } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useUserContext } from '../contexts/UseUserContext';
 
@@ -45,7 +46,13 @@ function CreateAccountForm() {
     >
       <Box>
         <Center>
-          <Title>Create your account</Title>
+          <Title
+            sx={{
+              paddingTop: '3rem',
+            }}
+          >
+            Create account
+          </Title>
         </Center>
       </Box>
       <form onSubmit={form.onSubmit(handleSubmit)} data-cy="signin-form">
@@ -78,8 +85,31 @@ function CreateAccountForm() {
           </Button>
         </Center>
       </form>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingTop: '3rem',
+          paddingBottom: '3rem',
+        }}
+      >
+        <Text fz="sm" fw={500}>
+          Already have an account? <StyledLink to="/signin">Sign in</StyledLink>
+        </Text>
+      </Box>
     </Box>
   );
 }
+
+const StyledLink = styled(Link)({
+  color: 'black',
+  fontWeight: 'normal',
+  textDecoration: 'underline',
+  '&:hover': {
+    color: 'gray',
+  },
+});
 
 export default CreateAccountForm;
