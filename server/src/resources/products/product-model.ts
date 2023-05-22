@@ -6,7 +6,7 @@ const productSchema = new Schema({
   price: { type: Number, required: true },
   quantity: { type: Number, required: true },
   stock: { type: Number, required: true },
-  imageId: { type: SchemaTypes.ObjectId, required: true },
+  imageId: { type: SchemaTypes.ObjectId, required: true }, // Schematypes? Path?
   imageURL: { type: String, required: true },
 });
 

@@ -16,3 +16,5 @@ const productRouter = express
   .put("/api/products/:id", updateProduct)
   .put("/api/products/:id", productQuantity) // uppdatera lagersaldo
   .delete("/api/products/:id", deleteProduct);
+
+export default productRouter;
