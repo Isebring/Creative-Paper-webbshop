@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Box, Button, Center, Text, TextInput, Title } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
+import { notifications } from '@mantine/notifications';
 import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useUserContext } from '../contexts/UseUserContext';
@@ -24,15 +25,17 @@ function SignInForm() {
   });
 
   const handleSubmit = async (values: { email: string; password: string }) => {
-    console.log('Inloggad! :)');
-
+    console.log(form.values.email, 'Signed in! :)');
     try {
       await login(values.email, values.password);
       form.reset();
       navigate('/');
     } catch (error) {
-      // Implement error handling here
-      console.error(error);
+      notifications.show({
+        title: 'Error',
+        message: 'Incorrect email or password, please try again!',
+        color: 'red',
+      });
     }
   };
 
