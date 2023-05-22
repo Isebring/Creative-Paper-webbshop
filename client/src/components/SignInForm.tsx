@@ -44,7 +44,7 @@ function SignInForm({ onSubmit }: SignInFormProps) {
       }}
     >
       <Box>
-        <Title>Sign Up</Title>
+        <Title>Sign In</Title>
       </Box>
       <form onSubmit={form.onSubmit(handleSubmit)} data-cy="signin-form">
         <TextInput
