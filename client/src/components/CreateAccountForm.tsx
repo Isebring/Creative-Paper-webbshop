@@ -47,6 +47,7 @@ function CreateAccountForm() {
       <Box>
         <Center>
           <Title
+            order={2}
             sx={{
               paddingTop: '3rem',
             }}
