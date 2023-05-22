@@ -1,0 +1,16 @@
+
+
+### Post
+
+POST http://localhost:3000/api/products
+Content-Type: application/json
+
+{
+  "title": "Testprodukt",
+  "categories": "Testkategori",
+  "price": "50",
+  "quantity": "30",
+  "stock": "20",
+  "imageId": "1",
+  "imageURL": "www.test.se"
+}
