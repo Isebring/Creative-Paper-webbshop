@@ -1,4 +1,3 @@
-import console from "console";
 import cookieSession from "cookie-session";
 import express, { NextFunction, Request, Response } from "express";
 import "express-async-errors";
