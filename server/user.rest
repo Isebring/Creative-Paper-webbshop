@@ -6,7 +6,7 @@ POST http://localhost:3000/api/users/register
 Content-Type: application/json
 
 {
-    "username": "hejjjj",
+    "email": "godmorgon",
     "password": "hej12345"
 }
 
@@ -15,7 +15,7 @@ POST http://localhost:3000/api/users/login
 Content-Type: application/json
 
 {
-    "username": "hejjjj",
+    "email": "godmorgon",
     "password": "hej12345"
 }
 

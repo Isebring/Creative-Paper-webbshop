@@ -3,12 +3,12 @@ import { InferSchemaType, Schema, model } from "mongoose";
 
 const userSchema = new Schema(
   {
-    username: {
+    email: {
       type: String,
-      required: [true, "Username is required"],
+      required: [true, "Email is required"],
       unique: true,
-      minlength: [3, "Username must be at least 3 characters"],
-      maxlength: [32, "Username cannot exceed 32 characters"],
+      minlength: [3, "Email must be at least 3 characters"],
+      maxlength: [32, "Email cannot exceed 32 characters"],
     },
     password: {
       type: String,

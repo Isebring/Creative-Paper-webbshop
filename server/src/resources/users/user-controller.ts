@@ -4,7 +4,7 @@ import { UserModel } from "./user-model";
 import userRegistrationSchema from "./user-validation";
 
 export function getLoggedInUserInfo(req: Request, res: Response) {
-  if (!req.session?.username) {
+  if (!req.session?.email) {
     return res.status(401).json("You must login!");
   }
   res.status(200).json(req.session);
@@ -24,7 +24,7 @@ export async function getSpecificUser(req: Request, res: Response) {
     if (!user) {
       throw new Error("User not found");
     }
-    res.status(200).json({ username: user.username });
+    res.status(200).json({ email: user.email });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
@@ -33,12 +33,12 @@ export async function getSpecificUser(req: Request, res: Response) {
 
 // Register user
 export async function registerUser(req: Request, res: Response) {
-  const { username, password, isAdmin = false } = req.body;
+  const { email, password, isAdmin = false } = req.body;
 
-  const existingUser = await UserModel.findOne({ username });
+  const existingUser = await UserModel.findOne({ email });
 
   if (existingUser) {
-    return res.status(409).json("Username already exists");
+    return res.status(409).json("email already exists");
   }
 
   // Validate request body with Yup
@@ -51,32 +51,32 @@ export async function registerUser(req: Request, res: Response) {
 
   res.status(201).json({
     _id: user._id,
-    username: user.username,
+    email: user.email,
     isAdmin: user.isAdmin,
   });
 }
 
 // Login user
 export async function loginUser(req: Request, res: Response) {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
-  const user = await UserModel.findOne({ username });
+  const user = await UserModel.findOne({ email });
   if (!user) {
-    return res.status(401).json("Incorrect username");
+    return res.status(401).json("Incorrect email");
   }
   const isAuth = await argon2.verify(user.password, password);
   if (!isAuth) {
     return res.status(401).json("Incorrect password");
   }
   // Check session/cookie
-  req.session!.username = user.username;
+  req.session!.email = user.email;
   req.session!.userId = user.id; // Stores user ID in the session
   req.session!.isAdmin = user.isAdmin; // Stores isAdmin status in the session
 
   // Create a new user object without the password field
   const userResponse = {
     _id: user._id,
-    username: user.username,
+    email: user.email,
     isAdmin: user.isAdmin,
   };
 
@@ -88,7 +88,7 @@ export async function getLoggedInUser(req: Request, res: Response) {
   // Create a new user object without the password field
   const userResponse = {
     _id: req.session?.userId,
-    username: req.session?.username,
+    email: req.session?.email,
     isAdmin: req.session?.isAdmin,
   };
 
@@ -106,15 +106,15 @@ export function logoutUser(req: Request, res: Response) {
   res.sendStatus(204);
 }
 
-// Check if username is in use
-export async function checkUsername(req: Request, res: Response) {
-  const { username } = req.body;
+// Check if email is in use
+export async function checkemail(req: Request, res: Response) {
+  const { email } = req.body;
 
-  const existingUser = await UserModel.findOne({ username });
+  const existingUser = await UserModel.findOne({ email });
 
   if (existingUser) {
-    res.json({ isUsernameTaken: true });
+    res.json({ isemailTaken: true });
   } else {
-    res.json({ isUsernameTaken: false });
+    res.json({ isemailTaken: false });
   }
 }
