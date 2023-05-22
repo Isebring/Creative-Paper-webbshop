@@ -1,19 +1,20 @@
 import { Box, Button, Center, TextInput, Title } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
-interface CreateAccountFormProps {
+interface Props {
   onSubmit: (credentials: { email: string; password: string }) => void;
 }
 
 const schema = Yup.object().shape({
-  email: Yup.string().email('Invalid email').required('Email is required'),
+  email: Yup.string()
+    .email('Invalid email, please use the format example@example.com')
+    .required('Email is required'),
   password: Yup.string().required('Password is required'),
 });
 
-function CreateAccountForm({ onSubmit }: CreateAccountFormProps) {
+function CreateAccountForm({ onSubmit }: Props) {
   const navigate = useNavigate();
   const form = useForm({
     validate: yupResolver(schema),
@@ -23,14 +24,10 @@ function CreateAccountForm({ onSubmit }: CreateAccountFormProps) {
     },
   });
 
-  useEffect(() => {
-    form.reset();
-  }, [form]);
-
   const handleSubmit = (values: { email: string; password: string }) => {
     onSubmit(values);
     form.reset();
-    navigate('/dashboard');
+    navigate('/');
   };
 
   return (
@@ -45,7 +42,7 @@ function CreateAccountForm({ onSubmit }: CreateAccountFormProps) {
     >
       <Box>
         <Center>
-          <Title>Sign Up</Title>
+          <Title>Create your account</Title>
         </Center>
       </Box>
       <form onSubmit={form.onSubmit(handleSubmit)} data-cy="signin-form">
@@ -74,7 +71,7 @@ function CreateAccountForm({ onSubmit }: CreateAccountFormProps) {
               width: '100%',
             }}
           >
-            Sign Up
+            Sign up
           </Button>
         </Center>
       </form>
