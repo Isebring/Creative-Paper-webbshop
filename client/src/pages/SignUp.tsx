@@ -1,10 +1,10 @@
 import { Container } from '@mantine/core';
-import SignInForm from '../components/SignInForm';
+import SignUpForm from '../components/SignUpForm';
 
-function SignIn() {
+function SignUp() {
   return (
     <Container size="xl">
-      <SignInForm
+      <SignUpForm
         onSubmit={function (): void {
           throw new Error('Function not implemented.');
         }}
@@ -13,4 +13,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default SignUp;

@@ -15,7 +15,7 @@ import { Faq } from './pages/Faq';
 import Home from './pages/Home';
 import NewProduct from './pages/NewProduct';
 import ProductDetails from './pages/ProductDetails';
-import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
 import Root from './root';
 
 export const router = createBrowserRouter(
@@ -31,7 +31,7 @@ export const router = createBrowserRouter(
       <Route path="/admin/product/:id/edit" element={<EditProduct />} />
       <Route path="/admin/product/new" element={<NewProduct />} />
       <Route path="/confirmation" element={<Confirmation />} />
-      <Route path="/signin" element={<SignIn />} />
+      <Route path="/signup" element={<SignUp />} />
     </Route>,
   ),
 );
