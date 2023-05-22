@@ -1,11 +1,11 @@
-import argon2 from "argon2";
-import { Request, Response } from "express";
-import { UserModel } from "./user-model";
-import userRegistrationSchema from "./user-validation";
+import argon2 from 'argon2';
+import { Request, Response } from 'express';
+import { UserModel } from './user-model';
+import userRegistrationSchema from './user-validation';
 
 export function getLoggedInUserInfo(req: Request, res: Response) {
   if (!req.session?.email) {
-    return res.status(401).json("You must login!");
+    return res.status(401).json('You must login!');
   }
   res.status(200).json(req.session);
 }
@@ -22,12 +22,12 @@ export async function getSpecificUser(req: Request, res: Response) {
   try {
     const user = await UserModel.findById(userId);
     if (!user) {
-      throw new Error("User not found");
+      throw new Error('User not found');
     }
     res.status(200).json({ email: user.email });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: 'Server error' });
   }
 }
 
@@ -38,7 +38,7 @@ export async function registerUser(req: Request, res: Response) {
   const existingUser = await UserModel.findOne({ email });
 
   if (existingUser) {
-    return res.status(409).json("email already exists");
+    return res.status(409).json('email already exists');
   }
 
   // Validate request body with Yup
@@ -62,11 +62,11 @@ export async function loginUser(req: Request, res: Response) {
 
   const user = await UserModel.findOne({ email });
   if (!user) {
-    return res.status(401).json("Incorrect email");
+    return res.status(401).json('Incorrect email');
   }
   const isAuth = await argon2.verify(user.password, password);
   if (!isAuth) {
-    return res.status(401).json("Incorrect password");
+    return res.status(401).json('Incorrect password');
   }
   // Check session/cookie
   req.session!.email = user.email;
@@ -100,7 +100,7 @@ export async function getLoggedInUser(req: Request, res: Response) {
 export function logoutUser(req: Request, res: Response) {
   req.session = null;
   res.setHeader(
-    "Set-Cookie",
+    'Set-Cookie',
     `session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`,
   );
   res.sendStatus(204);
