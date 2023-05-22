@@ -3,10 +3,7 @@ import { Box, Button, Center, Text, TextInput, Title } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
-
-interface SignInFormProps {
-  onSubmit: (credentials: { email: string; password: string }) => void;
-}
+import { useUserContext } from '../contexts/UseUserContext';
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -15,8 +12,9 @@ const schema = Yup.object().shape({
   password: Yup.string().required('Password is required'),
 });
 
-function SignInForm({ onSubmit }: SignInFormProps) {
+function SignInForm() {
   const navigate = useNavigate();
+  const { login } = useUserContext();
   const form = useForm({
     validate: yupResolver(schema),
     initialValues: {
@@ -25,10 +23,17 @@ function SignInForm({ onSubmit }: SignInFormProps) {
     },
   });
 
-  const handleSubmit = (values: { email: string; password: string }) => {
-    onSubmit(values);
-    form.reset();
-    navigate('/');
+  const handleSubmit = async (values: { email: string; password: string }) => {
+    console.log('Inloggad! :)');
+
+    try {
+      await login(values.email, values.password);
+      form.reset();
+      navigate('/');
+    } catch (error) {
+      // Implement error handling here
+      console.error(error);
+    }
   };
 
   return (
