@@ -1,6 +1,6 @@
-import { NextFunction, Request, Response } from "express";
-import * as yup from "yup";
-import { ProductModel } from "./product-model";
+import { NextFunction, Request, Response } from 'express';
+import * as yup from 'yup';
+import { ProductModel } from './product-model';
 
 // const testSchema
 
@@ -34,16 +34,51 @@ export async function createProduct(
     const newProduct = new ProductModel(incomingProduct);
     const savedProduct = await newProduct.save();
     const responseObj = {
-      message: "Product added",
+      message: 'Product added',
       ...savedProduct.toJSON(),
     };
-    res.set("content-type", "application/json");
+    res.set('content-type', 'application/json');
     res.status(201).send(JSON.stringify(responseObj));
   } catch (error) {
     next(error); // är detta globala error handlern? Oklart
   }
 }
-export async function updateProduct() {}
+
+export async function updateProduct(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  const productId = req.params.id;
+  const product = await ProductModel.findById(productId);
+
+  if (!product) {
+    return res.status(404).json(`Product with ID ${productId} not found`);
+  }
+
+  const productUpdateSchema = yup.object({
+    title: yup.string().trim().min(2).required(),
+    description: yup.string().trim().min(5).required(),
+    categories: yup.string().trim().min(2).required(), // Ska dessa verkligen vara required vid en edit??
+    price: yup.number().min(1).required(),
+    quantity: yup.number().required(),
+    stock: yup.number().required(),
+    imageId: yup.string().trim().min(2).required(),
+    imageURL: yup.string().trim().min(2).required(),
+  });
+
+  try {
+    const validatedProduct = await productUpdateSchema.validate(req.body);
+    const updatedProduct = await ProductModel.findByIdAndUpdate(
+      productId,
+      validatedProduct,
+      { new: true },
+    );
+    res.status(200).json(updatedProduct);
+  } catch (error) {
+    next(error);
+  }
+}
 
 export async function deleteProduct(req: Request, res: Response) {
   try {
@@ -51,15 +86,15 @@ export async function deleteProduct(req: Request, res: Response) {
     const deletedProduct = await ProductModel.findById(productId);
 
     if (!deletedProduct) {
-      return res.status(404).json("product not found");
+      return res.status(404).json('product not found');
     }
 
     await ProductModel.findByIdAndDelete(productId);
-    res.status(200).json("product deleted");
+    res.status(200).json('product deleted');
     // res.status(204).end();   bättre alternativ?
   } catch (error) {
     res.status(404).json({
-      message: "Error finding the product",
+      message: 'Error finding the product',
       error: (error as any).message,
     });
   }

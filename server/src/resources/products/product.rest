@@ -35,3 +35,18 @@ Content-Type: application/json
   "imageId": "12",
   "imageURL": "www.test.se"
 }
+
+### PUT 
+PUT http://localhost:3000/api/products/abc123
+Content-Type: application/json
+
+{
+  "title": "Ändrad produkt",
+  "description": "Ändrad info om product",
+  "categories": "Ändrad Testkategori",
+  "price": "60",
+  "quantity": "20",
+  "stock": "10",
+  "imageId": "16",
+  "imageURL": "www.ändrattest.se"
+}

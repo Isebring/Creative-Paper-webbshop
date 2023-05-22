@@ -1,8 +1,8 @@
-import console from "console";
-import cookieSession from "cookie-session";
-import express, { NextFunction, Request, Response } from "express";
-import "express-async-errors";
-import productRouter from "./resources/products/product-router";
+import console from 'console';
+import cookieSession from 'cookie-session';
+import express, { NextFunction, Request, Response } from 'express';
+import 'express-async-errors';
+import productRouter from './resources/products/product-router';
 
 export const app = express();
 
@@ -12,7 +12,7 @@ app.use(
   cookieSession({
     secure: false,
     httpOnly: true,
-    secret: "fjkarhgoahgbvjbjaerhfaorsafa",
+    secret: 'fjkarhgoahgbvjbjaerhfaorsafa',
     maxAge: 3600000,
   }),
 );
