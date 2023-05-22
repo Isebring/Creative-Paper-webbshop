@@ -23,7 +23,7 @@ function CreateAccountForm() {
   });
 
   const handleSubmit = async (values: { email: string; password: string }) => {
-    console.log('Konto skapat! :)');
+    console.log('An account was created! :)');
     try {
       await register(values.email, values.password);
       form.reset();
