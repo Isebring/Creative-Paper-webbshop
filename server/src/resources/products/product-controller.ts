@@ -45,25 +45,6 @@ export async function createProduct(
 }
 export async function updateProduct() {}
 
-// export async function deleteProduct(req: Request, res: Response) {
-//   try {
-//     const productId = req.params.id;
-
-//     const product = await ProductModel.findById(productId);
-//     if (!product) {
-//       return res.status(404).json(`Product with ID ${productId} not found `);
-//     }
-
-//     await ProductModel.findByIdAndDelete(req.params.id);
-//     res.status(204).json(`Product with ID ${productId} deleted `);
-//   } catch (error) {
-//     res.status(404).json({
-//       message: "Error finding the product",
-//       error: (error as any).message,
-//     });
-//   }
-// }
-
 export async function deleteProduct(req: Request, res: Response) {
   try {
     const productId = req.params.id;
@@ -85,26 +66,3 @@ export async function deleteProduct(req: Request, res: Response) {
 }
 
 export async function productQuantity() {}
-
-// Hampus
-// export const deletePost = async (req: Request, res: Response) => {
-//   const postId = req.params.id;
-//   // const userId = req.session!.user._id;
-
-//   const post = await PostModel.findById(postId);
-//   if (!post) {
-//     return res.status(404).json(`Post with ID ${postId} not found`);
-//   }
-
-//   if (
-//     post.author.toString() !== userId.toString() &&
-//     !req.session?.user.isAdmin
-//   ) {
-//     return res
-//       .status(403)
-//       .json(`You do not have permission to delete this post`);
-//   }
-
-//   await post.delete();
-
-//   res.status(204).end();
