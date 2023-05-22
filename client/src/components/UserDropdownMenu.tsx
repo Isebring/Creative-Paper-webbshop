@@ -1,11 +1,10 @@
 import { Button, Menu, Text } from '@mantine/core';
 import {
-  IconArrowsLeftRight,
+  IconHelp,
   IconLogin,
   IconLogout,
   IconSearch,
   IconSettings,
-  IconTrash,
   IconUser,
   IconUserCircle,
 } from '@tabler/icons-react';
@@ -46,8 +45,22 @@ function UserDropdownMenu() {
               <Text>Signed in as</Text>
               <Text fw={700}>{user?.email}</Text>
             </Menu.Item>
+            <Menu.Divider />
             <Menu.Item icon={<IconUser size={14} />}>My account</Menu.Item>
             <Menu.Item icon={<IconSettings size={14} />}>Settings</Menu.Item>
+            <Menu.Divider />
+            <Menu.Item
+              icon={<IconSearch size={14} />}
+              rightSection={
+                <Text size="xs" color="dimmed">
+                  ⌘K
+                </Text>
+              }
+            >
+              Search
+            </Menu.Item>
+            <Menu.Item icon={<IconHelp size={14} />}>Help</Menu.Item>
+            <Menu.Divider />
             <Menu.Item icon={<IconLogout size={14} />} onClick={handleLogout}>
               Sign out
             </Menu.Item>
@@ -66,28 +79,20 @@ function UserDropdownMenu() {
             >
               Create an account
             </Menu.Item>
+            <Menu.Divider />
+            <Menu.Item
+              icon={<IconSearch size={14} />}
+              rightSection={
+                <Text size="xs" color="dimmed">
+                  ⌘K
+                </Text>
+              }
+            >
+              Search
+            </Menu.Item>
+            <Menu.Item icon={<IconHelp size={14} />}>Help</Menu.Item>
           </>
         )}
-        <Menu.Item
-          icon={<IconSearch size={14} />}
-          rightSection={
-            <Text size="xs" color="dimmed">
-              ⌘K
-            </Text>
-          }
-        >
-          Search
-        </Menu.Item>
-
-        <Menu.Divider />
-
-        <Menu.Label>Danger zone</Menu.Label>
-        <Menu.Item icon={<IconArrowsLeftRight size={14} />}>
-          Transfer my data
-        </Menu.Item>
-        <Menu.Item color="red" icon={<IconTrash size={14} />}>
-          Delete my account
-        </Menu.Item>
       </Menu.Dropdown>
     </Menu>
   );
