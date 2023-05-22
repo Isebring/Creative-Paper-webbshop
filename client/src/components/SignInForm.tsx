@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
-interface SignUpFormProps {
+interface SignInFormProps {
   onSubmit: (credentials: { email: string; password: string }) => void;
 }
 
@@ -13,7 +13,7 @@ const schema = Yup.object().shape({
   password: Yup.string().required('Password is required'),
 });
 
-function SignUpForm({ onSubmit }: SignUpFormProps) {
+function SignInForm({ onSubmit }: SignInFormProps) {
   const navigate = useNavigate();
   const form = useForm({
     validate: yupResolver(schema),
@@ -45,7 +45,7 @@ function SignUpForm({ onSubmit }: SignUpFormProps) {
     >
       <Box>
         <Center>
-          <Title>Sign Up</Title>
+          <Title>Sign In</Title>
         </Center>
       </Box>
       <form onSubmit={form.onSubmit(handleSubmit)} data-cy="signin-form">
@@ -74,12 +74,13 @@ function SignUpForm({ onSubmit }: SignUpFormProps) {
               width: '100%',
             }}
           >
-            Sign Up
+            Sign In
           </Button>
         </Center>
       </form>
+      <Box>{/* <Text>Are you new here?</Text> */}</Box>
     </Box>
   );
 }
 
-export default SignUpForm;
+export default SignInForm;
