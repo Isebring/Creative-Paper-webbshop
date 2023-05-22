@@ -1,7 +1,7 @@
-import { Box, Button, Center, TextInput, Title } from '@mantine/core';
+import styled from '@emotion/styled';
+import { Box, Button, Center, Text, TextInput, Title } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 interface SignInFormProps {
@@ -9,7 +9,9 @@ interface SignInFormProps {
 }
 
 const schema = Yup.object().shape({
-  email: Yup.string().email('Invalid email').required('Email is required'),
+  email: Yup.string()
+    .email('Invalid email, please use the format example@example.com')
+    .required('Email is required'),
   password: Yup.string().required('Password is required'),
 });
 
@@ -23,14 +25,10 @@ function SignInForm({ onSubmit }: SignInFormProps) {
     },
   });
 
-  useEffect(() => {
-    form.reset();
-  }, [form]);
-
   const handleSubmit = (values: { email: string; password: string }) => {
     onSubmit(values);
     form.reset();
-    navigate('/dashboard');
+    navigate('/');
   };
 
   return (
@@ -78,9 +76,22 @@ function SignInForm({ onSubmit }: SignInFormProps) {
           </Button>
         </Center>
       </form>
-      <Box>{/* <Text>Are you new here?</Text> */}</Box>
+      <Box sx={{ paddingTop: '1rem' }}>
+        <Text fz="sm">
+          New here?{' '}
+          <StyledLink to="/createaccount">Create an account</StyledLink>
+        </Text>
+      </Box>
     </Box>
   );
 }
+
+const StyledLink = styled(Link)({
+  color: 'grey',
+  textDecoration: 'none',
+  '&:hover': {
+    textDecoration: 'underline',
+  },
+});
 
 export default SignInForm;
