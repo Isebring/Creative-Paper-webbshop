@@ -42,6 +42,10 @@ function UserDropdownMenu() {
       <Menu.Dropdown>
         {isLoggedIn ? (
           <>
+            <Menu.Item>
+              <Text>Signed in as</Text>
+              <Text fw={700}>{user?.email}</Text>
+            </Menu.Item>
             <Menu.Item icon={<IconUser size={14} />}>My account</Menu.Item>
             <Menu.Item icon={<IconSettings size={14} />}>Settings</Menu.Item>
             <Menu.Item icon={<IconLogout size={14} />} onClick={handleLogout}>
