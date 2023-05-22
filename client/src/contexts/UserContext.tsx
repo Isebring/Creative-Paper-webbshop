@@ -35,13 +35,17 @@ export const UserProvider = ({ children }: Props) => {
     const fetchUser = async () => {
       try {
         const response = await fetch(`/api/users/auth`);
-        if (!response.ok) {
+        if (response.ok) {
+          const userResponse = await response.json();
+          setUser(userResponse);
+        } else if (response.status === 401) {
+          setUser(null);
+        } else {
           throw new Error('Failed to fetch user information');
         }
-        const userResponse = await response.json();
-        setUser(userResponse);
       } catch (error) {
         console.error(error);
+        setUser(null);
       }
     };
 
@@ -62,8 +66,12 @@ export const UserProvider = ({ children }: Props) => {
       const user = await response.json();
       setUser(user);
       return '';
-    } catch (error: any) {
-      throw new Error(error.message || 'Failed to register user');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw new Error(error.message || 'Failed to register user');
+      } else {
+        throw new Error('Failed to register user');
+      }
     }
   };
 
@@ -80,8 +88,12 @@ export const UserProvider = ({ children }: Props) => {
       const user = await response.json();
       setUser(user);
       return user;
-    } catch (error: any) {
-      throw new Error(error.message || 'Failed to log in user');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw new Error(error.message || 'Failed to log in user');
+      } else {
+        throw new Error('Failed to log in user');
+      }
     }
   };
 
@@ -89,6 +101,7 @@ export const UserProvider = ({ children }: Props) => {
     try {
       await sendLogoutRequest();
       setUser(null);
+      console.log('User has been signed out');
     } catch (error) {
       console.error('Failed to log out user:', error);
     }
@@ -105,8 +118,12 @@ export const UserProvider = ({ children }: Props) => {
       if (!response.ok) {
         throw new Error('Failed to log out user');
       }
-    } catch (error: any) {
-      throw new Error(error.message || 'Failed to log out user');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw new Error(error.message || 'Failed to log out user');
+      } else {
+        throw new Error('Failed to log out user');
+      }
     }
   };
 
