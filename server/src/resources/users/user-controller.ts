@@ -105,16 +105,3 @@ export function logoutUser(req: Request, res: Response) {
   );
   res.sendStatus(204);
 }
-
-// Check if email is in use
-export async function checkemail(req: Request, res: Response) {
-  const { email } = req.body;
-
-  const existingUser = await UserModel.findOne({ email });
-
-  if (existingUser) {
-    res.json({ isemailTaken: true });
-  } else {
-    res.json({ isemailTaken: false });
-  }
-}
