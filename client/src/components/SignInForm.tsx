@@ -51,7 +51,13 @@ function SignInForm() {
     >
       <Box>
         <Center>
-          <Title>Sign In</Title>
+          <Title
+            sx={{
+              paddingTop: '3rem',
+            }}
+          >
+            Sign In
+          </Title>
         </Center>
       </Box>
       <form onSubmit={form.onSubmit(handleSubmit)} data-cy="signin-form">
@@ -84,8 +90,17 @@ function SignInForm() {
           </Button>
         </Center>
       </form>
-      <Box sx={{ paddingTop: '1rem' }}>
-        <Text fz="sm">
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingTop: '3rem',
+          paddingBottom: '3rem',
+        }}
+      >
+        <Text fz="sm" fw={500}>
           New here?{' '}
           <StyledLink to="/createaccount">Create an account</StyledLink>
         </Text>
@@ -95,10 +110,11 @@ function SignInForm() {
 }
 
 const StyledLink = styled(Link)({
-  color: 'grey',
-  textDecoration: 'none',
+  color: 'black',
+  fontWeight: 'normal',
+  textDecoration: 'underline',
   '&:hover': {
-    textDecoration: 'underline',
+    color: 'gray',
   },
 });
 
