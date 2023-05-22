@@ -44,7 +44,7 @@ function SignUpForm({ onSubmit }: SignUpFormProps) {
       }}
     >
       <Box>
-        <Title>Sign Up</Title>
+        <Title>Sign In</Title>
       </Box>
       <form onSubmit={form.onSubmit(handleSubmit)} data-cy="signin-form">
         <TextInput
@@ -70,7 +70,7 @@ function SignUpForm({ onSubmit }: SignUpFormProps) {
             marginTop: '1rem',
           }}
         >
-          Sign Up
+          Sign In
         </Button>
       </form>
     </Box>
