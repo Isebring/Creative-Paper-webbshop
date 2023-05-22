@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { UserModel } from './user-model';
 import userRegistrationSchema from './user-validation';
 
+// Check if a user is logged in, in order to be able to place an order etc.
 export function getLoggedInUserInfo(req: Request, res: Response) {
   if (!req.session?.email) {
     return res.status(401).json('You must login!');
@@ -14,21 +15,6 @@ export function getLoggedInUserInfo(req: Request, res: Response) {
 export async function getAllUsers(req: Request, res: Response) {
   const users = await UserModel.find({});
   res.status(200).json(users);
-}
-
-export async function getSpecificUser(req: Request, res: Response) {
-  const { userId } = req.query;
-  console.log(userId);
-  try {
-    const user = await UserModel.findById(userId);
-    if (!user) {
-      throw new Error('User not found');
-    }
-    res.status(200).json({ email: user.email });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server error' });
-  }
 }
 
 // Register user
