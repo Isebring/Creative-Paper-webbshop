@@ -9,10 +9,28 @@ Content-Type: application/json
 
 {
   "title": "Testprodukt",
+  "description": "Info about product",
   "categories": "Testkategori",
   "price": "50",
   "quantity": "30",
   "stock": "20",
+  "imageId": "12",
+  "imageURL": "www.test.se"
+}
+
+
+### Post with error
+
+POST http://localhost:3000/api/products
+Content-Type: application/json
+
+{
+  "title": "Testprodukt",
+  "description": "Info about product",
+  "categories": "Testkategori",
+  "price": "50",
+  "quantity": "30",
+  "stock": "THIS MUST CAUSE ERROR",
   "imageId": "1",
   "imageURL": "www.test.se"
 }

@@ -1,4 +1,6 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
+import "express-async-errors";
+import * as yup from "yup";
 import { ProductModel } from "./product-model";
 
 // const testSchema
@@ -8,21 +10,39 @@ export async function getAllProducts(req: Request, res: Response) {
   res.status(200).json(products);
 }
 export async function getProductById() {}
-export async function createProduct(req: Request, res: Response) {
-  // const incomingProduct = req.body; //samtliga inputfält
-
+export async function createProduct(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
   const incomingProduct = req.body;
 
-  const newProduct = new ProductModel(incomingProduct);
+  const productValidationSchema = yup.object({
+    title: yup.string().trim().min(2).required(),
+    description: yup.string().trim().min(5).required(),
+    categories: yup.string().trim().min(2).required(),
+    price: yup.number().min(1).required(),
+    quantity: yup.number().required(),
+    stock: yup.number().required(),
+    imageId: yup.string().trim().min(2).required(),
+    imageURL: yup.string().trim().min(2).required(),
+  });
 
-  const savedProduct = await newProduct.save();
-  res.status(201).json(savedProduct);
+  try {
+    await productValidationSchema.validate(incomingProduct);
+
+    const newProduct = new ProductModel(incomingProduct);
+    const savedProduct = await newProduct.save();
+    res.status(201).json(savedProduct);
+  } catch (error) {
+    next(error); // Pass the error to the global error handler
+  }
 }
 export async function updateProduct() {}
 export async function deleteProduct() {}
 export async function productQuantity() {}
 
-// // Hampus
+// Hampus
 // export const createPost = async (req: Request, res: Response) => {
 //   const { title, content } = req.body;
 //   const author = req.session!.user._id;

@@ -2,6 +2,7 @@ import { InferSchemaType, Schema, model } from "mongoose";
 
 const productSchema = new Schema({
   title: { type: String, required: true },
+  description: { type: String, required: true },
   categories: { type: String, required: true }, // fråga David?
   price: { type: Number, required: true },
   quantity: { type: Number, required: true },

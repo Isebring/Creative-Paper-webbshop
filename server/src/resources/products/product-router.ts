@@ -5,7 +5,6 @@ import {
   getAllProducts,
   getProductById,
   productQuantity,
-  updateProduct,
 } from "./product-controller";
 
 const productRouter = express
@@ -13,7 +12,7 @@ const productRouter = express
   .get("/api/products", getAllProducts)
   .get("/api/products/:id", getProductById)
   .post("/api/products", createProduct) //add?
-  .put("/api/products/:id", updateProduct)
+  // .put("/api/products/:id", updateProduct) Kan inte vara dublett
   .put("/api/products/:id", productQuantity) // uppdatera lagersaldo
   .delete("/api/products/:id", deleteProduct);
 
