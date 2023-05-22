@@ -70,7 +70,7 @@ function SignInForm({ onSubmit }: SignInFormProps) {
             marginTop: '1rem',
           }}
         >
-          Sign Up
+          Sign In
         </Button>
       </form>
     </Box>
