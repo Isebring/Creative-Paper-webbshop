@@ -8,6 +8,7 @@ POST http://localhost:3000/api/products
 Content-Type: application/json
 
 {
+  "_id": "abc123",
   "title": "Testprodukt",
   "description": "Info about product",
   "categories": "Testkategori",
@@ -18,19 +19,19 @@ Content-Type: application/json
   "imageURL": "www.test.se"
 }
 
+### Delete
 
-### Post with error
-
-POST http://localhost:3000/api/products
+DELETE http://localhost:3000/api/products/abc123
 Content-Type: application/json
 
 {
+  "_id": "abc123",
   "title": "Testprodukt",
   "description": "Info about product",
   "categories": "Testkategori",
   "price": "50",
   "quantity": "30",
-  "stock": "THIS MUST CAUSE ERROR",
-  "imageId": "1",
+  "stock": "20",
+  "imageId": "12",
   "imageURL": "www.test.se"
 }

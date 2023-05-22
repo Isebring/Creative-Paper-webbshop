@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import "express-async-errors";
 import * as yup from "yup";
 import { ProductModel } from "./product-model";
 
@@ -18,6 +17,7 @@ export async function createProduct(
   const incomingProduct = req.body;
 
   const productValidationSchema = yup.object({
+    _id: yup.string().required(),
     title: yup.string().trim().min(2).required(),
     description: yup.string().trim().min(5).required(),
     categories: yup.string().trim().min(2).required(),
@@ -33,80 +33,78 @@ export async function createProduct(
 
     const newProduct = new ProductModel(incomingProduct);
     const savedProduct = await newProduct.save();
-    res.status(201).json(savedProduct);
+    const responseObj = {
+      message: "Product added",
+      ...savedProduct.toJSON(),
+    };
+    res.set("content-type", "application/json");
+    res.status(201).send(JSON.stringify(responseObj));
   } catch (error) {
-    next(error); // Pass the error to the global error handler
+    next(error); // är detta globala error handlern? Oklart
   }
 }
 export async function updateProduct() {}
-export async function deleteProduct() {}
+
+// export async function deleteProduct(req: Request, res: Response) {
+//   try {
+//     const productId = req.params.id;
+
+//     const product = await ProductModel.findById(productId);
+//     if (!product) {
+//       return res.status(404).json(`Product with ID ${productId} not found `);
+//     }
+
+//     await ProductModel.findByIdAndDelete(req.params.id);
+//     res.status(204).json(`Product with ID ${productId} deleted `);
+//   } catch (error) {
+//     res.status(404).json({
+//       message: "Error finding the product",
+//       error: (error as any).message,
+//     });
+//   }
+// }
+
+export async function deleteProduct(req: Request, res: Response) {
+  try {
+    const productId = req.params.id;
+    const deletedProduct = await ProductModel.findById(productId);
+
+    if (!deletedProduct) {
+      return res.status(404).json("product not found");
+    }
+
+    await ProductModel.findByIdAndDelete(productId);
+    res.status(200).json("product deleted");
+    // res.status(204).end();   bättre alternativ?
+  } catch (error) {
+    res.status(404).json({
+      message: "Error finding the product",
+      error: (error as any).message,
+    });
+  }
+}
+
 export async function productQuantity() {}
 
 // Hampus
-// export const createPost = async (req: Request, res: Response) => {
-//   const { title, content } = req.body;
-//   const author = req.session!.user._id;
+// export const deletePost = async (req: Request, res: Response) => {
+//   const postId = req.params.id;
+//   // const userId = req.session!.user._id;
 
-//   // Validate input
-//   const schema = Joi.object({
-//     title: Joi.string().trim().min(2).required(),
-//     content: Joi.string().trim().min(5).required(),
-//   });
-
-//   const { error } = schema.validate({ title, content });
-//   if (error) {
-//     return res.status(400).json(error.message);
+//   const post = await PostModel.findById(postId);
+//   if (!post) {
+//     return res.status(404).json(`Post with ID ${postId} not found`);
 //   }
 
-//   const newPost = new PostModel({
-//     title,
-//     content,
-//     author,
-//   });
-
-//   const savedPost = await newPost.save();
-//   res.status(201).json(savedPost);
-// };
-
-// // Jespers
-// export async function createPost(req: Request, res: Response) {
-//   try {
-//     const incomingPost = req.body;
-
-//     const author = req.session?._id;
-//     if (!author) {
-//       res.status(400).json("Missing author ID");
-//       return;
-//     }
-
-//     const newPost = new PostModel({
-//       ...incomingPost,
-//       author: req.session?._id,
-//     });
-
-//     try {
-//       await testSchema.validate(newPost);
-//     } catch (error: any) {
-//       res.set("content-type", "application/json");
-//       return res.status(400).send(JSON.stringify(error.message));
-//     }
-
-//     const result = await newPost.save();
-//     const responseObj = {
-//       message: "Post created",
-//       ...result.toJSON(),
-//     };
-
-//     res.set("content-type", "application/json");
-//     res.status(201).send(JSON.stringify(responseObj));
-//   } catch (error) {
-//     console.error("Error inserting user:", error);
-//     res.set("content-type", "application/json");
-//     res.status(500).send(
-//       JSON.stringify({
-//         message: "Error inserting user",
-//         error: (error as any).message,
-//       }),
-//     );
+//   if (
+//     post.author.toString() !== userId.toString() &&
+//     !req.session?.user.isAdmin
+//   ) {
+//     return res
+//       .status(403)
+//       .json(`You do not have permission to delete this post`);
 //   }
-// }
+
+//   await post.delete();
+
+//   res.status(204).end();
