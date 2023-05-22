@@ -4,11 +4,7 @@ import SignInForm from '../components/SignInForm';
 function SignIn() {
   return (
     <Container size="xl">
-      <SignInForm
-        onSubmit={function (): void {
-          throw new Error('Function not implemented.');
-        }}
-      />
+      <SignInForm />
     </Container>
   );
 }
