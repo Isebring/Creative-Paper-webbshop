@@ -11,7 +11,7 @@ import {
 const productRouter = express
   .Router()
   .get("/api/products", getAllProducts)
-  .get("/api/products", getProductById)
+  .get("/api/products/:id", getProductById)
   .post("/api/products", createProduct) //add?
   .put("/api/products/:id", updateProduct)
   .put("/api/products/:id", productQuantity) // uppdatera lagersaldo

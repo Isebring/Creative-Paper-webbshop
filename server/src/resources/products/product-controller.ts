@@ -3,7 +3,10 @@ import { ProductModel } from "./product-model";
 
 // const testSchema
 
-export async function getAllProducts() {}
+export async function getAllProducts(req: Request, res: Response) {
+  const products = await ProductModel.find();
+  res.status(200).json(products);
+}
 export async function getProductById() {}
 export async function createProduct(req: Request, res: Response) {
   // const incomingProduct = req.body; //samtliga inputfält
