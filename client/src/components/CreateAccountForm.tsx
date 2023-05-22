@@ -2,10 +2,7 @@ import { Box, Button, Center, TextInput, Title } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
-
-interface Props {
-  onSubmit: (credentials: { email: string; password: string }) => void;
-}
+import { useUserContext } from '../contexts/UseUserContext';
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -14,8 +11,9 @@ const schema = Yup.object().shape({
   password: Yup.string().required('Password is required'),
 });
 
-function CreateAccountForm({ onSubmit }: Props) {
+function CreateAccountForm() {
   const navigate = useNavigate();
+  const { register } = useUserContext();
   const form = useForm({
     validate: yupResolver(schema),
     initialValues: {
@@ -24,10 +22,15 @@ function CreateAccountForm({ onSubmit }: Props) {
     },
   });
 
-  const handleSubmit = (values: { email: string; password: string }) => {
-    onSubmit(values);
-    form.reset();
-    navigate('/');
+  const handleSubmit = async (values: { email: string; password: string }) => {
+    console.log('Konto skapat! :)');
+    try {
+      await register(values.email, values.password);
+      form.reset();
+      navigate('/');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
