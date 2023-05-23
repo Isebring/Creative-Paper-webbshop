@@ -1,3 +1,4 @@
+import console from 'console';
 import cookieSession from 'cookie-session';
 import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
@@ -13,7 +14,7 @@ app.use(
     httpOnly: true,
     secret: 'fjkarhgoahgbvjbjaerhfaorsafa',
     maxAge: 3600000,
-  }),
+  })
 );
 
 app.use(productRouter);
