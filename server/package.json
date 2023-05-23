@@ -4,6 +4,7 @@
     "format": "prettier --check \"src/**/*.{ts,tsx}\""
   },
   "dependencies": {
+    "argon2": "^0.30.3",
     "cookie-session": "^2.0.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
@@ -11,7 +12,10 @@
     "mongodb": "^5.5.0",
     "mongoose": "^7.1.1",
     "prettier": "^2.8.8",
+<<<<<<< HEAD
     "socket.io": "^4.6.1",
+=======
+>>>>>>> c1e9a24dc95c3668fb140c983aba0d0f625417ea
     "yup": "^1.1.1"
   },
   "devDependencies": {

@@ -8,6 +8,7 @@ import React, { useState } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import ProductProvider from './contexts/ProductContext';
 import ShoppingCartProvider from './contexts/ShoppingCartContext';
+import { UserProvider } from './contexts/UserContext';
 import './index.css';
 import { router } from './main';
 
@@ -31,9 +32,11 @@ function Root() {
         >
           <Notifications data-cy="added-to-cart-toast" />
           <ProductProvider>
-            <ShoppingCartProvider>
-              <RouterProvider router={router} />
-            </ShoppingCartProvider>
+            <UserProvider>
+              <ShoppingCartProvider>
+                <RouterProvider router={router} />
+              </ShoppingCartProvider>
+            </UserProvider>
           </ProductProvider>
         </MantineProvider>
       </ColorSchemeProvider>
