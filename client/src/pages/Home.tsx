@@ -45,12 +45,13 @@ function Home() {
           flexDirection: 'column',
         }}
       >
-        <Title>Tech101</Title>
+        <Title>Creative Paper</Title>
         <Text fz="xl" fw={500}>
-          Providing up-to-date <br /> products and services
+          Unleash Your Creativity with Our Stationery, <br /> Where Ideas Take
+          Flight on Pages Delight!
         </Text>
         <Text fz="lg" fs="italic">
-          We. Tech. You
+          We. Stationery. You
         </Text>
       </Box>
       <MediaQuery
