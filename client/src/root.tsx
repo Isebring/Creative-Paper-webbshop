@@ -26,6 +26,7 @@ function Root() {
           theme={{
             colorScheme,
             primaryColor: 'violet',
+            fontFamily: 'Ovo, serif',
           }}
           withGlobalStyles
           withNormalizeCSS

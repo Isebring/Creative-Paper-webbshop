@@ -34,7 +34,7 @@ function HeroSlideItem({ imageSrc }: HeroSlideItemProps) {
               query="(max-width: 640px)"
               styles={{ fontSize: rem(18) }}
             >
-              <Title sx={{ textAlign: 'center' }}>
+              <Title sx={{ textAlign: 'center', width: '80%' }}>
                 Shop Summer & New Weekend Deals
               </Title>
             </MediaQuery>
@@ -42,7 +42,11 @@ function HeroSlideItem({ imageSrc }: HeroSlideItemProps) {
               query="(max-width: 640px)"
               styles={{ fontSize: rem(13), marginTop: '.5rem' }}
             >
-              <Title order={4} sx={{ textAlign: 'center' }}>
+              <Title
+                order={4}
+                sx={{ textAlign: 'center', width: '80%' }}
+                style={{ fontFamily: 'Poppins, sans-serif' }}
+              >
                 We have all the different things you need to feel organized in
                 your day to day life.
               </Title>
@@ -68,6 +72,7 @@ function HeroSlideItem({ imageSrc }: HeroSlideItemProps) {
                     border: '2px solid white',
                   },
                 }}
+                style={{ fontFamily: 'Poppins, sans-serif' }}
               >
                 Go to Deals
               </Button>

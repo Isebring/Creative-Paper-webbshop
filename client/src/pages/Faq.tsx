@@ -73,66 +73,60 @@ export function Faq() {
 
       <Accordion variant="separated">
         <Accordion.Item className={classes.item} value="reset-password">
-          <Accordion.Control>
-            What is the best laptop for gaming?
-          </Accordion.Control>
+          <Accordion.Control>What are your store hours?</Accordion.Control>
           <Accordion.Panel>
-            The best laptop for gaming would typically have a powerful
-            processor, dedicated graphics card, high RAM and storage capacity,
-            and a high refresh rate display. Some popular options include the
-            Asus ROG Zephyrus G14, Acer Predator Helios 300, and MSI GE75
-            Raider.
+            Our store is open from Monday to Saturday, from 9:00 am to 6:00 pm.
+            We are closed on Sundays.
           </Accordion.Panel>
         </Accordion.Item>
 
         <Accordion.Item className={classes.item} value="another-account">
           <Accordion.Control>
-            What is the difference between an SSD and an HDD in a laptop?
+            Do you offer bulk discounts for large orders?
           </Accordion.Control>
           <Accordion.Panel>
-            An SSD (Solid State Drive) is a type of storage device that uses
-            flash memory to store data, while an HDD (Hard Disk Drive) uses
-            spinning disks and a read/write head to access and store data. SSDs
-            are generally faster and more durable, while HDDs are less expensive
-            and have larger storage capacities.
+            Yes, we offer bulk discounts for large orders. Please contact our
+            sales team or visit our store for more information on bulk pricing
+            and discounts.
           </Accordion.Panel>
         </Accordion.Item>
 
         <Accordion.Item className={classes.item} value="newsletter">
           <Accordion.Control>
-            How much RAM do I need in a laptop?
+            Can I return or exchange items if I change my mind?
           </Accordion.Control>
           <Accordion.Panel>
-            The amount of RAM you need in a laptop depends on the tasks you plan
-            to perform. For basic tasks like web browsing and word processing,
-            8GB of RAM is usually sufficient. For more demanding tasks like
-            photo/video editing or gaming, 16GB or more may be necessary.
+            We have a flexible return and exchange policy. If you change your
+            mind about a product, you can return it within 30 days of purchase,
+            provided it is in its original condition and packaging. Please bring
+            your receipt or proof of purchase for a smooth return or exchange
+            process.
           </Accordion.Panel>
         </Accordion.Item>
 
         <Accordion.Item className={classes.item} value="credit-card">
           <Accordion.Control>
-            What is the battery life of a typical laptop?
+            Do you provide customization services for stationery items?
           </Accordion.Control>
           <Accordion.Panel>
-            The battery life of a laptop varies depending on the model and
-            usage. Most laptops have a battery life of 5-8 hours, but some
-            high-end models can last up to 12 hours or more. Battery life can
-            also be affected by factors such as screen brightness, CPU usage,
-            and connectivity options.
+            Yes, we offer customization services for various stationery items.
+            Whether you need personalized notebooks, engraved pens, or
+            custom-designed invitations, our team can assist you with creating
+            unique and customized stationery products. Please inquire with our
+            staff for more details and pricing.
           </Accordion.Panel>
         </Accordion.Item>
 
         <Accordion.Item className={classes.item} value="payment">
           <Accordion.Control>
-            What is the warranty period for a laptop?
+            Can I place an order online and have it shipped to my address?
           </Accordion.Control>
           <Accordion.Panel>
-            The warranty period for a laptop varies depending on the
-            manufacturer and model. Most laptops come with a one-year warranty,
-            but some manufacturers offer longer warranties of two or three
-            years. It's important to check the warranty details before making a
-            purchase to ensure you are covered for any potential issues.
+            Absolutely! We have an online store where you can browse our
+            selection of stationery items and place orders. We offer shipping
+            services to various locations. Simply add your desired items to the
+            cart, proceed to checkout, and enter your shipping address. Shipping
+            fees will be calculated based on the destination and package weight.
           </Accordion.Panel>
         </Accordion.Item>
       </Accordion>

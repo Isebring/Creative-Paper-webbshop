@@ -46,7 +46,7 @@ function Home() {
         }}
       >
         <Title>Creative Paper</Title>
-        <Text fz="xl" fw={500}>
+        <Text fz="xl" fw={500} style={{ fontFamily: 'Poppins, sans-serif' }}>
           Unleash Your Creativity with Our Stationery, <br /> Where Ideas Take
           Flight on Pages Delight!
         </Text>
@@ -100,6 +100,7 @@ function Home() {
           size="xs"
           radius="sm"
           onClick={sortProductsByLowestPrice}
+          style={{ fontFamily: 'Poppins, sans-serif' }}
         >
           Sort by lowest price
         </Button>
@@ -111,6 +112,7 @@ function Home() {
           variant="light"
           radius="sm"
           onClick={sortProductsByHighestPrice}
+          style={{ fontFamily: 'Poppins, sans-serif' }}
         >
           Sort by highest price
         </Button>

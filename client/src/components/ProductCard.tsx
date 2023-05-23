@@ -36,14 +36,23 @@ function ProductCard({ product }: Props) {
                 mb="xl"
                 style={{ display: 'flex', justifyContent: 'space-between' }}
               >
-                <Title order={2} data-cy="product-title">
+                <Title
+                  order={2}
+                  data-cy="product-title"
+                  style={{ fontFamily: 'Poppins, sans-serif' }}
+                >
                   {product.title}
                 </Title>
-                <Badge color="violet" variant="light" size="lg">
+                <Badge
+                  color="violet"
+                  variant="light"
+                  size="lg"
+                  style={{ fontFamily: 'Poppins, sans-serif' }}
+                >
                   New!
                 </Badge>
               </Group>
-              <List>
+              <List style={{ fontFamily: 'Poppins, sans-serif' }}>
                 {Array.isArray(product.summary) &&
                   product.summary.map((item) => (
                     <List.Item key={item}>{item}</List.Item>
@@ -53,11 +62,6 @@ function ProductCard({ product }: Props) {
           </Link>
         </Card.Section>
         <Group position="left" mt="md" mb="xs">
-          <Link to={link}>
-            <Button variant="outline" mt="md" radius="md">
-              Product Page
-            </Button>
-          </Link>
           <Button
             variant="light"
             mt="md"
@@ -72,10 +76,25 @@ function ProductCard({ product }: Props) {
             }}
             data-cy="product-buy-button"
           >
-            Add to cart
+            ADD TO CART
           </Button>
+          <Link to={link}>
+            <Button
+              variant="outline"
+              mt="md"
+              radius="md"
+              style={{ fontFamily: 'Poppins, sans-serif' }}
+            >
+              MORE INFO
+            </Button>
+          </Link>
+
           <Title
-            style={{ marginLeft: 'auto', marginTop: '.5rem' }}
+            style={{
+              marginLeft: 'auto',
+              marginTop: '.5rem',
+              fontFamily: 'Poppins, sans-serif',
+            }}
             order={2}
             align="left"
             data-cy="product-price"

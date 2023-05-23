@@ -27,7 +27,7 @@ const useStyles = createStyles((theme) => ({
   wrapper: {
     marginTop: '1rem',
     boxSizing: 'border-box',
-    backgroundImage: `linear-gradient(-60deg, ${theme.colors.blue[3]} 0%, ${theme.colors.blue[7]} 100%)`,
+    backgroundImage: `linear-gradient(-60deg, ${theme.colors.violet[0]} 0%, ${theme.colors.violet[2]} 100%)`,
     borderRadius: theme.radius.md,
     padding: `calc(${theme.spacing.xl} * 5)`,
 
