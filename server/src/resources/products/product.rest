@@ -2,13 +2,17 @@
 GET http://localhost:3000/api/products
 Content-Type:  application/json
 
+### GET 
+GET http://localhost:3000/api/products/cde321
+Content-Type:  application/json
+
 ### Post
 
 POST http://localhost:3000/api/products
 Content-Type: application/json
 
 {
-  "_id": "abc123",
+  "_id": "cde321",
   "title": "Testprodukt",
   "description": "Info about product",
   "categories": "Testkategori",
@@ -21,7 +25,7 @@ Content-Type: application/json
 
 ### Delete
 
-DELETE http://localhost:3000/api/products/abc123
+DELETE http://localhost:3000/api/products/cde321
 Content-Type: application/json
 
 {
@@ -37,7 +41,7 @@ Content-Type: application/json
 }
 
 ### PUT 
-PUT http://localhost:3000/api/products/abc123
+PUT http://localhost:3000/api/products/cde321
 Content-Type: application/json
 
 {

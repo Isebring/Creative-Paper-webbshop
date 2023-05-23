@@ -8,7 +8,21 @@ export async function getAllProducts(req: Request, res: Response) {
   const products = await ProductModel.find();
   res.status(200).json(products);
 }
-export async function getProductById() {}
+
+export async function getProductById(req: Request, res: Response) {
+  const productId = req.params.id;
+  try {
+    const product = await ProductModel.findById(productId);
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    return res.status(200).json(product);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Server error' });
+  }
+}
+
 export async function createProduct(
   req: Request,
   res: Response,
