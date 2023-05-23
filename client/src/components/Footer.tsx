@@ -43,6 +43,10 @@ const useStyles = createStyles((theme) => ({
     alignItems: 'center',
     padding: `${theme.spacing.md} ${theme.spacing.md}`,
 
+    '& > *': {
+      flex: '1 1 0%', // This will make each child flex equally
+    },
+
     [theme.fn.smallerThan('sm')]: {
       flexDirection: 'column',
     },
@@ -55,9 +59,18 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
+  centeredBox: {
+    flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    textAlign: 'center',
+  },
+
   form: {
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'center',
     [theme.fn.smallerThan('sm')]: {
       marginTop: theme.spacing.lg,
       flexDirection: 'column',
@@ -97,7 +110,7 @@ export function FooterCentered({ links }: FooterCenteredProps) {
     <footer className={classes.footer}>
       <div className={classes.inner}>
         <Group className={classes.links}>{items}</Group>
-        <Box>
+        <Box className={classes.centeredBox}>
           <Title order={3} align="center" mb="md">
             Sign up to our newsletter!
           </Title>
