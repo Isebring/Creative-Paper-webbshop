@@ -24,6 +24,7 @@ import {
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useShoppingCart } from '../contexts/UseShoppingCart';
+import UserDropdownMenu from './UserDropdownMenu';
 
 const HEADER_HEIGHT = rem(70);
 
@@ -231,6 +232,7 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
               <IconUserShield size="1.8rem" stroke="1.3" />
             </Button>
           </Link>
+          <UserDropdownMenu />
           <Link to="/checkout">
             <Button
               onClick={handleLinkClick}

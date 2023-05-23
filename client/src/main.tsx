@@ -10,11 +10,13 @@ import Admin from './pages/Admin';
 import Cart from './pages/Cart';
 import Confirmation from './pages/Confirmation';
 import { Contact } from './pages/Contact';
+import CreateAccount from './pages/CreateAccount';
 import EditProduct from './pages/EditProduct';
 import { Faq } from './pages/Faq';
 import Home from './pages/Home';
 import NewProduct from './pages/NewProduct';
 import ProductDetails from './pages/ProductDetails';
+import SignIn from './pages/SignIn';
 import Root from './root';
 
 export const router = createBrowserRouter(
@@ -30,6 +32,8 @@ export const router = createBrowserRouter(
       <Route path="/admin/product/:id/edit" element={<EditProduct />} />
       <Route path="/admin/product/new" element={<NewProduct />} />
       <Route path="/confirmation" element={<Confirmation />} />
+      <Route path="/signin" element={<SignIn />} />
+      <Route path="/createaccount" element={<CreateAccount />} />
     </Route>,
   ),
 );
