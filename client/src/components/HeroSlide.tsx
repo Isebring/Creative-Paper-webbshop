@@ -3,10 +3,13 @@ import { Autoplay, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import 'swiper/swiper.min.css';
-import { products as mockedProducts } from '../../data/index';
+
+import { useProduct } from '../contexts/ProductContext';
 import HeroSlideItem from './HeroSlideItem';
 
 function HeroSlide() {
+  const { products } = useProduct();
+
   return (
     <Box
       sx={{
@@ -25,7 +28,7 @@ function HeroSlide() {
         navigation
         pagination={{ clickable: true }}
       >
-        {mockedProducts.slice(0, 4).map((product) => (
+        {products!.slice(0, 4).map((product) => (
           <SwiperSlide style={{ height: '22rem' }} key={product.id}>
             <HeroSlideItem imageSrc={product.image} />
           </SwiperSlide>

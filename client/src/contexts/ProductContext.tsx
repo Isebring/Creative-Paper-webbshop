@@ -1,25 +1,53 @@
-import { createContext, ReactNode } from 'react';
-import { products as mockedProducts, Product } from '../../data/index';
-import useLocalStorage from '../hooks/useLocalStorage';
+import { createContext, useContext, useEffect, useState } from 'react';
 
-interface ContextValue {
-  products: Product[];
-  deleteProduct: (id: string) => void;
+export interface Product {
+  id: string;
+  image: string;
+  secondImage: string;
+  title: string;
+  description: string;
+  summary: string[];
+  price: number;
+  rating: number;
+  usersRated: number;
+}
+
+interface ProductContextType {
+  products: Product[] | null;
   addProduct: (product: Product) => void;
+  deleteProduct: (id: string) => void;
   updateProduct: (product: Product) => void;
 }
 
-export const ProductContext = createContext<ContextValue>(null as never);
+export const ProductContext = createContext<ProductContextType>({
+  products: null,
+  addProduct: () => {},
+  deleteProduct: () => {},
+  updateProduct: () => {},
+});
 
-interface Props {
-  children: ReactNode;
+export const useProduct = () => useContext(ProductContext);
+
+export interface ProductProviderProps {
+  children: React.ReactNode;
 }
 
-function ProductProvider({ children }: Props) {
-  const [products, setProducts] = useLocalStorage<Product[]>(
-    'products',
-    mockedProducts,
-  );
+export const ProductProvider = ({ children }: ProductProviderProps) => {
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/api/products');
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   function deleteProduct(id: string) {
     setProducts((currentProducts) => {
@@ -47,6 +75,6 @@ function ProductProvider({ children }: Props) {
       {children}
     </ProductContext.Provider>
   );
-}
+};
 
 export default ProductProvider;

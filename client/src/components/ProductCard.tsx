@@ -28,7 +28,7 @@ function ProductCard({ product }: Props) {
     <>
       <Card shadow="xl" radius="lg" withBorder data-cy="product">
         <Card.Section>
-          <Link to={link} style={{ textDecoration: 'none', color: 'inherit' }}>
+          <Link to={link} style={{ textDecoration: 'none', color: 'inhFerit' }}>
             <Image src={product.image} height={230} fit="cover" />
             <Box pl="md" pr="md">
               <Group

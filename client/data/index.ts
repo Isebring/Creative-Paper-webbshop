@@ -1,3 +1,7 @@
+export interface CartItem extends Product {
+  quantity: number;
+}
+
 export interface Product {
   id: string;
   image: string;
@@ -8,10 +12,6 @@ export interface Product {
   price: number;
   rating: number;
   usersRated: number;
-}
-
-export interface CartItem extends Product {
-  quantity: number;
 }
 
 export const products: Product[] = [
