@@ -66,6 +66,11 @@ function ProductCard({ product }: Props) {
             variant="light"
             mt="md"
             radius="md"
+            style={{
+              fontFamily: 'Poppins, sans-serif',
+              backgroundColor: 'black',
+              color: 'white',
+            }}
             onClick={() => {
               increaseCartQuantity(product._id);
               notifications.show({
@@ -83,7 +88,11 @@ function ProductCard({ product }: Props) {
               variant="outline"
               mt="md"
               radius="md"
-              style={{ fontFamily: 'Poppins, sans-serif' }}
+              style={{
+                fontFamily: 'Poppins, sans-serif',
+                border: '1px solid black',
+                color: 'black',
+              }}
             >
               MORE INFO
             </Button>

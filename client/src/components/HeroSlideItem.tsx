@@ -57,8 +57,8 @@ function HeroSlideItem({ imageSrc }: HeroSlideItemProps) {
             >
               <Button
                 sx={{
-                  background: theme.colors.violet[6],
-                  color: theme.colors.violet[0],
+                  background: 'black',
+                  color: 'white',
                   fontWeight: 'bold',
                   marginTop: '1rem',
                   height: '2.4rem',
@@ -69,7 +69,6 @@ function HeroSlideItem({ imageSrc }: HeroSlideItemProps) {
                   '&:hover': {
                     background: theme.colors.violet[4],
                     color: theme.colors.violet[0],
-                    border: '2px solid white',
                   },
                 }}
                 style={{ fontFamily: 'Poppins, sans-serif' }}

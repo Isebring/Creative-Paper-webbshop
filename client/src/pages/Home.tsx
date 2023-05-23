@@ -46,7 +46,7 @@ function Home() {
         }}
       >
         <Title>Creative Paper</Title>
-        <Text fz="xl" fw={500} style={{ fontFamily: 'Poppins, sans-serif' }}>
+        <Text fz="lg" fw={500} style={{ fontFamily: 'Poppins, sans-serif' }}>
           Unleash Your Creativity with Our Stationery, <br /> Where Ideas Take
           Flight on Pages Delight!
         </Text>
@@ -68,7 +68,7 @@ function Home() {
             width: '100%',
             background:
               theme.colorScheme === 'dark'
-                ? theme.colors.dark[0]
+                ? theme.colors.violet[0]
                 : theme.colors.violet[1],
             display: 'flex',
             justifyContent: 'space-around',

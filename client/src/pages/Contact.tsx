@@ -171,7 +171,15 @@ export function Contact() {
                 classNames={{ input: classes.input, label: classes.inputLabel }}
               />
               <Group position="right" mt="md">
-                <Button type="submit" className={classes.control}>
+                <Button
+                  type="submit"
+                  className={classes.control}
+                  style={{ fontFamily: 'Poppins, sans-serif' }}
+                  sx={{
+                    backgroundColor: 'black',
+                    color: 'white',
+                  }}
+                >
                   Send message
                 </Button>
               </Group>

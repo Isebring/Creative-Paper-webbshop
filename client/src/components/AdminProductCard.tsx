@@ -85,7 +85,12 @@ function AdminProductCard({ product, onDelete }: Props) {
           )}
 
           <Link to={edit} data-cy="admin-edit-product">
-            <Button variant="outline" mt="md" radius="md">
+            <Button
+              variant="outline"
+              mt="md"
+              radius="md"
+              sx={{ border: '1px solid black', color: 'black' }}
+            >
               Edit product
             </Button>
           </Link>
