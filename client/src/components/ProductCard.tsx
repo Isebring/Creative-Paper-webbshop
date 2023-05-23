@@ -22,7 +22,7 @@ export interface Props {
 
 function ProductCard({ product }: Props) {
   const { increaseCartQuantity } = useShoppingCart();
-  const link = '/product/' + product.id;
+  const link = '/product/' + product._id;
 
   return (
     <>
@@ -63,7 +63,7 @@ function ProductCard({ product }: Props) {
             mt="md"
             radius="md"
             onClick={() => {
-              increaseCartQuantity(product.id);
+              increaseCartQuantity(product._id);
               notifications.show({
                 icon: <IconShoppingCartPlus />,
                 title: `${product.title}`,
@@ -80,7 +80,7 @@ function ProductCard({ product }: Props) {
             align="left"
             data-cy="product-price"
           >
-            {product.price}€
+            ${product.price}
           </Title>
         </Group>
       </Card>
