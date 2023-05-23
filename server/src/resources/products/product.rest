@@ -1,0 +1,56 @@
+### GET 
+GET http://localhost:3000/api/products
+Content-Type:  application/json
+
+### GET 
+GET http://localhost:3000/api/products/cde321
+Content-Type:  application/json
+
+### Post
+
+POST http://localhost:3000/api/products
+Content-Type: application/json
+
+{
+  "_id": "cde321",
+  "title": "Testprodukt",
+  "description": "Info about product",
+  "categories": "Testkategori",
+  "price": "50",
+  "quantity": "30",
+  "stock": "20",
+  "imageId": "12",
+  "imageURL": "www.test.se"
+}
+
+### Delete
+
+DELETE http://localhost:3000/api/products/cde321
+Content-Type: application/json
+
+{
+  "_id": "abc123",
+  "title": "Testprodukt",
+  "description": "Info about product",
+  "categories": "Testkategori",
+  "price": "50",
+  "quantity": "30",
+  "stock": "20",
+  "imageId": "12",
+  "imageURL": "www.test.se"
+}
+
+### PUT 
+PUT http://localhost:3000/api/products/cde321
+Content-Type: application/json
+
+{
+  "title": "Ändrad produkt",
+  "description": "Ändrad info om product",
+  "categories": "Ändrad Testkategori",
+  "price": "60",
+  "quantity": "20",
+  "stock": "10",
+  "imageId": "16",
+  "imageURL": "www.ändrattest.se"
+}
