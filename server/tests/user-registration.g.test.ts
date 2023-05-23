@@ -1,5 +1,4 @@
 import argon2 from 'argon2';
-import bcrypt from 'bcrypt';
 import request from 'supertest';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { UserModel } from '../src';
@@ -90,9 +89,7 @@ describe('Registering a user (POST)', () => {
     }).select('+password');
     const argon2Match =
       user1 && (await argon2.verify(user1.password, 's3cr3t'));
-    const bcryptMatch =
-      user1 && (await bcrypt.compare('s3cr3t', user1.password));
-    expect(argon2Match || bcryptMatch).to.be.true;
+    expect(argon2Match).to.be.true;
 
     const user2 = await UserModel.findOne({
       username: 'user2@plugga.se',

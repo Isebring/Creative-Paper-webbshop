@@ -13,13 +13,13 @@ export function sorted<T extends { _id: any }>(document: T[]): T[] {
 
 export async function loginUser(
   agent: SuperAgentTest | SuperTest<any>,
-  username = 'user@plugga.se',
+  email = 'user@plugga.se',
   password = '123123',
 ) {
   return await agent
     .post('/api/users/login')
     .set('content-type', 'application/json')
-    .send({ username, password });
+    .send({ email, password });
 }
 
 export function expectDocumentListsToBeTheSame<T extends { _id: any }>(
@@ -31,22 +31,4 @@ export function expectDocumentListsToBeTheSame<T extends { _id: any }>(
   sorted(otherlist).forEach((item, index) => {
     expect(item).toStrictEqual(sortedList[index]);
   });
-}
-
-export function expectPostListsToBeTheSame(posts: Post[], dbPosts: Post[]) {
-  const sortedList = sorted(posts);
-  expect(dbPosts.length).toBe(posts.length);
-  sorted(dbPosts).forEach((post, index) => {
-    expectPostsToBeTheSame(post, sortedList[index]);
-  });
-}
-
-export function expectPostsToBeTheSame(post: Post, dbPost: Post) {
-  expect(post._id).toBe(dbPost._id);
-  expect(post.title).toBe(dbPost.title);
-  expect(post.content).toBe(dbPost.content);
-  expect((post.author as any)?._id || post.author).toBe(
-    (dbPost.author as any)?._id || dbPost.author,
-  );
-  expect(post.createdAt).toBe(dbPost.createdAt);
 }
