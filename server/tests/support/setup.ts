@@ -6,7 +6,7 @@ beforeAll(async () => {
   try {
     if (mongoose.connection.readyState === 0) {
       mongoose.set('strictQuery', true);
-      await mongoose.connect('mongodb://127.0.0.1:27017/user-content-test');
+      await mongoose.connect('mongodb://127.0.0.1:27017/creative-paper-test');
       console.log('Connected to MongoDB');
     }
   } catch (error) {

@@ -16,22 +16,22 @@ describe('Registering a user (POST)', () => {
     const response = await request(app)
       .post('/api/users/register')
       .set('content-type', 'application/json')
-      .send({ username: 'new-user@plugga.se', password: '123123' });
+      .send({ email: 'new-user@plugga.se', password: '123123' });
 
     // Assert response is correct
     expect(response.status).toBe(201);
     expect(response.headers['content-type']).toMatch(/json/);
     expect(response.body._id).toBeDefined();
-    expect(response.body.username).toBe('new-user@plugga.se');
+    expect(response.body.email).toBe('new-user@plugga.se');
     expect(response.body.password).toBeUndefined();
     expect(response.body.isAdmin).toBe(false);
   });
 
-  it('should not be possible to register a user with an existsing username (409)', async () => {
+  it('should not be possible to register a user with an existsing email (409)', async () => {
     const response = await request(app)
       .post('/api/users/register')
       .set('content-type', 'application/json')
-      .send({ username: 'user@plugga.se', password: '123123' });
+      .send({ email: 'user@plugga.se', password: '123123' });
 
     // Assert response is correct
     expect(response.status).toBe(409);
@@ -40,7 +40,7 @@ describe('Registering a user (POST)', () => {
   });
 
   it('should not be possible to register a user with incorrect or missing values (400)', async () => {
-    const user = { username: 'new-user@plugga.se', password: '123123' };
+    const user = { email: 'new-user@plugga.se', password: '123123' };
 
     // Incorrect values
     for (const key of Object.keys(user)) {
@@ -78,21 +78,21 @@ describe('Registering a user (POST)', () => {
     await request(app)
       .post('/api/users/register')
       .set('content-type', 'application/json')
-      .send({ username: 'user1@plugga.se', password: 's3cr3t' });
+      .send({ email: 'user1@plugga.se', password: 's3cr3t' });
     await request(app)
       .post('/api/users/register')
       .set('content-type', 'application/json')
-      .send({ username: 'user2@plugga.se', password: 's3cr3t' });
+      .send({ email: 'user2@plugga.se', password: 's3cr3t' });
 
     const user1 = await UserModel.findOne({
-      username: 'user1@plugga.se',
+      email: 'user1@plugga.se',
     }).select('+password');
     const argon2Match =
       user1 && (await argon2.verify(user1.password, 's3cr3t'));
     expect(argon2Match).to.be.true;
 
     const user2 = await UserModel.findOne({
-      username: 'user2@plugga.se',
+      email: 'user2@plugga.se',
     }).select('+password');
     expect(user2?.password).not.toEqual(user1?.password);
   });
