@@ -15,7 +15,10 @@ function Admin() {
       </Title>
       <Group position="center" mb="xl">
         <Link to="/admin/product/new" data-cy="admin-add-product">
-          <Button leftIcon={<IconShieldPlus size="1.2rem" />}>
+          <Button
+            leftIcon={<IconShieldPlus size="1.2rem" />}
+            sx={{ backgroundColor: 'black', color: 'white' }}
+          >
             {' '}
             Add new Product
           </Button>

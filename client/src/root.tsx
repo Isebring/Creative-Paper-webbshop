@@ -25,7 +25,8 @@ function Root() {
         <MantineProvider
           theme={{
             colorScheme,
-            primaryColor: 'blue',
+            primaryColor: 'violet',
+            fontFamily: 'Ovo, serif',
           }}
           withGlobalStyles
           withNormalizeCSS

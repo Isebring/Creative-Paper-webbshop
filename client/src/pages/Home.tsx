@@ -45,12 +45,13 @@ function Home() {
           flexDirection: 'column',
         }}
       >
-        <Title>Tech101</Title>
-        <Text fz="xl" fw={500}>
-          Providing up-to-date <br /> products and services
+        <Title>Creative Paper</Title>
+        <Text fz="lg" fw={500} style={{ fontFamily: 'Poppins, sans-serif' }}>
+          Unleash Your Creativity with Our Stationery, <br /> Where Ideas Take
+          Flight on Pages Delight!
         </Text>
         <Text fz="lg" fs="italic">
-          We. Tech. You
+          We. Stationery. You
         </Text>
       </Box>
       <MediaQuery
@@ -67,8 +68,8 @@ function Home() {
             width: '100%',
             background:
               theme.colorScheme === 'dark'
-                ? theme.colors.dark[0]
-                : theme.colors.blue[0],
+                ? theme.colors.violet[0]
+                : theme.colors.violet[1],
             display: 'flex',
             justifyContent: 'space-around',
             marginBottom: '1.5rem',
@@ -93,24 +94,25 @@ function Home() {
       <Group spacing={5} mb="md">
         <Button
           sx={{
-            border: activeButton === 'lowest' ? '2px solid lightblue' : 'none',
+            border: activeButton === 'lowest' ? '2px solid violet' : 'none',
           }}
           variant="light"
           size="xs"
           radius="sm"
           onClick={sortProductsByLowestPrice}
+          style={{ fontFamily: 'Poppins, sans-serif' }}
         >
           Sort by lowest price
         </Button>
         <Button
           sx={{
-            border:
-              activeButton === 'highest' ? '2px solid lightblue ' : 'none',
+            border: activeButton === 'highest' ? '2px solid violet ' : 'none',
           }}
           size="xs"
           variant="light"
           radius="sm"
           onClick={sortProductsByHighestPrice}
+          style={{ fontFamily: 'Poppins, sans-serif' }}
         >
           Sort by highest price
         </Button>

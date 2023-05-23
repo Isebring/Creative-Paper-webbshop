@@ -119,7 +119,12 @@ export function FooterCentered({ links }: FooterCenteredProps) {
               className={classes.input}
               placeholder="Enter your email"
             />
-            <Button variant="outline">Sign up</Button>
+            <Button
+              variant="outline"
+              sx={{ border: '1px solid black', color: 'black' }}
+            >
+              Sign up
+            </Button>
           </form>
         </Box>
 

@@ -18,101 +18,109 @@ export const products: Product[] = [
   {
     id: '1',
     image:
-      'https://cdn.pixabay.com/photo/2016/11/19/15/32/laptop-1839876_960_720.jpg',
-    title: 'UltraBook X9',
+      'https://papier.imgix.net/https%3A%2F%2Fpapier.imgix.net%2Fhttps%253A%252F%252Fwww.papier.com%252Fproduct_image%252F90348%252F36%252Fwildflower-22590_front_1680777957.png%3Fixlib%3Drb-3.2.1%26auto%3Dformat%252Ccompress%26s%3Dfbf27af9c76f530fb146420170981a0e?ixlib=rb-3.2.1&w=700&auto=format%2Ccompress&s=f6d74b85151d69884edd50ba879631eb',
+    title: 'Wildflower',
     description:
-      'The UltraBook X9 is the ultimate productivity machine for professionals on-the-go. With its lightweight design and powerful hardware, you can breeze through any task without breaking a sweat. The X9 also features a stunning 15-inch display with 4K resolution, perfect for streaming your favorite shows or editing photos.',
-    summary: ['Lightweight design', 'Powerful hardware', '15-inch 4K display'],
-    price: 1599,
+      'The possibilities of a new notebook are endless. Whether it becomes a space for grand ideas, little reminders or anything that inspires you throughout the day. Decide if you’d like lined, dotted or plain pages inside and then personalize your cover with a name, fun title, your alter ego or a special quote – the page is yours.',
+    summary: [
+      '6" x 8.5"',
+      '96 leaves (192 sides) of lined paper.',
+      'Line height: 0.3"',
+    ],
+    price: 30.0,
     rating: 4.5,
     usersRated: 7,
     secondImage:
-      'https://img.freepik.com/free-photo/laptop-wooden-table_53876-20635.jpg?w=1060&t=st=1679504274~exp=1679504874~hmac=572261dfc89d5e011d9d356e7a4f0042a16ee509474b9c67299ca6dedce6bac5',
+      'https://papier.imgix.net/https%3A%2F%2Fd1o785do8fyxgx.cloudfront.net%2Fproduct%2Fproduct_images%2Fimages%2F000%2F002%2F501%2Foriginal%2F1022_PMTEST_Wildflower_Generic_Resized.jpg%3F1665401173?ixlib=rb-3.2.1&w=700&auto=format%2Ccompress&s=8644b53c80f4bbf2f3287972643c3cf2',
   },
   {
     id: '2',
     image:
-      'https://images.unsplash.com/photo-1629131726692-1accd0c53ce0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
-    title: 'PowerBook 13',
+      'https://papier.imgix.net/https%3A%2F%2Fpapier.imgix.net%2Fhttps%253A%252F%252Fwww.papier.com%252Fproduct_image%252F145671%252F36%252Fflowerbed-39494_front_1680778168.png%3Fixlib%3Drb-3.2.1%26auto%3Dformat%252Ccompress%26s%3Dbcda6dcee99198f2b65acaed09048b8f?ixlib=rb-3.2.1&w=700&auto=format%2Ccompress&s=f6e3172e5e901a590fc1a4282904f7e7',
+    title: 'Flowerbed',
     description:
-      'The PowerBook 13 is the perfect laptop for students and creative professionals. With its compact size and powerful performance, you can take your work wherever you go. The 13-inch Retina display delivers crisp and clear visuals, while the powerful processor ensures speedy performance.',
+      'The possibilities of a new notebook are endless. Whether it becomes a space for grand ideas, little reminders or anything that inspires you throughout the day. Decide if you’d like lined, dotted or plain pages inside and then personalize your cover with a name, fun title, your alter ego or a special quote – the page is yours.',
     summary: [
-      'Perfect for studying',
-      '13-inch Retina display',
-      'Powerful processor',
+      '6" x 8.5"',
+      '96 leaves (192 sides) of lined paper.',
+      'Line height: 0.3"',
     ],
-    price: 3919,
+    price: 30.0,
     rating: 3.2,
     usersRated: 5,
     secondImage:
-      'https://images.unsplash.com/photo-1555099962-4199c345e5dd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
+      'https://papier.imgix.net/https%3A%2F%2Fd1o785do8fyxgx.cloudfront.net%2Fproduct%2Fproduct_images%2Fimages%2F000%2F002%2F405%2Foriginal%2FFLOWERBED_RACINGGREEN_NOTEBOOK_0422_1.jpg%3F1660300078?ixlib=rb-3.2.1&w=700&auto=format%2Ccompress&s=97b04953ff2d1ba38a2470bf1addf16a',
   },
   {
     id: '3',
     image:
-      'https://images.pexels.com/photos/7974/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=1600',
-    title: 'GamingBook Pro',
+      'https://papier.imgix.net/https%3A%2F%2Fpapier.imgix.net%2Fhttps%253A%252F%252Fwww.papier.com%252Fproduct_image%252F148180%252F153%252Ftaste-buddies-40172_front_1677493479.png%3Fixlib%3Drb-3.2.1%26auto%3Dformat%252Ccompress%26s%3D47f88595d8e5cb2ddaa0a292ae45ba3e?ixlib=rb-3.2.1&w=700&auto=format%2Ccompress&s=d6eb0e8c924b62e7eb860f5b9d8648ab',
+    title: 'Taste Buddies',
     description:
-      'The GamingBook Pro is the ultimate gaming machine for hardcore gamers. With its powerful graphics card and lightning-fast processor, you can play the latest games at the highest settings. The 17-inch Full HD display delivers immersive visuals, while the backlit keyboard ensures you can keep gaming even in low light.',
+      'Plot delightful dishes for every day with our personalized meal planners. Design your weekly menu and see all your breakfasts, lunches and dinners on one page. Each week, there’s also a tear-off list you can fill out and take to the grocery store. With over a year’s worth of pages, meal planning is your route to lovely recipes, simpler shopping trips and less food waste. Enjoy.',
     summary: [
-      'Ideal for gaming',
-      '17-inch Full HD display',
-      'Backlit keyboard',
+      '9.5" x 7"',
+      'Satisfyingly thick paper that looks as good as it feels (120 gsm)',
+      '60 weekly pages with tear-off grocery lists (Monday-Sunday)',
     ],
-    price: 2299,
+    price: 15.0,
     rating: 3.8,
     usersRated: 3,
     secondImage:
-      'https://img.freepik.com/free-photo/desk-arrangement-with-laptop-top-view_23-2149073069.jpg?w=1060&t=st=1679504654~exp=1679505254~hmac=de6d45ec753c07e4f7fdadf7a4d0ddceb1c859e23f0cbc0610c802607a7a74f7',
+      'https://papier.imgix.net/https%3A%2F%2Fd1o785do8fyxgx.cloudfront.net%2Fproduct_type_name_images%2Fimages%2F000%2F000%2F799%2Foriginal%2FMeal-Planner-Lifestyle-Shot-1-PNG24.png%3F1658229327?ixlib=rb-3.2.1&w=700&auto=format%2Ccompress&s=f2af75991a7b407bb50993fa7fbf1386',
   },
   {
     id: '4',
     image:
-      'https://images.pexels.com/photos/129208/pexels-photo-129208.jpeg?auto=compress&cs=tinysrgb&w=1600',
-    title: 'BookAir S',
+      'https://papier.imgix.net/https%3A%2F%2Fpapier.imgix.net%2Fhttps%253A%252F%252Fwww.papier.com%252Fproduct_image%252F133899%252F153%252Fthe-jag-35909_front_1677493339.png%3Fixlib%3Drb-3.2.1%26auto%3Dformat%252Ccompress%26s%3D07479510662f916630a95b0e824a9da9?ixlib=rb-3.2.1&w=700&auto=format%2Ccompress&s=9bafa2ffeb26fc4aaa2cc55a88e1b5a6',
+    title: 'The Jag',
     description:
-      'The BookAir S is the perfect laptop for those who value style and portability. With its slim and lightweight design, you can take it with you wherever you go. The 14-inch Full HD display delivers stunning visuals, while the long-lasting battery ensures you can work or play all day.',
+      'For those who like to plan, our desk planners are the new daily companions to have by your side. Structure your week with to-dos, goals, dinner ideas, exercise plans, reminders and more. They’re undated and come with easy tearaway pages. Did we mention they’re just the right size for being on the go?',
     summary: [
-      'Slim and lightweight design',
-      '14-inch Full HD display',
-      'Long-lasting battery',
+      '9.5" x 7"',
+      'Satisfyingly thick paper that looks as good as it feels (120 gsm)',
+      'Foldable cover to protect your planner on the go',
     ],
-    price: 1299,
+    price: 20.0,
     rating: 4.2,
     usersRated: 8,
     secondImage:
-      'https://images.pexels.com/photos/238118/pexels-photo-238118.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+      'https://papier.imgix.net/https%3A%2F%2Fd1o785do8fyxgx.cloudfront.net%2Fproduct%2Fproduct_images%2Fimages%2F000%2F003%2F032%2Foriginal%2FJAG_DESKPLANNER_0123_1.jpg%3F1671550462?ixlib=rb-3.2.1&w=700&auto=format%2Ccompress&s=8034d3ab27f72d1f104fcd22fbbe3d07',
   },
   {
     id: '5',
     image:
-      'https://images.pexels.com/photos/669228/pexels-photo-669228.jpeg?auto=compress&cs=tinysrgb&w=1600',
-    title: 'WorkBook Plus',
+      'https://papier.imgix.net/https%3A%2F%2Fpapier.imgix.net%2Fhttps%253A%252F%252Fwww.papier.com%252Fproduct_image%252F157871%252F169%252Fnose-in-a-book-43014_front_1682610655.png%3Fixlib%3Drb-3.2.1%26auto%3Dformat%252Ccompress%26s%3D27e2b5c8b5d163eda6aff28322e7e7e7?ixlib=rb-3.2.1&w=700&auto=format%2Ccompress&s=e8f77c3631e42f7e6f686279914fa69f',
+    title: 'Nose in a Book',
     description:
-      'The WorkBook Plus is the ultimate workstation for professionals who need to run demanding applications. With its powerful hardware and spacious 17-inch display, you can work on multiple projects at once without any lag. The workstation also features a backlit keyboard for typing in low light conditions.',
+      'The journal for your reading journey. Find delight in new narratives and remember your most-loved books with our reading journal. Record and review your reads, with journaling prompts that double as book club questions. Choose your next book from your own reading wish list, or consult our curated list of Papier recommendations. Our reading journal is the perfect place to put literary love into words.',
     summary: [
-      'Multiple projects at once',
-      'Spacious 17-inch display',
-      'Backlit keyboard',
+      '6" x 8.5"',
+      '96 leaves (192 sides) of lovely paper.',
+      'Space to review 32 books, with 4 pages per review',
     ],
-    price: 999,
+    price: 35.0,
     rating: 3.5,
     usersRated: 2,
     secondImage:
-      'https://img.freepik.com/free-photo/desk-arrangement-with-laptop_23-2148868097.jpg?w=1800&t=st=1679500147~exp=1679500747~hmac=0f4e357fe2db14c7e1593ab096de21f1d6c9c605831fd4614f6af5af84c83577',
+      'https://papier.imgix.net/https%3A%2F%2Fd1o785do8fyxgx.cloudfront.net%2Fproduct%2Fproduct_images%2Fimages%2F000%2F003%2F082%2Foriginal%2FNOSE_IN_BOOK_READING_JOURNAL_1.jpg%3F1675943202?ixlib=rb-3.2.1&w=700&auto=format%2Ccompress&s=1a275b48f47fd0912dcda9254cdc672f',
   },
   {
     id: '6',
     image:
-      'https://images.unsplash.com/flagged/1/apple-gear-looking-pretty.jpg?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
-    title: 'TravelBook Mini',
+      'https://papier.imgix.net/https%3A%2F%2Fpapier.imgix.net%2Fhttps%253A%252F%252Fwww.papier.com%252Fproduct_image%252F114391%252F36%252Fdutch-tulip-30276_front_1680778023.png%3Fixlib%3Drb-3.2.1%26auto%3Dformat%252Ccompress%26s%3D215e9867ca41d6cb55f542f13989f5af?ixlib=rb-3.2.1&w=700&auto=format%2Ccompress&s=5c6fdd8ee8dcca234a7d0052e2f321be',
+    title: 'Dutch Tulip',
     description:
-      'The TravelBook Mini is the perfect laptop for those who are always on-the-go. With its compact size and long-lasting battery, you can take it with you wherever you go. The 11-inch display delivers crisp visuals, while the lightweight design ensures you can carry it with ease.',
-    summary: ['Long-lasting battery', '11-inch display', 'Lightweight design'],
-    price: 5499,
+      'Make time for yourself with our daily wellness journal. Start and end each day with a fresh mindset, set intentions and take note of the things that make you feel good. Inside, there are 12-weeks of pages for reflecting on your mindful goals, habits, meals, water intake, sleep and the things you’re grateful for.',
+    summary: [
+      '6" x 8.5"',
+      '96 leaves (192 sides) of lovely paper.',
+      'Its hardback cover is 3mm thick with a 150gsm silk paper finish',
+    ],
+    price: 35.0,
     rating: 4.9,
     usersRated: 4,
     secondImage:
-      'https://img.freepik.com/free-photo/laptop-kitchen_23-2147772848.jpg?t=st=1679502360~exp=1679502960~hmac=19c1e45280a8553e89358b6dc9bb8d029d3e6d9cae70d083ae857e0b87c1fcf9',
+      'https://papier.imgix.net/https%3A%2F%2Fd1o785do8fyxgx.cloudfront.net%2Fproduct_type_name_images%2Fimages%2F000%2F000%2F616%2Foriginal%2FWELLNESS_INSIDE_FILLED_0922_2.jpg%3F1667300139?ixlib=rb-3.2.1&w=700&auto=format%2Ccompress&s=daafd91868da4b00a3702387e1cafa6c',
   },
 ];

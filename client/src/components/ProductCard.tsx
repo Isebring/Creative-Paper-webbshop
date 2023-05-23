@@ -29,21 +29,30 @@ function ProductCard({ product }: Props) {
       <Card shadow="xl" radius="lg" withBorder data-cy="product">
         <Card.Section>
           <Link to={link} style={{ textDecoration: 'none', color: 'inherit' }}>
-            <Image src={product.image} height={230} fit="cover" />
+            <Image src={product.image} height={300} fit="cover" />
             <Box pl="md" pr="md">
               <Group
                 mt="xl"
                 mb="xl"
                 style={{ display: 'flex', justifyContent: 'space-between' }}
               >
-                <Title order={2} data-cy="product-title">
+                <Title
+                  order={2}
+                  data-cy="product-title"
+                  style={{ fontFamily: 'Poppins, sans-serif' }}
+                >
                   {product.title}
                 </Title>
-                <Badge color="blue" variant="light" size="lg">
+                <Badge
+                  color="violet"
+                  variant="light"
+                  size="lg"
+                  style={{ fontFamily: 'Poppins, sans-serif' }}
+                >
                   New!
                 </Badge>
               </Group>
-              <List>
+              <List style={{ fontFamily: 'Poppins, sans-serif' }}>
                 {Array.isArray(product.summary) &&
                   product.summary.map((item) => (
                     <List.Item key={item}>{item}</List.Item>
@@ -53,15 +62,15 @@ function ProductCard({ product }: Props) {
           </Link>
         </Card.Section>
         <Group position="left" mt="md" mb="xs">
-          <Link to={link}>
-            <Button variant="outline" mt="md" radius="md">
-              Product Page
-            </Button>
-          </Link>
           <Button
             variant="light"
             mt="md"
             radius="md"
+            style={{
+              fontFamily: 'Poppins, sans-serif',
+              backgroundColor: 'black',
+              color: 'white',
+            }}
             onClick={() => {
               increaseCartQuantity(product.id);
               notifications.show({
@@ -72,15 +81,34 @@ function ProductCard({ product }: Props) {
             }}
             data-cy="product-buy-button"
           >
-            Add to cart
+            ADD TO CART
           </Button>
+          <Link to={link}>
+            <Button
+              variant="outline"
+              mt="md"
+              radius="md"
+              style={{
+                fontFamily: 'Poppins, sans-serif',
+                border: '1px solid black',
+                color: 'black',
+              }}
+            >
+              MORE INFO
+            </Button>
+          </Link>
+
           <Title
-            style={{ marginLeft: 'auto', marginTop: '.5rem' }}
+            style={{
+              marginLeft: 'auto',
+              marginTop: '.5rem',
+              fontFamily: 'Poppins, sans-serif',
+            }}
             order={2}
             align="left"
             data-cy="product-price"
           >
-            {product.price}€
+            ${product.price}
           </Title>
         </Group>
       </Card>

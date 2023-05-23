@@ -45,7 +45,7 @@ function Cart() {
         />
         <Text
           style={{
-            color: '#E92D37',
+            color: '#7950f2',
             fontWeight: '500',
             fontSize: '1.5rem',
             textAlign: 'center',
