@@ -1,7 +1,6 @@
 import { Document } from 'mongoose';
 import { SuperAgentTest, SuperTest } from 'supertest';
 import { expect } from 'vitest';
-import { Post } from '../../src';
 
 export function toJSON<T extends Document>(document: T | null) {
   if (!document) return document;
@@ -15,7 +14,7 @@ export function sorted<T extends { _id: any }>(document: T[]): T[] {
 export async function loginUser(
   agent: SuperAgentTest | SuperTest<any>,
   username = 'user@plugga.se',
-  password = '123123'
+  password = '123123',
 ) {
   return await agent
     .post('/api/users/login')
@@ -25,7 +24,7 @@ export async function loginUser(
 
 export function expectDocumentListsToBeTheSame<T extends { _id: any }>(
   list: T[],
-  otherlist: T[]
+  otherlist: T[],
 ) {
   const sortedList = sorted(list);
   expect(otherlist.length).toBe(list.length);
@@ -47,7 +46,7 @@ export function expectPostsToBeTheSame(post: Post, dbPost: Post) {
   expect(post.title).toBe(dbPost.title);
   expect(post.content).toBe(dbPost.content);
   expect((post.author as any)?._id || post.author).toBe(
-    (dbPost.author as any)?._id || dbPost.author
+    (dbPost.author as any)?._id || dbPost.author,
   );
   expect(post.createdAt).toBe(dbPost.createdAt);
 }
