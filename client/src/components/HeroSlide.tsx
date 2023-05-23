@@ -26,7 +26,7 @@ function HeroSlide() {
         pagination={{ clickable: true }}
       >
         {mockedProducts.slice(0, 4).map((product) => (
-          <SwiperSlide style={{ height: '22rem' }} key={product._id}>
+          <SwiperSlide style={{ height: '22rem' }} key={product.id}>
             <HeroSlideItem imageSrc={product.secondImage} />
           </SwiperSlide>
         ))}

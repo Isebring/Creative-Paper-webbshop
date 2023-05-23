@@ -22,14 +22,14 @@ export interface Props {
 
 function ProductCard({ product }: Props) {
   const { increaseCartQuantity } = useShoppingCart();
-  const link = '/product/' + product._id;
+  const link = '/product/' + product.id;
 
   return (
     <>
       <Card shadow="xl" radius="lg" withBorder data-cy="product">
         <Card.Section>
           <Link to={link} style={{ textDecoration: 'none', color: 'inherit' }}>
-            <Image src={product.image} height={230} fit="cover" />
+            <Image src={product.image} height={300} fit="cover" />
             <Box pl="md" pr="md">
               <Group
                 mt="xl"
@@ -72,7 +72,7 @@ function ProductCard({ product }: Props) {
               color: 'white',
             }}
             onClick={() => {
-              increaseCartQuantity(product._id);
+              increaseCartQuantity(product.id);
               notifications.show({
                 icon: <IconShoppingCartPlus />,
                 title: `${product.title}`,

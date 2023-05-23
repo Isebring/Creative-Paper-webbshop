@@ -128,7 +128,7 @@ function Home() {
       >
         {sortedProducts.map((product) => (
           <ProductCard
-            key={product._id}
+            key={product.id}
             product={product}
             sortedProducts={sortedProducts}
             sortDirection={sortDirection === 'ascending' ? 'lowest' : 'highest'}
