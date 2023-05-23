@@ -1,6 +1,7 @@
 {
   "scripts": {
     "dev": "nodemon src/server.ts",
+    "build": "tsc",
     "format": "prettier --check \"src/**/*.{ts,tsx}\""
   },
   "dependencies": {
