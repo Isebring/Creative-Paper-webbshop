@@ -132,7 +132,7 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
     logoType === 'dark' ? (
       <img src="/assets/logoCreative.svg" alt="Creative Paper logo" />
     ) : (
-      <img src="/assets/logoCreativelight.svg" alt="Creative Paper logo" />
+      <img src="/assets/logoCreativeLight.svg" alt="Creative Paper logo" />
     );
 
   const items = links.map((link, index) => (
@@ -179,7 +179,7 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
     return (
       <ActionIcon
         variant="outline"
-        color={dark ? 'gray' : 'blue'}
+        color={dark ? 'gray' : 'violet'}
         onClick={handleToggle}
         title="Toggle color scheme"
         sx={{ marginRight: '1rem' }}

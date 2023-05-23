@@ -66,7 +66,7 @@ function ProductDetails() {
               mb="xs"
               mr="sm"
               sx={{
-                background: theme.colors.blue[7],
+                background: theme.colors.violet[7],
                 color: theme.colors.gray[1],
                 width: '15%',
                 borderRadius: '.2rem',
@@ -114,7 +114,7 @@ function ProductDetails() {
         <Card sx={{ flex: 1 }}>
           <Box
             sx={{
-              background: theme.colors.blue[7],
+              background: theme.colors.violet[7],
               color: theme.colors.gray[1],
               borderTopLeftRadius: '.5rem',
               borderBottomLeftRadius: '.5rem',

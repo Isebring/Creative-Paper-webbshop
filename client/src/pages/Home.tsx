@@ -69,7 +69,7 @@ function Home() {
             background:
               theme.colorScheme === 'dark'
                 ? theme.colors.dark[0]
-                : theme.colors.blue[0],
+                : theme.colors.violet[1],
             display: 'flex',
             justifyContent: 'space-around',
             marginBottom: '1.5rem',
@@ -94,7 +94,7 @@ function Home() {
       <Group spacing={5} mb="md">
         <Button
           sx={{
-            border: activeButton === 'lowest' ? '2px solid lightblue' : 'none',
+            border: activeButton === 'lowest' ? '2px solid violet' : 'none',
           }}
           variant="light"
           size="xs"
@@ -105,8 +105,7 @@ function Home() {
         </Button>
         <Button
           sx={{
-            border:
-              activeButton === 'highest' ? '2px solid lightblue ' : 'none',
+            border: activeButton === 'highest' ? '2px solid violet ' : 'none',
           }}
           size="xs"
           variant="light"

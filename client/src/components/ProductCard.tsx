@@ -39,7 +39,7 @@ function ProductCard({ product }: Props) {
                 <Title order={2} data-cy="product-title">
                   {product.title}
                 </Title>
-                <Badge color="blue" variant="light" size="lg">
+                <Badge color="violet" variant="light" size="lg">
                   New!
                 </Badge>
               </Group>
