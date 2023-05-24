@@ -49,7 +49,7 @@ function Confirmation() {
               (product, index) =>
                 'id' in product && (
                   <List.Item key={index}>
-                    {product.title} - {product.price} € - Quantity:{' '}
+                    {product.title} - ${product.price} - Quantity:{' '}
                     {product.quantity}
                   </List.Item>
                 ),

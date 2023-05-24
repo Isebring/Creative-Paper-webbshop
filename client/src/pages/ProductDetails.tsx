@@ -132,8 +132,12 @@ function ProductDetails() {
             {product.description}
           </Text>
           <Group position="right">
-            <Title order={2} data-cy="product-price">
-              {product.price}€
+            <Title
+              order={2}
+              data-cy="product-price"
+              style={{ fontFamily: 'Poppins, sans-serif' }}
+            >
+              ${product.price}
             </Title>
           </Group>
           <Button
