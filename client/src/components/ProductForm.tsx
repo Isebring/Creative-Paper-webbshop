@@ -13,12 +13,14 @@ interface ProductFormProps {
   product?: Product;
 }
 
-const data = [
+export const categoryData = [
   { value: 'pens', label: 'Pens' },
   { value: 'notebooks', label: 'Notebooks' },
+  { value: 'journals', label: 'Journals' },
   { value: 'cards', label: 'Cards' },
   { value: 'calendars', label: 'Calendars' },
-  { value: 'accessories', label: 'Accessories' },
+  { value: 'planners', label: 'Planners' },
+  { value: 'desk-accessories', label: 'Desk accessories' },
 ];
 
 const schema = Yup.object().shape({
@@ -57,7 +59,7 @@ function ProductForm({
       summary: [],
       rating: 0,
       usersRated: 0,
-      category: [''],
+      category: [] as never,
     },
   });
   useEffect(() => {
@@ -68,7 +70,7 @@ function ProductForm({
   }, [product, isEditing, form.setValues]);
 
   const handleSubmit = (values: Product) => {
-    const editedProduct = { ...values, id: product?.id || '' };
+    const editedProduct = { ...values, id: product?.id || '', category: values.category || [] };
     if (isEditing) {
       onSubmit(editedProduct);
     } else {
@@ -126,7 +128,7 @@ function ProductForm({
           errorProps={{ 'data-cy': 'product-price-error' }}
         />
         <MultiSelect
-          data={data}
+          data={categoryData}
           label="Category"
           placeholder="Select categories"
           {...form.getInputProps('category')}
