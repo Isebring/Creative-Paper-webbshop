@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 
 export interface Product {
-  id: string;
+  _id: string;
   image: string;
   secondImage: string;
   title: string;
@@ -41,6 +41,7 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
         const response = await fetch('/api/products');
         const data = await response.json();
         setProducts(data);
+        // console.log('Products fetched:', data);
       } catch (error) {
         console.error('Error fetching products:', error);
       }
@@ -51,7 +52,7 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
 
   function deleteProduct(id: string) {
     setProducts((currentProducts) => {
-      return currentProducts.filter((product) => product.id !== id);
+      return currentProducts.filter((product) => product._id !== id);
     });
   }
 
@@ -61,7 +62,7 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
 
   const updateProduct = (updatedProduct: Product) => {
     const newProducts = products.map((product) =>
-      product.id === updatedProduct.id ? updatedProduct : product,
+      product._id === updatedProduct._id ? updatedProduct : product,
     );
 
     setProducts(newProducts);

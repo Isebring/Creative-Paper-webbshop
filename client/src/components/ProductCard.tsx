@@ -10,19 +10,27 @@ import {
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IconShoppingCartPlus } from '@tabler/icons-react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Product } from '../../data/index';
+import { useProduct } from '../contexts/ProductContext';
 import { useShoppingCart } from '../contexts/UseShoppingCart';
 
-export interface Props {
-  product: Product;
-  sortDirection: 'lowest' | 'highest';
-  sortedProducts: Product[];
-}
+type ProductCardProps = {
+  productId: string;
+};
 
-function ProductCard({ product }: Props) {
+const ProductCard: React.FC<ProductCardProps> = ({ productId }) => {
   const { increaseCartQuantity } = useShoppingCart();
-  const link = '/product/' + product.id;
+  const { products } = useProduct();
+
+  // Find the product by ID in the products array
+  const product = products?.find((product) => product._id === productId);
+
+  if (!product) {
+    return <div>Loading...</div>;
+  }
+
+  const link = '/api/product/' + product._id;
 
   return (
     <>
@@ -72,7 +80,7 @@ function ProductCard({ product }: Props) {
               color: 'white',
             }}
             onClick={() => {
-              increaseCartQuantity(product.id);
+              increaseCartQuantity(product._id);
               notifications.show({
                 icon: <IconShoppingCartPlus />,
                 title: `${product.title}`,
@@ -108,12 +116,12 @@ function ProductCard({ product }: Props) {
             align="left"
             data-cy="product-price"
           >
-            ${product.price}
+            ${product?.price}
           </Title>
         </Group>
       </Card>
     </>
   );
-}
+};
 
 export default ProductCard;
