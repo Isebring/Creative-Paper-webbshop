@@ -12,7 +12,6 @@ import {
   rem,
   Transition,
   useMantineColorScheme,
-  useMantineTheme,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import {
@@ -121,7 +120,7 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
   const { cartQuantity } = useShoppingCart();
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const [logoType, setLogoType] = useState('dark');
-  const theme = useMantineTheme();
+  // const theme = useMantineTheme();
 
   const handleToggle = () => {
     toggleColorScheme();
@@ -254,7 +253,7 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
                 <Box
                   sx={{
                     borderRadius: '10rem',
-                    background: theme.colors.blue[4],
+                    background: 'black',
                     color: 'white',
                     width: '1.1rem',
                     height: '1.1rem',
