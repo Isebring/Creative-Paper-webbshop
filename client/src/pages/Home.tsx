@@ -3,10 +3,11 @@ import {
   Button,
   Container,
   Group,
-  MediaQuery, SimpleGrid,
+  MediaQuery,
+  SimpleGrid,
   Text,
   Title,
-  useMantineTheme
+  useMantineTheme,
 } from '@mantine/core';
 import { useContext, useEffect, useState } from 'react';
 import CategoryFilter from '../components/CategoryFilter';
@@ -24,7 +25,7 @@ function Home() {
 
   useEffect(() => {
     let sorted = [...products];
-    
+
     if (sortDirection === 'ascending') {
       sorted.sort((a, b) => a.price - b.price);
     } else if (sortDirection === 'descending') {
@@ -32,7 +33,11 @@ function Home() {
     }
 
     if (selectedCategories.length > 0) {
-      sorted = sorted.filter(product => product.category.some(category => selectedCategories.includes(category)));
+      sorted = sorted.filter((product) =>
+        product.category.some((category) =>
+          selectedCategories.includes(category),
+        ),
+      );
     }
 
     setSortedProducts(sorted);
@@ -129,7 +134,10 @@ function Home() {
         >
           Sort by highest price
         </Button>
-        <CategoryFilter products={products} setSelectedCategories={setSelectedCategories} />
+        <CategoryFilter
+          products={products}
+          setSelectedCategories={setSelectedCategories}
+        />
       </Group>
       <SimpleGrid
         cols={3}
