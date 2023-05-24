@@ -8,7 +8,8 @@ import {
   Text,
   Title,
 } from '@mantine/core';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import CategoryFilter from '../components/CategoryFilter';
 import HeroSlide from '../components/HeroSlide';
 import ProductCard from '../components/ProductCard';
 import { ProductContext } from '../contexts/ProductContext';
@@ -16,19 +17,36 @@ import { ProductContext } from '../contexts/ProductContext';
 function Home() {
   const { products } = useContext(ProductContext);
   const [sortDirection, setSortDirection] = useState('');
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [sortedProducts, setSortedProducts] = useState(products);
   const [activeButton, setActiveButton] = useState('');
 
-  function sortProductsByLowestPrice() {
-    const sorted = [...products].sort((a, b) => a.price - b.price);
+  useEffect(() => {
+    let sorted = [...products];
+
+    if (sortDirection === 'ascending') {
+      sorted.sort((a, b) => a.price - b.price);
+    } else if (sortDirection === 'descending') {
+      sorted.sort((a, b) => b.price - a.price);
+    }
+
+    if (selectedCategories.length > 0) {
+      sorted = sorted.filter((product) =>
+        product.category.some((category) =>
+          selectedCategories.includes(category),
+        ),
+      );
+    }
+
     setSortedProducts(sorted);
+  }, [products, sortDirection, selectedCategories]);
+
+  function sortProductsByLowestPrice() {
     setSortDirection('ascending');
     setActiveButton('lowest');
   }
 
   function sortProductsByHighestPrice() {
-    const sorted = [...products].sort((a, b) => b.price - a.price);
-    setSortedProducts(sorted);
     setSortDirection('descending');
     setActiveButton('highest');
   }
@@ -115,6 +133,10 @@ function Home() {
         >
           Sort by highest price
         </Button>
+        <CategoryFilter
+          products={products}
+          setSelectedCategories={setSelectedCategories}
+        />
       </Group>
       <SimpleGrid
         cols={3}
