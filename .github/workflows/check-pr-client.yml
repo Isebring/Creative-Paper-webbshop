@@ -29,4 +29,4 @@ jobs:
       - run: cd client && npm ci
       - run: cd client && npm run build
       - run: cd client && npm run lint
-      - run: cd server && npm run format
+      - run: cd client && npm run format
