@@ -7,7 +7,7 @@ import { ProductContext } from '../contexts/ProductContext';
 function EditProduct() {
   const { id } = useParams<{ id: string }>();
   const { products, addProduct, updateProduct } = useContext(ProductContext);
-  const productToEdit = products.find((product) => product.id === id);
+  const productToEdit = products?.find((product) => product._id === id);
 
   return (
     <Container>

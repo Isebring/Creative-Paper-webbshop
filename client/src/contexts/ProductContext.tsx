@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { createContext, useContext, useEffect, useState } from 'react';
 
 export interface Product {
@@ -14,6 +15,7 @@ export interface Product {
 
 interface ProductContextType {
   products: Product[] | null;
+  getProductById: (id: string) => Promise<Product | null>;
   addProduct: (product: Product) => void;
   deleteProduct: (id: string) => void;
   updateProduct: (product: Product) => void;
@@ -21,6 +23,7 @@ interface ProductContextType {
 
 export const ProductContext = createContext<ProductContextType>({
   products: null,
+  getProductById: async (id: string) => null,
   addProduct: () => {},
   deleteProduct: () => {},
   updateProduct: () => {},
@@ -50,6 +53,21 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
     fetchProducts();
   }, []);
 
+  async function getProductById(_id: string): Promise<Product | null> {
+    try {
+      const response = await fetch(`/api/products/${_id}`);
+      if (response.ok) {
+        const data = await response.json();
+        return data;
+      } else {
+        throw new Error('Product not found');
+      }
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  }
+
   function deleteProduct(id: string) {
     setProducts((currentProducts) => {
       return currentProducts.filter((product) => product._id !== id);
@@ -71,7 +89,13 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
 
   return (
     <ProductContext.Provider
-      value={{ products, deleteProduct, addProduct, updateProduct }}
+      value={{
+        products,
+        getProductById,
+        deleteProduct,
+        addProduct,
+        updateProduct,
+      }}
     >
       {children}
     </ProductContext.Provider>

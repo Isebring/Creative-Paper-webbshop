@@ -10,7 +10,7 @@ export async function getAllProducts(req: Request, res: Response) {
 }
 
 export async function getProductById(req: Request, res: Response) {
-  const productId = req.params.id;
+  const productId = req.params._id;
   try {
     const product = await ProductModel.findById(productId);
     if (!product) {
@@ -63,7 +63,7 @@ export async function updateProduct(
   res: Response,
   next: NextFunction,
 ) {
-  const productId = req.params.id;
+  const productId = req.params._id;
   const product = await ProductModel.findById(productId);
 
   if (!product) {
@@ -96,7 +96,7 @@ export async function updateProduct(
 
 export async function deleteProduct(req: Request, res: Response) {
   try {
-    const productId = req.params.id;
+    const productId = req.params._id;
     const deletedProduct = await ProductModel.findById(productId);
 
     if (!deletedProduct) {

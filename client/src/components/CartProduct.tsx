@@ -12,7 +12,7 @@ interface Props {
 function CartProduct({ cartItem }: Props) {
   const { products } = useContext(ProductContext);
   const { increaseCartQuantity, decreaseCartQuantity } = useShoppingCart();
-  products.find((i) => i.id === cartItem.id);
+  products?.find((product) => product._id === cartItem._id);
 
   return (
     <Box
@@ -46,7 +46,7 @@ function CartProduct({ cartItem }: Props) {
             variant="light"
             mt="sm"
             radius="sm"
-            onClick={() => decreaseCartQuantity(cartItem.id)}
+            onClick={() => decreaseCartQuantity(cartItem._id)}
             data-cy="decrease-quantity-button"
           >
             <IconMinus size="1.2rem" stroke="0.1rem" />
@@ -67,7 +67,7 @@ function CartProduct({ cartItem }: Props) {
             variant="light"
             mt="sm"
             radius="md"
-            onClick={() => increaseCartQuantity(cartItem.id)}
+            onClick={() => increaseCartQuantity(cartItem._id)}
             data-cy="increase-quantity-button"
           >
             <IconPlus size="1.2rem" stroke="0.1rem" />

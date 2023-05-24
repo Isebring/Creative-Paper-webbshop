@@ -15,28 +15,50 @@ import {
   IconStarFilled,
   IconUserStar,
 } from '@tabler/icons-react';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Autoplay, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import 'swiper/swiper.min.css';
-import { ProductContext } from '../contexts/ProductContext';
+import {
+  Product,
+  ProductContext,
+  useProduct,
+} from '../contexts/ProductContext';
 import { useShoppingCart } from '../contexts/UseShoppingCart';
 
 function ProductDetails() {
-  const { id } = useParams();
-  const { products } = useContext(ProductContext);
-  const product = products?.find((p) => p._id === id);
+  const { getProductById } = useProduct();
+  const { _id = '' } = useParams();
   const { increaseCartQuantity } = useShoppingCart();
+  const { products } = useContext(ProductContext);
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const goBack = () => {
     window.history.back();
   };
 
   useEffect(() => {
+    const fetchProduct = async () => {
+      const product = await getProductById(_id);
+      if (product) {
+        setProduct(product);
+      }
+      setLoading(false);
+    };
+
+    fetchProduct();
+  }, [getProductById, _id]);
+
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   if (!product) {
     return (
@@ -63,7 +85,7 @@ function ProductDetails() {
       <Flex direction={{ base: 'column', sm: 'row' }}>
         <Card sx={{ flex: 1 }}>
           <Title align="center" mb={50} data-cy="product-title">
-            {product.title}
+            {product?.title}
           </Title>
           <Box sx={{ display: 'flex' }}>
             <Box
@@ -80,14 +102,14 @@ function ProductDetails() {
               }}
             >
               <IconStarFilled size="1.1rem" />
-              {product.rating}
+              {product?.rating}
             </Box>
             <IconUserStar
               style={{ marginRight: '.2rem' }}
               stroke="0.04rem"
               size="1.5rem"
             />
-            {product.usersRated}
+            {product?.usersRated}
           </Box>
           <Swiper
             spaceBetween={0}
@@ -100,16 +122,16 @@ function ProductDetails() {
           >
             <SwiperSlide>
               <Image
-                src={product.image}
-                key={product._id}
-                alt={product.title}
+                src={product?.image}
+                key={product?._id}
+                alt={product?.title}
                 fit="contain"
               />
             </SwiperSlide>
             <SwiperSlide>
               <Image
-                src={product.secondImage}
-                alt={product.title}
+                src={product?.secondImage}
+                alt={product?.title}
                 fit="contain"
               />
             </SwiperSlide>
@@ -125,15 +147,15 @@ function ProductDetails() {
             }}
           >
             <Title order={3} align="center">
-              About this {product.title}
+              About this {product?.title}
             </Title>
           </Box>
           <Text size="md" align="left" mt="md" data-cy="product-description">
-            {product.description}
+            {product?.description}
           </Text>
           <Group position="right">
             <Title order={2} data-cy="product-price">
-              {product.price}€
+              {product?.price}€
             </Title>
           </Group>
           <Button
@@ -142,10 +164,10 @@ function ProductDetails() {
             mt="md"
             radius="md"
             onClick={() => {
-              increaseCartQuantity(product._id);
+              increaseCartQuantity(product!._id);
               notifications.show({
                 icon: <IconShoppingCartPlus />,
-                title: `${product.title}`,
+                title: `${product?.title}`,
                 message: 'has been added',
               });
             }}
@@ -160,7 +182,7 @@ function ProductDetails() {
               mt="md"
               radius="md"
               onClick={() => {
-                increaseCartQuantity(product._id);
+                increaseCartQuantity(product!._id);
               }}
             >
               Buy now
