@@ -15,12 +15,17 @@ Content-Type: application/json
   "_id": "cde321",
   "title": "Testprodukt",
   "description": "Info about product",
+  "summary": ["1 sak", "2 sak", "3 sak"],
   "categories": "Testkategori",
   "price": "50",
   "quantity": "30",
   "stock": "20",
   "imageId": "12",
-  "imageURL": "www.test.se"
+  "imageURL": "www.test.se",
+  "secondImageId": "25",
+  "secondImageURL": "www.test2.se",
+  "rating": "4.5",
+  "usersRated": "7"
 }
 
 ### Delete
@@ -29,15 +34,20 @@ DELETE http://localhost:3000/api/products/cde321
 Content-Type: application/json
 
 {
-  "_id": "abc123",
+   "_id": "cde321",
   "title": "Testprodukt",
   "description": "Info about product",
+  "summary": ["1 sak", "2 sak", "3 sak"],
   "categories": "Testkategori",
   "price": "50",
   "quantity": "30",
   "stock": "20",
   "imageId": "12",
-  "imageURL": "www.test.se"
+  "imageURL": "www.test.se",
+  "secondImageId": "25",
+  "secondImageURL": "www.test2.se",
+  "rating": "4.5",
+  "usersRated": "7"
 }
 
 ### PUT 
@@ -45,12 +55,17 @@ PUT http://localhost:3000/api/products/cde321
 Content-Type: application/json
 
 {
-  "title": "Ändrad produkt",
-  "description": "Ändrad info om product",
-  "categories": "Ändrad Testkategori",
-  "price": "60",
-  "quantity": "20",
-  "stock": "10",
-  "imageId": "16",
-  "imageURL": "www.ändrattest.se"
+  "title": "Testprodukten",
+  "description": "Info about product okej kul",
+  "summary": ["1 sak", "2 sak", "3 sak"],
+  "categories": "Testkategori",
+  "price": "900",
+  "quantity": "30",
+  "stock": "20",
+  "imageId": "12",
+  "imageURL": "www.testet.se",
+  "secondImageId": "25",
+  "secondImageURL": "www.test2.se",
+  "rating": "2",
+  "usersRated": "7"
 }

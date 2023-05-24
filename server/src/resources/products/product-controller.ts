@@ -34,18 +34,24 @@ export async function createProduct(
     _id: yup.string().required(),
     title: yup.string().trim().min(2).required(),
     description: yup.string().trim().min(5).required(),
+    summary: yup.string().trim().min(3).required(),
     categories: yup.string().trim().min(2).required(),
     price: yup.number().min(1).required(),
     quantity: yup.number().required(),
     stock: yup.number().required(),
     imageId: yup.string().trim().min(2).required(),
     imageURL: yup.string().trim().min(2).required(),
+    secondImageId: yup.string().trim().min(2).required(),
+    secondImageURL: yup.string().trim().min(2).required(),
+    rating: yup.number().required(),
+    usersRated: yup.number().required(),
   });
 
   try {
     await productValidationSchema.validate(incomingProduct);
 
     const newProduct = new ProductModel(incomingProduct);
+    newProduct.quantity = incomingProduct.stock;
     const savedProduct = await newProduct.save();
     const responseObj = {
       message: 'Product added',
@@ -72,17 +78,27 @@ export async function updateProduct(
 
   const productUpdateSchema = yup.object({
     title: yup.string().trim().min(2).required(),
-    description: yup.string().trim().min(5).required(),
-    categories: yup.string().trim().min(2).required(), // Ska dessa verkligen vara required vid en edit??
+    description: yup.string().trim().min(5).required(), // Ska dessa verkligen vara required vid en edit?
+    summary: yup.string().trim().min(3).required(),
+    categories: yup.string().trim().min(2).required(),
     price: yup.number().min(1).required(),
     quantity: yup.number().required(),
     stock: yup.number().required(),
     imageId: yup.string().trim().min(2).required(),
     imageURL: yup.string().trim().min(2).required(),
+    secondImageId: yup.string().trim().min(2).required(),
+    secondImageURL: yup.string().trim().min(2).required(),
+    rating: yup.number().required(),
+    usersRated: yup.number().required(),
   });
 
   try {
     const validatedProduct = await productUpdateSchema.validate(req.body);
+
+    if (validatedProduct.stock !== product.stock) {
+      validatedProduct.quantity = validatedProduct.stock;
+    }
+
     const updatedProduct = await ProductModel.findByIdAndUpdate(
       productId,
       validatedProduct,
@@ -104,14 +120,31 @@ export async function deleteProduct(req: Request, res: Response) {
     }
 
     await ProductModel.findByIdAndDelete(productId);
-    res.status(200).json('product deleted');
-    // res.status(204).end();   bättre alternativ?
+    res.status(204).end();
   } catch (error) {
-    res.status(404).json({
-      message: 'Error finding the product',
-      error: (error as any).message,
+    res.status(500).json({
+      message: 'Error deleting the product',
+      error: (error as Error).message,
     });
   }
 }
 
-export async function productQuantity() {}
+// export async function productQuantity(
+//   productId: string,
+//   quantityToDecrease: number,
+// ) {
+//   try {
+//     const product = await ProductModel.findById(productId);
+
+//     if (!product) {
+//       throw new Error(`Product with ID ${productId} not found`);
+//     }
+
+//     // Decrease the quantity by the specified amount
+//     product.quantity -= quantityToDecrease;
+
+//     await product.save();
+//   } catch (error) {
+//     throw error;
+//   }
+// }

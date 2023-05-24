@@ -7,30 +7,46 @@ import {
   SimpleGrid,
   Text,
   Title,
-  useMantineTheme,
 } from '@mantine/core';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import CategoryFilter from '../components/CategoryFilter';
 import HeroSlide from '../components/HeroSlide';
 import ProductCard from '../components/ProductCard';
 import { ProductContext } from '../contexts/ProductContext';
 
 function Home() {
-  const theme = useMantineTheme();
   const { products } = useContext(ProductContext);
   const [sortDirection, setSortDirection] = useState('');
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [sortedProducts, setSortedProducts] = useState(products);
   const [activeButton, setActiveButton] = useState('');
 
-  function sortProductsByLowestPrice() {
-    const sorted = [...products].sort((a, b) => a.price - b.price);
+  useEffect(() => {
+    let sorted = [...products];
+
+    if (sortDirection === 'ascending') {
+      sorted.sort((a, b) => a.price - b.price);
+    } else if (sortDirection === 'descending') {
+      sorted.sort((a, b) => b.price - a.price);
+    }
+
+    if (selectedCategories.length > 0) {
+      sorted = sorted.filter((product) =>
+        product.category.some((category) =>
+          selectedCategories.includes(category),
+        ),
+      );
+    }
+
     setSortedProducts(sorted);
+  }, [products, sortDirection, selectedCategories]);
+
+  function sortProductsByLowestPrice() {
     setSortDirection('ascending');
     setActiveButton('lowest');
   }
 
   function sortProductsByHighestPrice() {
-    const sorted = [...products].sort((a, b) => b.price - a.price);
-    setSortedProducts(sorted);
     setSortDirection('descending');
     setActiveButton('highest');
   }
@@ -46,7 +62,11 @@ function Home() {
         }}
       >
         <Title>Creative Paper</Title>
-        <Text fz="lg" fw={500} style={{ fontFamily: 'Poppins, sans-serif' }}>
+        <Text
+          fz="lg"
+          fw={500}
+          style={{ fontFamily: 'Poppins, sans-serif', textAlign: 'center' }}
+        >
           Unleash Your Creativity with Our Stationery, <br /> Where Ideas Take
           Flight on Pages Delight!
         </Text>
@@ -66,26 +86,23 @@ function Home() {
         <Box
           sx={{
             width: '100%',
-            background:
-              theme.colorScheme === 'dark'
-                ? theme.colors.violet[0]
-                : theme.colors.violet[1],
+            // background:
+            //   theme.colorScheme === 'dark'
+            //     ? theme.colors.violet[0]
+            //     : theme.colors.violet[1],
             display: 'flex',
             justifyContent: 'space-around',
             marginBottom: '1.5rem',
             marginTop: '1rem',
             padding: '.3rem',
-            boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+            // boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
           }}
         >
-          <img src="/assets/recycable-parts.svg" alt="recycable parts icon" />
           <img
-            src="./assets/sustainable-transports.svg"
-            alt="sustainable transports icon"
+            src="/assets/plantpurple.svg"
+            alt="purple plant leaf"
+            style={{ width: '90%' }}
           />
-          <img src="/assets/free-deliveries.svg" alt="free deliveries icon" />
-          <img src="/assets/price-guarantee.svg" alt="price guarantee icon" />
-          <img src="/assets/free-returns.svg" alt="free returns icon" />
         </Box>
       </MediaQuery>
       <Title sx={{ marginBottom: '1rem' }} ta="center">
@@ -94,7 +111,7 @@ function Home() {
       <Group spacing={5} mb="md">
         <Button
           sx={{
-            border: activeButton === 'lowest' ? '2px solid violet' : 'none',
+            border: activeButton === 'lowest' ? '2px solid #5f3dc4' : 'none',
           }}
           variant="light"
           size="xs"
@@ -106,7 +123,7 @@ function Home() {
         </Button>
         <Button
           sx={{
-            border: activeButton === 'highest' ? '2px solid violet ' : 'none',
+            border: activeButton === 'highest' ? '2px solid #5f3dc4 ' : 'none',
           }}
           size="xs"
           variant="light"
@@ -116,6 +133,10 @@ function Home() {
         >
           Sort by highest price
         </Button>
+        <CategoryFilter
+          products={products}
+          setSelectedCategories={setSelectedCategories}
+        />
       </Group>
       <SimpleGrid
         cols={3}

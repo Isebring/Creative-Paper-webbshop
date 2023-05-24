@@ -1,10 +1,11 @@
-import { Box, Button, Group, TextInput } from '@mantine/core';
+import { Box, Button, Group, MultiSelect, TextInput } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Product } from '../../data';
 import generateID from '../utils/generateID';
+import { categoryData } from './CategoryData';
 
 interface ProductFormProps {
   onSubmit: (product: Product) => void;
@@ -25,6 +26,9 @@ const schema = Yup.object().shape({
     .min(1, 'Nothing is this cheap...')
     .required('Price is required')
     .strict(),
+  category: Yup.array()
+    .of(Yup.string().min(2))
+    .required('At least one category is required'),
 });
 
 function ProductForm({
@@ -46,6 +50,7 @@ function ProductForm({
       summary: [],
       rating: 0,
       usersRated: 0,
+      category: [] as never,
     },
   });
   useEffect(() => {
@@ -56,7 +61,11 @@ function ProductForm({
   }, [product, isEditing, form.setValues]);
 
   const handleSubmit = (values: Product) => {
-    const editedProduct = { ...values, id: product?.id || '' };
+    const editedProduct = {
+      ...values,
+      id: product?.id || '',
+      category: values.category || [],
+    };
     if (isEditing) {
       onSubmit(editedProduct);
     } else {
@@ -113,6 +122,14 @@ function ProductForm({
           data-cy="product-price"
           errorProps={{ 'data-cy': 'product-price-error' }}
         />
+        <MultiSelect
+          data={categoryData}
+          label="Category"
+          placeholder="Select categories"
+          {...form.getInputProps('category')}
+          errorProps={{ 'data-cy': 'product-categories-error' }}
+        />
+
         <Group mt="xl">
           <Button type="submit">
             {isEditing ? 'Save changes' : 'Add new Product'}
