@@ -24,13 +24,25 @@ export async function uploadImage(req: Request, res: Response) {
   bb.on('file', (_, file, info) => {
     const { filename, mimeType } = info;
 
-    const uploadStream = imageBucket
-      .openUploadStream(filename, { contentType: mimeType })
-      .on('finish', (data: mongoose.mongo.GridFSFile) => {
-        res.status(201).json(data._id);
-        file.pipe(uploadStream);
-      });
+    const uploadStream = imageBucket.openUploadStream(filename, {
+      contentType: mimeType,
+    });
+    file.pipe(uploadStream);
+
+    uploadStream.on('finish', (data: mongoose.mongo.GridFSFile) => {
+      res.status(201).json(data._id);
+    });
   });
 }
 
-export async function deleteImage(req: Request, res: Response) {}
+export async function deleteImage(req: Request, res: Response) {
+  const _id = new mongoose.mongo.ObjectId(req.params.id);
+
+  const file = await imageBucket.find({ _id }).next();
+  if (!file) {
+    return res.status(404).json('Image not found');
+  }
+
+  await imageBucket.delete(_id);
+  res.status(200).json('Image deleted');
+}
