@@ -75,7 +75,7 @@ function CartProduct({ cartItem }: Props) {
         </Group>
         <Group position="center" mt="xs" mb="xs">
           <Text mt="sm" weight={500} size={15} data-cy="product-price">
-            x{cartItem.price * cartItem.quantity}€
+            x ${cartItem.price * cartItem.quantity}
           </Text>
         </Group>
       </Group>

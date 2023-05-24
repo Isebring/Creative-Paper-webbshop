@@ -19,12 +19,11 @@ function Cart() {
   const { products } = useContext(ProductContext);
 
   <Text weight={500} size={29}>
-    total:{' '}
+    total: $
     {cartProducts.reduce((total, cartProduct) => {
       const product = products.find((i) => i.id === cartProduct.id);
       return total + (product?.price || 0) * cartProduct.quantity;
     }, 0)}
-    €
   </Text>;
 
   if (cartQuantity < 1) {
@@ -137,21 +136,25 @@ function Cart() {
                       >
                         <Text>{product?.title}</Text>
                         <Text weight={400}>
-                          {cartproduct.quantity}x {product?.price}€
+                          {cartproduct.quantity}x ${product?.price}
                         </Text>
                       </Box>
                     );
                   })}
                 </Text>
-                <Text data-cy="total-price" weight={500} size={29}>
-                  total:{' '}
+                <Text
+                  data-cy="total-price"
+                  weight={500}
+                  size={29}
+                  style={{ fontFamily: 'Poppins, sans-serif' }}
+                >
+                  Total: $
                   {cartProducts.reduce((total, cartProduct) => {
                     const product = products.find(
                       (i) => i.id === cartProduct.id,
                     );
                     return total + (product?.price || 0) * cartProduct.quantity;
                   }, 0)}
-                  €
                 </Text>
               </Card>
             </Box>
