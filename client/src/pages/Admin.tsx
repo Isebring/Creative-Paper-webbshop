@@ -1,46 +1,46 @@
-import { Button, Container, Group, SimpleGrid, Title } from '@mantine/core';
-import { IconShieldPlus } from '@tabler/icons-react';
-import { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import AdminProductCard from '../components/AdminProductCard';
-import { ProductContext } from '../contexts/ProductContext';
+import { Box, Button, Container } from '@mantine/core';
+import { useState } from 'react';
+import AdminOrderTable from '../components/AdminOrderTable';
+import AdminProductManagement from '../components/AdminProductManagement';
 
 function Admin() {
-  const { products, deleteProduct } = useContext(ProductContext);
-
+  const [selectedComponent, setSelectedComponent] = useState('');
   return (
-    <Container size="xl">
-      <Title mb="lg" ta="center">
-        Admin - Product Management
-      </Title>
-      <Group position="center" mb="xl">
-        <Link to="/admin/product/new" data-cy="admin-add-product">
-          <Button
-            leftIcon={<IconShieldPlus size="1.2rem" />}
-            sx={{ backgroundColor: 'black', color: 'white' }}
-          >
-            {' '}
-            Add new Product
-          </Button>
-        </Link>
-      </Group>
-      <SimpleGrid
-        cols={3}
-        spacing="xl"
-        verticalSpacing="xl"
-        breakpoints={[
-          { maxWidth: '85rem', cols: 2, spacing: 'md' },
-          { maxWidth: '36rem', cols: 1, spacing: 'sm' },
-        ]}
-      >
-        {products.map((product) => (
-          <AdminProductCard
-            key={product.id}
-            product={product}
-            onDelete={() => deleteProduct(product.id)}
-          />
-        ))}
-      </SimpleGrid>
+    <Container
+      size="xl"
+      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+    >
+      <Box>
+        <Button
+          onClick={() => setSelectedComponent('component1')}
+          sx={{ backgroundColor: 'black', color: 'white', margin: '1rem' }}
+        >
+          Product Management
+        </Button>
+        <Button
+          onClick={() => setSelectedComponent('component2')}
+          sx={{ backgroundColor: 'black', color: 'white', margin: '1rem' }}
+        >
+          Order Management
+        </Button>
+        <Button
+          onClick={() => setSelectedComponent('component3')}
+          sx={{ backgroundColor: 'black', color: 'white', margin: '1rem' }}
+        >
+          User Management
+        </Button>
+        <Button
+          onClick={() => setSelectedComponent('component4')}
+          sx={{ backgroundColor: 'black', color: 'white', margin: '1rem' }}
+        >
+          My Orders
+        </Button>
+      </Box>
+
+      {selectedComponent === 'component1' && <AdminProductManagement />}
+      {selectedComponent === 'component2' && <AdminOrderTable />}
+      {selectedComponent === 'component3' && <AdminOrderTable />}
+      {selectedComponent === 'component4' && <AdminOrderTable />}
     </Container>
   );
 }
