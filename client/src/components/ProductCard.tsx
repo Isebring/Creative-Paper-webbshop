@@ -7,6 +7,7 @@ import {
   Image,
   List,
   Title,
+  useMantineTheme,
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IconShoppingCartPlus } from '@tabler/icons-react';
@@ -23,6 +24,7 @@ type ProductCardProps = {
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({ productId }) => {
+  const theme = useMantineTheme();
   const { increaseCartQuantity } = useShoppingCart();
   const { products } = useProduct();
 
@@ -101,8 +103,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId }) => {
               radius="md"
               style={{
                 fontFamily: 'Poppins, sans-serif',
-                border: '1px solid black',
-                color: 'black',
+                border:
+                  theme.colorScheme === 'dark'
+                    ? '1px solid white'
+                    : '1px solid black',
+                color: theme.colorScheme === 'dark' ? 'white' : 'black',
               }}
             >
               MORE INFO

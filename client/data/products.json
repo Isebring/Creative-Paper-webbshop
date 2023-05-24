@@ -1,6 +1,32 @@
 [
   {
     "image": "https://papier.imgix.net/https%3A%2F%2Fpapier.imgix.net%2Fhttps%253A%252F%252Fwww.papier.com%252Fproduct_image%252F90348%252F36%252Fwildflower-22590_front_1680777957.png%3Fixlib%3Drb-3.2.1%26auto%3Dformat%252Ccompress%26s%3Dfbf27af9c76f530fb146420170981a0e?ixlib=rb-3.2.1&w=700&auto=format%2Ccompress&s=f6d74b85151d69884edd50ba879631eb",
+ [
+  {
+    "title": "Wildflower",
+    "description": "The possibilities of a new notebook are endless. Whether it becomes a space for grand ideas, little reminders or anything that inspires you throughout the day. Decide if you’d like lined, dotted or plain pages inside and then personalize your cover with a name, fun title, your alter ego or a special quote – the page is yours.",
+    "summary": [
+      "6\" x 8.5\"",
+      "96 leaves (192 sides) of lined paper.",
+      "Line height: 0.3\""
+    ],
+    "categories": "notebook",
+    "price": 30.0,
+    "quantity": 12,
+    "stock": 12,
+    "imageId": "id1",
+    "imageURL": "www.hej.se",
+    "secondImageId": "id2",
+    "secondImageURL": "www.hej2.se",
+    "rating": 4.5,
+    "usersRated": 7
+  }
+ ]
+ 
+ 
+ [{
+    "image":
+      "https://papier.imgix.net/https%3A%2F%2Fpapier.imgix.net%2Fhttps%253A%252F%252Fwww.papier.com%252Fproduct_image%252F90348%252F36%252Fwildflower-22590_front_1680777957.png%3Fixlib%3Drb-3.2.1%26auto%3Dformat%252Ccompress%26s%3Dfbf27af9c76f530fb146420170981a0e?ixlib=rb-3.2.1&w=700&auto=format%2Ccompress&s=f6d74b85151d69884edd50ba879631eb",
     "title": "Wildflower",
     "description": "The possibilities of a new notebook are endless. Whether it becomes a space for grand ideas, little reminders or anything that inspires you throughout the day. Decide if you’d like lined, dotted or plain pages inside and then personalize your cover with a name, fun title, your alter ego or a special quote – the page is yours.",
     "summary": [
