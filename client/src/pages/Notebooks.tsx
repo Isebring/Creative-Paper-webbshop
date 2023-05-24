@@ -1,15 +1,15 @@
-import { Button, Container, Group, SimpleGrid, Title } from '@mantine/core';
-import { useContext, useEffect, useState } from 'react';
-import CategoryFilter from '../components/CategoryFilter';
-import HeroSlide from '../components/HeroSlide';
-import { PageHero } from '../components/PageHero';
-import ProductCard from '../components/ProductCard';
-import { ProductContext } from '../contexts/ProductContext';
+import { Button, Container, Group, SimpleGrid } from "@mantine/core";
+import { useContext, useEffect, useState } from "react";
+import { Product } from "../../data";
+import CategoryFilter from "../components/CategoryFilter";
+import { PageHero } from "../components/PageHero";
+import ProductCard from "../components/ProductCard";
+import { ProductContext } from "../contexts/ProductContext";
 
-function Home() {
-  const { products } = useContext(ProductContext);
+export function Notebooks() {
+const { products } = useContext(ProductContext);
   const [sortDirection, setSortDirection] = useState('');
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(['notebooks', 'journals']); // Set 'pens' as a default selection
   const [sortedProducts, setSortedProducts] = useState(products);
   const [activeButton, setActiveButton] = useState('');
 
@@ -23,8 +23,8 @@ function Home() {
     }
 
     if (selectedCategories.length > 0) {
-      sorted = sorted.filter((product) =>
-        product.category.some((category) =>
+      sorted = sorted.filter((product: Product) =>
+        product.category.some((category: string) =>
           selectedCategories.includes(category),
         ),
       );
@@ -42,18 +42,13 @@ function Home() {
     setSortDirection('descending');
     setActiveButton('highest');
   }
-
-  return (
-    <Container size="xl">
-      <HeroSlide />
-      <PageHero
-        title="Creative Paper"
-        line1="Unleash Your Creativity with Our Stationary,"
-        line2="Where Ideas Take Flight on Pages Delight!"
+    return(
+        <Container size="lg">
+      <PageHero 
+      title="Pens"
+      line1="Let our beautiful notebooks harbour"
+      line2="your best and worst ideas."
       />
-      <Title sx={{ marginBottom: '1rem' }} ta="center">
-        Browse our collection
-      </Title>
       <Group spacing={5} mb="md">
         <Button
           sx={{
@@ -81,8 +76,8 @@ function Home() {
         </Button>
         <CategoryFilter
           products={products}
-          setSelectedCategories={setSelectedCategories}
           selectedCategories={selectedCategories}
+          setSelectedCategories={setSelectedCategories}
         />
       </Group>
       <SimpleGrid
@@ -94,7 +89,7 @@ function Home() {
           { maxWidth: '36rem', cols: 1, spacing: 'sm' },
         ]}
       >
-        {sortedProducts.map((product) => (
+        {sortedProducts.map((product: Product) => (
           <ProductCard
             key={product.id}
             product={product}
@@ -104,7 +99,5 @@ function Home() {
         ))}
       </SimpleGrid>
     </Container>
-  );
+    )
 }
-
-export default Home;

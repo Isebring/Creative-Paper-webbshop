@@ -11,14 +11,14 @@ import {
   Paper,
   rem,
   Transition,
-  useMantineColorScheme,
+  useMantineColorScheme
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import {
   IconMoonStars,
   IconShoppingCart,
   IconSunHigh,
-  IconUserShield,
+  IconUserShield
 } from '@tabler/icons-react';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -303,7 +303,9 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
       </Header>
 
       {isDesktop && (
-        <Box style={{ display: 'flex', justifyContent: 'center' }}>{items}</Box>
+        <Box style={{ display: 'flex', justifyContent: 'center' }}>
+          {items}
+        </Box>
       )}
     </>
   );
