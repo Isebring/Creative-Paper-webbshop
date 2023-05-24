@@ -120,12 +120,11 @@ export async function deleteProduct(req: Request, res: Response) {
     }
 
     await ProductModel.findByIdAndDelete(productId);
-    res.status(200).json('product deleted');
-    // res.status(204).end();   bättre alternativ?
+    res.status(204).end();
   } catch (error) {
-    res.status(404).json({
-      message: 'Error finding the product',
-      error: (error as any).message,
+    res.status(500).json({
+      message: 'Error deleting the product',
+      error: (error as Error).message,
     });
   }
 }
