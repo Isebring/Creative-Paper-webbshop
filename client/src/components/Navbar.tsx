@@ -9,8 +9,7 @@ import {
   Header,
   MediaQuery,
   Paper,
-  rem,
-  Transition,
+  rem, Transition,
   useMantineColorScheme
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
@@ -175,7 +174,7 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 769);
+      setIsDesktop(window.innerWidth >= 768);
     };
 
     window.addEventListener('resize', handleResize);
@@ -228,6 +227,12 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
         className={classes.root}
       >
         <Container sx={{ maxWidth: 'none' }} className={classes.header}>
+          <Group spacing={5}>
+          </Group>
+          <Group spacing={5}>
+          </Group>
+
+          
           <MediaQuery
             query="(max-width: 460px)"
             styles={{
