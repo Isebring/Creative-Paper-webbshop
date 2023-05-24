@@ -1,6 +1,7 @@
 body {
   margin: 0;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-family: 'Ovo', serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .swiper-pagination-bullet {

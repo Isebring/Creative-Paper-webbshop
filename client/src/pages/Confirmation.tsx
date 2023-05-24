@@ -56,7 +56,7 @@ function Confirmation() {
             )}
           </List>
           <Divider mt="lg" mb="sm" size="xs" />
-          <h2>Total price: {calculateLastOrderTotal()}€</h2>
+          <h2>Total price: ${calculateLastOrderTotal()}</h2>
         </Card>
       )}
     </Container>

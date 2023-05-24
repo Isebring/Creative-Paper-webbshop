@@ -21,12 +21,12 @@ function HeroSlideItem({ imageSrc }: HeroSlideItemProps) {
             sx={{
               width: '50%',
               height: '100%',
-              backgroundColor: theme.colors.blue[9],
+              backgroundColor: theme.colors.violet[1],
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
-              color: 'white',
+              color: 'black',
               padding: '2rem',
             }}
           >
@@ -34,16 +34,21 @@ function HeroSlideItem({ imageSrc }: HeroSlideItemProps) {
               query="(max-width: 640px)"
               styles={{ fontSize: rem(18) }}
             >
-              <Title>
-                Shop Easter & <br /> New Weekend <br /> Deals
+              <Title sx={{ textAlign: 'center', width: '80%' }}>
+                Shop Summer & New Weekend Deals
               </Title>
             </MediaQuery>
             <MediaQuery
               query="(max-width: 640px)"
               styles={{ fontSize: rem(13), marginTop: '.5rem' }}
             >
-              <Title order={4}>
-                We got you covered on all the latest releases in tech.
+              <Title
+                order={4}
+                sx={{ textAlign: 'center', width: '80%' }}
+                style={{ fontFamily: 'Poppins, sans-serif' }}
+              >
+                We have all the different things you need to feel organized in
+                your day to day life.
               </Title>
             </MediaQuery>
             <MediaQuery
@@ -52,8 +57,8 @@ function HeroSlideItem({ imageSrc }: HeroSlideItemProps) {
             >
               <Button
                 sx={{
-                  background: theme.colors.blue[0],
-                  color: theme.colors.blue[7],
+                  background: 'black',
+                  color: 'white',
                   fontWeight: 'bold',
                   marginTop: '1rem',
                   height: '2.4rem',
@@ -62,11 +67,11 @@ function HeroSlideItem({ imageSrc }: HeroSlideItemProps) {
                   borderStyle: 'none',
                   cursor: 'pointer',
                   '&:hover': {
-                    background: theme.colors.blue[4],
-                    color: theme.colors.blue[0],
-                    border: '2px solid white',
+                    background: theme.colors.violet[4],
+                    color: theme.colors.violet[0],
                   },
                 }}
+                style={{ fontFamily: 'Poppins, sans-serif' }}
               >
                 Go to Deals
               </Button>

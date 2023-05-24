@@ -30,7 +30,7 @@ function HeroSlide() {
       >
         {products!.slice(0, 4).map((product) => (
           <SwiperSlide style={{ height: '22rem' }} key={product.id}>
-            <HeroSlideItem imageSrc={product.image} />
+            <HeroSlideItem imageSrc={product.secondImage} />
           </SwiperSlide>
         ))}
       </Swiper>

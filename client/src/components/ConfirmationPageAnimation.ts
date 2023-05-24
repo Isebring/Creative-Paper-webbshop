@@ -51,7 +51,7 @@ function InitBackgroundAnimation() {
       ctx.translate(this.x, this.y);
       ctx.scale(this.size / 4.4, this.size / 4.4);
       ctx.lineWidth = 1;
-      ctx.strokeStyle = theme.colors.blue[4];
+      ctx.strokeStyle = theme.colors.violet[4];
       ctx.stroke(path);
       ctx.restore();
     }

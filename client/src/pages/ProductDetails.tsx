@@ -8,7 +8,6 @@ import {
   Image,
   Text,
   Title,
-  useMantineTheme,
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import {
@@ -34,7 +33,6 @@ function ProductDetails() {
   const goBack = () => {
     window.history.back();
   };
-  const theme = useMantineTheme();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -53,7 +51,13 @@ function ProductDetails() {
 
   return (
     <Container>
-      <Button variant="outline" mb="sm" mt="sm" onClick={goBack}>
+      <Button
+        variant="outline"
+        mb="sm"
+        mt="sm"
+        onClick={goBack}
+        sx={{ border: '1px solid black', color: 'black' }}
+      >
         Back to Store
       </Button>
       <Flex direction={{ base: 'column', sm: 'row' }}>
@@ -66,8 +70,8 @@ function ProductDetails() {
               mb="xs"
               mr="sm"
               sx={{
-                background: theme.colors.blue[7],
-                color: theme.colors.gray[1],
+                background: 'black',
+                color: 'white',
                 width: '15%',
                 borderRadius: '.2rem',
                 display: 'flex',
@@ -114,10 +118,9 @@ function ProductDetails() {
         <Card sx={{ flex: 1 }}>
           <Box
             sx={{
-              background: theme.colors.blue[7],
-              color: theme.colors.gray[1],
-              borderTopLeftRadius: '.5rem',
-              borderBottomLeftRadius: '.5rem',
+              background: 'black',
+              color: 'white',
+              borderRadius: '0.5rem',
               padding: '.4rem',
             }}
           >
