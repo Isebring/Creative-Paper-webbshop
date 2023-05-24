@@ -44,7 +44,11 @@ function Home() {
         }}
       >
         <Title>Creative Paper</Title>
-        <Text fz="lg" fw={500} style={{ fontFamily: 'Poppins, sans-serif' }}>
+        <Text
+          fz="lg"
+          fw={500}
+          style={{ fontFamily: 'Poppins, sans-serif', textAlign: 'center' }}
+        >
           Unleash Your Creativity with Our Stationery, <br /> Where Ideas Take
           Flight on Pages Delight!
         </Text>
