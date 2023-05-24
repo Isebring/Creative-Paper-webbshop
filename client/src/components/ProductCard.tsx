@@ -12,11 +12,14 @@ import { notifications } from '@mantine/notifications';
 import { IconShoppingCartPlus } from '@tabler/icons-react';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useProduct } from '../contexts/ProductContext';
+import { Product, useProduct } from '../contexts/ProductContext';
 import { useShoppingCart } from '../contexts/UseShoppingCart';
 
 type ProductCardProps = {
   productId: string;
+  product: Product;
+  sortedProducts?: Product[];
+  sortDirection?: string;
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({ productId }) => {

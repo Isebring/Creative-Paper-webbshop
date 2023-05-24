@@ -9,27 +9,33 @@ import {
   Title,
   useMantineTheme,
 } from '@mantine/core';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import HeroSlide from '../components/HeroSlide';
 import ProductCard from '../components/ProductCard';
-import { ProductContext } from '../contexts/ProductContext';
+import { Product, ProductContext } from '../contexts/ProductContext';
 
 function Home() {
   const theme = useMantineTheme();
   const { products } = useContext(ProductContext);
   const [sortDirection, setSortDirection] = useState('');
-  const [sortedProducts, setSortedProducts] = useState(products);
+  const [sortedProducts, setSortedProducts] = useState<Product[]>([]);
   const [activeButton, setActiveButton] = useState('');
 
+  useEffect(() => {
+    if (products) {
+      setSortedProducts(products);
+    }
+  }, [products]);
+
   function sortProductsByLowestPrice() {
-    const sorted = [...products].sort((a, b) => a.price - b.price);
+    const sorted = [...sortedProducts].sort((a, b) => a.price - b.price);
     setSortedProducts(sorted);
     setSortDirection('ascending');
     setActiveButton('lowest');
   }
 
   function sortProductsByHighestPrice() {
-    const sorted = [...products].sort((a, b) => b.price - a.price);
+    const sorted = [...sortedProducts].sort((a, b) => b.price - a.price);
     setSortedProducts(sorted);
     setSortDirection('descending');
     setActiveButton('highest');
@@ -126,9 +132,10 @@ function Home() {
           { maxWidth: '36rem', cols: 1, spacing: 'sm' },
         ]}
       >
-        {sortedProducts.map((product) => (
+        {sortedProducts?.map((product) => (
           <ProductCard
-            key={product.id}
+            key={product._id}
+            productId={product._id}
             product={product}
             sortedProducts={sortedProducts}
             sortDirection={sortDirection === 'ascending' ? 'lowest' : 'highest'}
