@@ -7,7 +7,6 @@ import {
   SimpleGrid,
   Text,
   Title,
-  useMantineTheme,
 } from '@mantine/core';
 import { useContext, useState } from 'react';
 import HeroSlide from '../components/HeroSlide';
@@ -15,7 +14,6 @@ import ProductCard from '../components/ProductCard';
 import { ProductContext } from '../contexts/ProductContext';
 
 function Home() {
-  const theme = useMantineTheme();
   const { products } = useContext(ProductContext);
   const [sortDirection, setSortDirection] = useState('');
   const [sortedProducts, setSortedProducts] = useState(products);
@@ -66,26 +64,23 @@ function Home() {
         <Box
           sx={{
             width: '100%',
-            background:
-              theme.colorScheme === 'dark'
-                ? theme.colors.violet[0]
-                : theme.colors.violet[1],
+            // background:
+            //   theme.colorScheme === 'dark'
+            //     ? theme.colors.violet[0]
+            //     : theme.colors.violet[1],
             display: 'flex',
             justifyContent: 'space-around',
             marginBottom: '1.5rem',
             marginTop: '1rem',
             padding: '.3rem',
-            boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+            // boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
           }}
         >
-          <img src="/assets/recycable-parts.svg" alt="recycable parts icon" />
           <img
-            src="./assets/sustainable-transports.svg"
-            alt="sustainable transports icon"
+            src="/assets/plantpurple.svg"
+            alt="purple plant leaf"
+            style={{ width: '90%' }}
           />
-          <img src="/assets/free-deliveries.svg" alt="free deliveries icon" />
-          <img src="/assets/price-guarantee.svg" alt="price guarantee icon" />
-          <img src="/assets/free-returns.svg" alt="free returns icon" />
         </Box>
       </MediaQuery>
       <Title sx={{ marginBottom: '1rem' }} ta="center">
@@ -94,7 +89,7 @@ function Home() {
       <Group spacing={5} mb="md">
         <Button
           sx={{
-            border: activeButton === 'lowest' ? '2px solid violet' : 'none',
+            border: activeButton === 'lowest' ? '2px solid #5f3dc4' : 'none',
           }}
           variant="light"
           size="xs"
@@ -106,7 +101,7 @@ function Home() {
         </Button>
         <Button
           sx={{
-            border: activeButton === 'highest' ? '2px solid violet ' : 'none',
+            border: activeButton === 'highest' ? '2px solid #5f3dc4 ' : 'none',
           }}
           size="xs"
           variant="light"
