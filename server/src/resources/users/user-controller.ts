@@ -19,7 +19,7 @@ export async function getAllUsers(req: Request, res: Response) {
 
 // Register user
 export async function registerUser(req: Request, res: Response) {
-  const { email, password, isAdmin = false } = req.body;
+  const { email } = req.body;
 
   const existingUser = await UserModel.findOne({ email });
 
@@ -55,9 +55,13 @@ export async function loginUser(req: Request, res: Response) {
     return res.status(401).json('Incorrect password');
   }
   // Check session/cookie
-  req.session!.email = user.email;
-  req.session!.userId = user.id; // Stores user ID in the session
-  req.session!.isAdmin = user.isAdmin; // Stores isAdmin status in the session
+  if (req.session) {
+    req.session.email = user.email;
+    req.session.userId = user.id;
+    req.session.isAdmin = user.isAdmin;
+  } else {
+    throw new Error('Session is not defined');
+  }
 
   // Create a new user object without the password field
   const userResponse = {

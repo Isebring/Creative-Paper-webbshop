@@ -13,6 +13,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      mongodb:
+        image: mongo:4.4
+        ports:
+          - 27017:27017
+
     strategy:
       matrix:
         node-version: [18.x]
@@ -25,8 +31,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-          cache-dependency-path: client/package-lock.json
-      - run: cd client && npm ci
-      - run: cd client && npm run build
-      - run: cd client && npm run lint
-      - run: cd client && npm run format
+          cache-dependency-path: server/package-lock.json
+      - run: cd server && npm ci
+      - run: cd server && npm run build
+      - run: cd server && npm run lint
+      - run: cd server && npm run format
+      - run: cd server && npm test --if-present

@@ -1,7 +1,7 @@
 import cookieSession from 'cookie-session';
-import express, { NextFunction, Request, Response } from 'express';
+import express from 'express';
 import 'express-async-errors';
-import * as Yup from 'yup';
+import errorHandler from './middlewares/error-handler';
 import productRouter from './resources/products/product-router';
 import userRouter from './resources/users/user-router';
 
@@ -26,15 +26,4 @@ app.use(productRouter);
 app.use(userRouter);
 
 // GLOBAL ERROR HANDLER
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  console.error(err);
-  if (err instanceof Yup.ValidationError) {
-    if (err.message.includes('errors occurred')) {
-      res.status(400).json(err.errors[0]);
-    } else {
-      res.status(400).json(err.message);
-    }
-  } else {
-    res.status(500).json(err.message);
-  }
-});
+app.use(errorHandler);
