@@ -61,7 +61,11 @@ function ProductForm({
   }, [product, isEditing, form.setValues]);
 
   const handleSubmit = (values: Product) => {
-    const editedProduct = { ...values, id: product?.id || '', category: values.category || [] };
+    const editedProduct = {
+      ...values,
+      id: product?.id || '',
+      category: values.category || [],
+    };
     if (isEditing) {
       onSubmit(editedProduct);
     } else {
