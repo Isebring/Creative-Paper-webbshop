@@ -1,7 +1,10 @@
 {
   "scripts": {
     "dev": "nodemon src/server.ts",
-    "format": "prettier --check \"src/**/*.{ts,tsx}\""
+    "build": "tsc",
+    "lint": "npx eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "format": "prettier --check \"src/**/*.{ts,tsx}\"",
+    "test": "vitest -c tests/vitest.config.ts"
   },
   "dependencies": {
     "argon2": "^0.30.3",
@@ -12,6 +15,8 @@
     "mongodb": "^5.5.0",
     "mongoose": "^7.1.1",
     "prettier": "^2.8.8",
+    "supertest": "^6.3.3",
+    "vitest": "^0.31.1",
     "yup": "^1.1.1"
   },
   "devDependencies": {
@@ -19,6 +24,13 @@
     "@types/express": "^4.17.17",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^20.1.5",
+    "@types/supertest": "^2.0.12",
+    "@typescript-eslint/eslint-plugin": "^5.59.7",
+    "@typescript-eslint/parser": "^5.59.7",
+    "eslint": "^8.41.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.1",
     "nodemon": "^2.0.22",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
