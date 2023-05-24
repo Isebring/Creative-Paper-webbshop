@@ -22,3 +22,30 @@ Content-Type: application/json
 ### LOGOUT USER
 POST  http://localhost:3000/api/users/logout
 
+### CREATE ORDER
+POST http://localhost:3000/api/orders
+Content-Type: application/json
+
+{
+  "orderItems": [
+    {
+      "product": "646c89ff625c6e08624dfe39",
+      "quantity": 2
+    },
+    {
+      "product": "646c89ff625c6e08624dfe38",
+      "quantity": 1
+    }
+  ],
+    "totalPrice": 1000,
+    "deliveryAddress": {
+    "fullName": "Eleanor Shellstrop",
+    "email": "eleanor.shellstrop@example.com",
+    "phoneNumber": "1234567890",
+    "address": "1234 Main St",
+    "zipCode": "12345",
+     "city": "Cityville"
+  }
+}
+
+
