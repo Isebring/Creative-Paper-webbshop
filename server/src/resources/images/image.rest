@@ -1,0 +1,19 @@
+### Retrieve file
+GET http://localhost:3000/api/image/646e0419af3a9037ca973140
+
+### Delete file
+DELETE http://localhost:3000/api/image/646e0419af3a9037ca973140
+### Upload image
+POST http://localhost:3000/api/image
+Content-Type: multipart/form-data; boundary=FormDataRow
+
+--FormDataRow
+Content-Disposition: form-data; name="image"; filename="notebook.png"
+Content-Type: image/png
+
+< ../notebook.png
+--FormDataRow--
+
+### Tänk på följande:
+### ALLA boundary's måste BÖRJA med --
+### SISTA boundary'n måste AVSLUTAS med --
