@@ -9,15 +9,16 @@ import {
   Header,
   MediaQuery,
   Paper,
-  rem, Transition,
-  useMantineColorScheme
+  rem,
+  Transition,
+  useMantineColorScheme,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import {
   IconMoonStars,
   IconShoppingCart,
   IconSunHigh,
-  IconUserShield
+  IconUserShield,
 } from '@tabler/icons-react';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -227,12 +228,9 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
         className={classes.root}
       >
         <Container sx={{ maxWidth: 'none' }} className={classes.header}>
-          <Group spacing={5}>
-          </Group>
-          <Group spacing={5}>
-          </Group>
+          <Group spacing={5}></Group>
+          <Group spacing={5}></Group>
 
-          
           <MediaQuery
             query="(max-width: 460px)"
             styles={{
@@ -247,7 +245,6 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
             </Link>
           </MediaQuery>
           <Group spacing={1}>
-            <ToggleDarkAndLightMode />
             <Link to="/admin" data-cy="admin-link">
               <Button size="xs" variant="subtle" radius="xl">
                 <IconUserShield size="1.8rem" stroke="1.3" />
@@ -308,9 +305,7 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
       </Header>
 
       {isDesktop && (
-        <Box style={{ display: 'flex', justifyContent: 'center' }}>
-          {items}
-        </Box>
+        <Box style={{ display: 'flex', justifyContent: 'center' }}>{items}</Box>
       )}
     </>
   );

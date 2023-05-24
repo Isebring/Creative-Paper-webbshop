@@ -9,7 +9,9 @@ import { ProductContext } from '../contexts/ProductContext';
 export function Pens() {
   const { products } = useContext(ProductContext);
   const [sortDirection, setSortDirection] = useState('');
-  const [selectedCategories, setSelectedCategories] = useState<string[]>(['pens']); // Set 'pens' as a default selection
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([
+    'pens',
+  ]); // Set 'pens' as a default selection
   const [sortedProducts, setSortedProducts] = useState(products);
   const [activeButton, setActiveButton] = useState('');
 
@@ -45,10 +47,10 @@ export function Pens() {
 
   return (
     <Container size="lg">
-      <PageHero 
-      title="Pens"
-      line1="Let our beautiful notebooks harbour"
-      line2="your best and worst ideas."
+      <PageHero
+        title="Pens"
+        line1="Let our beautiful notebooks harbour"
+        line2="your best and worst ideas."
       />
       <Group spacing={5} mb="md">
         <Button

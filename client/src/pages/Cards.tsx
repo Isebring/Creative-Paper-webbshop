@@ -9,7 +9,9 @@ import { ProductContext } from '../contexts/ProductContext';
 export function Cards() {
   const { products } = useContext(ProductContext);
   const [sortDirection, setSortDirection] = useState('');
-  const [selectedCategories, setSelectedCategories] = useState<string[]>(['cards']);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([
+    'cards',
+  ]);
   const [sortedProducts, setSortedProducts] = useState(products);
   const [activeButton, setActiveButton] = useState('');
 
@@ -45,10 +47,10 @@ export function Cards() {
 
   return (
     <Container size="lg">
-      <PageHero 
-      title="Cards"
-      line1="Birthday cards, wedding cards, funeral cards,"
-      line2="we have something for all occasions."
+      <PageHero
+        title="Cards"
+        line1="Birthday cards, wedding cards, funeral cards,"
+        line2="we have something for all occasions."
       />
       <Group spacing={5} mb="md">
         <Button

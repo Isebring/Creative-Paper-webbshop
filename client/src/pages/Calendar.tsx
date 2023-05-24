@@ -9,7 +9,10 @@ import { ProductContext } from '../contexts/ProductContext';
 export function Calendars() {
   const { products } = useContext(ProductContext);
   const [sortDirection, setSortDirection] = useState('');
-  const [selectedCategories, setSelectedCategories] = useState<string[]>(['calendars', 'planners']);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([
+    'calendars',
+    'planners',
+  ]);
   const [sortedProducts, setSortedProducts] = useState(products);
   const [activeButton, setActiveButton] = useState('');
 
@@ -45,10 +48,10 @@ export function Calendars() {
 
   return (
     <Container size="lg">
-      <PageHero 
-      title="Calendars & Planners"
-      line1="Plan for your future or,"
-      line2="let your future fuck you up."
+      <PageHero
+        title="Calendars & Planners"
+        line1="Plan for your future or,"
+        line2="let your future fuck you up."
       />
       <Group spacing={5} mb="md">
         <Button

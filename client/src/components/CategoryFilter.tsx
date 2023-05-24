@@ -68,7 +68,6 @@ interface CategoryFilterProps {
 
 const CategoryFilter: React.FC<CategoryFilterProps> = ({
   setSelectedCategories,
-  
 }) => {
   const [selectedCategories, _setSelectedCategories] = useState<string[]>([]);
 
