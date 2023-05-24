@@ -114,4 +114,4 @@ export async function deleteProduct(req: Request, res: Response) {
   }
 }
 
-export async function productQuantity() {}
+// export async function productQuantity() {}
