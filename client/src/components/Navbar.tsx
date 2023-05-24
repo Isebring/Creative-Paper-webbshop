@@ -245,6 +245,7 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
             </Link>
           </MediaQuery>
           <Group spacing={1}>
+            <ToggleDarkAndLightMode />
             <Link to="/admin" data-cy="admin-link">
               <Button size="xs" variant="subtle" radius="xl">
                 <IconUserShield size="1.8rem" stroke="1.3" />
