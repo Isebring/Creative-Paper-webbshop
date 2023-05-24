@@ -9,7 +9,7 @@ import {
   Flex,
 } from '@mantine/core';
 import { Product } from '../../data/index';
-import { categoryData } from './ProductForm';
+import { categoryData } from './CategoryData';
 
 function Value({ label, onRemove, ...others }: MultiSelectValueProps & { value: string }) {
   return (
@@ -52,7 +52,7 @@ interface CategoryFilterProps {
   setSelectedCategories: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const CategoryFilter: React.FC<CategoryFilterProps> = ({ products, setSelectedCategories }) => {
+const CategoryFilter: React.FC<CategoryFilterProps> = ({ setSelectedCategories }) => {
   const [selectedCategories, _setSelectedCategories] = useState<string[]>([]);
 
   const handleSelect = (values: string[]) => {

@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Product } from '../../data';
 import generateID from '../utils/generateID';
+import { categoryData } from './CategoryData';
 
 interface ProductFormProps {
   onSubmit: (product: Product) => void;
@@ -12,16 +13,6 @@ interface ProductFormProps {
   isEditing: boolean;
   product?: Product;
 }
-
-export const categoryData = [
-  { value: 'pens', label: 'Pens' },
-  { value: 'notebooks', label: 'Notebooks' },
-  { value: 'journals', label: 'Journals' },
-  { value: 'cards', label: 'Cards' },
-  { value: 'calendars', label: 'Calendars' },
-  { value: 'planners', label: 'Planners' },
-  { value: 'desk-accessories', label: 'Desk accessories' },
-];
 
 const schema = Yup.object().shape({
   image: Yup.string().url('Invalid URL').required('Image URL is required'),
