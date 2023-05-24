@@ -129,21 +129,22 @@ export async function deleteProduct(req: Request, res: Response) {
   }
 }
 
-export async function productQuantity(
-  productId: string,
-  quantityToDecrease: number,
-) {
-  try {
-    const product = await ProductModel.findById(productId);
+// export async function productQuantity(
+//   productId: string,
+//   quantityToDecrease: number,
+// ) {
+//   try {
+//     const product = await ProductModel.findById(productId);
 
-    if (!product) {
-      throw new Error(`Product with ID ${productId} not found`);
-    }
+//     if (!product) {
+//       throw new Error(`Product with ID ${productId} not found`);
+//     }
 
-    product.quantity -= quantityToDecrease;
+//     // Decrease the quantity by the specified amount
+//     product.quantity -= quantityToDecrease;
 
-    await product.save();
-  } catch (error) {
-    throw error;
-  }
-}
+//     await product.save();
+//   } catch (error) {
+//     throw error;
+//   }
+// }
