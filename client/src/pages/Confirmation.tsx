@@ -38,7 +38,7 @@ function Confirmation() {
           <Text>Email: {formData.email}</Text>
           <Text>Address: {formData.adress}</Text>
           <Text>Zip Code: {formData.zipCode}</Text>
-          <Text>Phone nr: {formData.mobileNr}</Text>
+          <Text>Phone nr: {formData.phoneNumber}</Text>
           <Text>City: {formData.city}</Text>
           <Divider mt="md" mb="sm" size="xs" />
           <Title mb="xs" order={2}>
