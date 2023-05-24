@@ -5,11 +5,11 @@ import { HeaderResponsive, HeaderResponsiveProps } from './components/Navbar';
 function App() {
   const headerLinks: HeaderResponsiveProps['links'] = [
     { link: '/', label: 'All Products' },
-    { link: '/faq', label: 'Pens' },
-    { link: '/contact', label: 'Notebooks & Journals' },
-    { link: '/contact', label: 'Cards' },
-    { link: '/contact', label: 'Calendars & Planners' },
-    { link: '/contact', label: 'Accessories' },
+    { link: '/pens', label: 'Pens' },
+    { link: '/notebooks', label: 'Notebooks & Journals' },
+    { link: '/cards', label: 'Cards' },
+    { link: '/calendars', label: 'Calendars & Planners' },
+    { link: '/accessories', label: 'Accessories' },
   ];
 
   const footerLinks = [

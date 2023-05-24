@@ -6,7 +6,10 @@ import {
 } from 'react-router-dom';
 import App from './App';
 import './index.css';
+import { Accessories } from './pages/Accessories';
 import Admin from './pages/Admin';
+import { Calendars } from './pages/Calendar';
+import { Cards } from './pages/Cards';
 import Cart from './pages/Cart';
 import Confirmation from './pages/Confirmation';
 import CreateAccount from './pages/CreateAccount';
@@ -23,8 +26,11 @@ export const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index element={<Home />} />
-      <Route path="/faq" element={<Pens />} />
-      <Route path="/contact" element={<Notebooks />} />
+      <Route path="/pens" element={<Pens />} />
+      <Route path="/notebooks" element={<Notebooks />} />
+      <Route path="/cards" element={<Cards />} />
+      <Route path="/calendars" element={<Calendars />} />
+      <Route path="/accessories" element={<Accessories />} />
       <Route path="/product/:id" element={<ProductDetails />} />
       <Route path="/checkout" element={<Cart />} />
       <Route path="/admin" element={<Admin />} />
