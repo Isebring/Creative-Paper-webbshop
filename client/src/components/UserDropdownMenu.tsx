@@ -7,12 +7,15 @@ import {
   IconSettings,
   IconUser,
   IconUserCircle,
+  IconUserShield,
 } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUserContext } from '../contexts/UseUserContext';
+import { useUser } from '../contexts/UserContext';
 
 function UserDropdownMenu() {
+  const { user: loggedInUser } = useUser();
   const { logout, user } = useUserContext();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
@@ -47,6 +50,14 @@ function UserDropdownMenu() {
             </Menu.Item>
             <Menu.Divider />
             <Menu.Item icon={<IconUser size={14} />}>My account</Menu.Item>
+            {loggedInUser?.isAdmin && (
+              <Menu.Item
+                icon={<IconUserShield size={14} />}
+                onClick={() => navigate('/admin')}
+              >
+                Admin
+              </Menu.Item>
+            )}
             <Menu.Item icon={<IconSettings size={14} />}>Settings</Menu.Item>
             <Menu.Divider />
             <Menu.Item
