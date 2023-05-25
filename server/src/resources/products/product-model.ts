@@ -1,7 +1,7 @@
 import { InferSchemaType, Schema, model } from 'mongoose';
 
 const productSchema = new Schema({
-  _id: { type: String, required: true }, // mongodbId
+  // _id: { type: String, required: true }, // mongodbId
   title: { type: String, required: true },
   description: { type: String, required: true },
   summary: { type: String, required: true },

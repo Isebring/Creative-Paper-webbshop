@@ -3,7 +3,7 @@ GET http://localhost:3000/api/products
 Content-Type:  application/json
 
 ### GET specific
-GET http://localhost:3000/api/products/646c89ff625c6e08624dfe39
+GET http://localhost:3000/api/products/646c89ff625c6e08624dfe38
 Content-Type:  application/json
 
 ### GET created 

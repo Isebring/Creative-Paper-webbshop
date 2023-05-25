@@ -16,7 +16,7 @@ import {
   IconUserStar,
 } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Autoplay, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
@@ -26,40 +26,29 @@ import { useShoppingCart } from '../contexts/UseShoppingCart';
 
 function ProductDetails() {
   const { getProductById } = useProduct();
-  const { _id = '' } = useParams();
-  const { pathname } = useLocation();
+  const { _id } = useParams<{ _id: string }>();
   const { increaseCartQuantity } = useShoppingCart();
-  // const { products } = useContext(ProductContext);
   const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(true);
 
   const goBack = () => {
     window.history.back();
   };
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      const product = await getProductById(_id);
-      console.log(_id, product);
-      if (!product) {
-        return null;
-      }
+    if (_id) {
+      const fetchSingleProduct = async () => {
+        const fetchedProduct = await getProductById(_id);
+        if (fetchedProduct) {
+          setProduct(fetchedProduct);
+        }
+      };
 
-      if (product) {
-        setProduct(product);
-      }
-      setLoading(false);
-    };
+      fetchSingleProduct();
+    }
+  }, [_id, getProductById]);
 
-    fetchProduct();
-  }, [getProductById, _id]);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
+  if (!product) {
+    return <div>Sorry! The product was not found.</div>;
   }
 
   if (!product) {
@@ -87,7 +76,7 @@ function ProductDetails() {
       <Flex direction={{ base: 'column', sm: 'row' }}>
         <Card sx={{ flex: 1 }}>
           <Title align="center" mb={50} data-cy="product-title">
-            {product?.title}
+            {product.title}
           </Title>
           <Box sx={{ display: 'flex' }}>
             <Box

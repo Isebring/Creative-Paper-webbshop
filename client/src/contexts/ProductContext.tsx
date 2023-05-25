@@ -23,7 +23,7 @@ interface ProductContextType {
 
 export const ProductContext = createContext<ProductContextType>({
   products: null,
-  getProductById: async (_id: string) => null,
+  getProductById: () => Promise.resolve(null),
   addProduct: () => {},
   deleteProduct: () => {},
   updateProduct: () => {},
@@ -46,7 +46,6 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
         const data = await response.json();
         setProducts(data);
         setLoading(false);
-        // console.log('Products fetched:', data);
       } catch (error) {
         console.error('Error fetching products:', error);
         setLoading(false);
@@ -58,10 +57,11 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
 
   async function getProductById(_id: string): Promise<Product | null> {
     try {
-      console.log('Fetching product with id:', _id);
       const response = await fetch(`/api/products/${_id}`);
+      console.log('getProductById', _id);
       if (response.ok) {
         const data = await response.json();
+        console.log('varför är det wildflowers?? Ingen vet', data);
         return data;
       } else {
         throw new Error('Product not found');

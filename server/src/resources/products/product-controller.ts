@@ -11,10 +11,9 @@ export async function getAllProducts(req: Request, res: Response) {
 
 export async function getProductById(req: Request, res: Response) {
   try {
-    const productId = req.body._id;
-    const product = await ProductModel.findOne(productId);
+    const productId = req.params.id;
+    const product = await ProductModel.findById(productId);
     if (!product) {
-      console.log('varför??');
       return res.status(404).json({ message: 'Product not found' });
     }
     return res.status(200).json(product);
@@ -32,7 +31,7 @@ export async function createProduct(
   const incomingProduct = req.body;
 
   const productValidationSchema = yup.object({
-    _id: yup.string().required(),
+    // _id: yup.string().required(),
     title: yup.string().trim().min(2).required(),
     description: yup.string().trim().min(5).required(),
     summary: yup.string().trim().min(3).required(),
