@@ -1,25 +1,33 @@
-import { Box, Button, Container, Flex, Group, MediaQuery, Paper, Title } from "@mantine/core";
-import { useEffect } from "react";
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  MediaQuery,
+  Paper,
+  Title,
+} from '@mantine/core';
+import { useEffect } from 'react';
 import { useUser } from '../contexts/UserContext';
 
 export function AdminUserControl() {
-    const { users, updateUserRole, getAllUsers } = useUser();
+  const { users, updateUserRole, getAllUsers } = useUser();
 
-    const handleMakeAdmin = async (userId: string, isAdmin: boolean) => {
-        await updateUserRole(userId, isAdmin);
-      };
+  const handleMakeAdmin = async (userId: string, isAdmin: boolean) => {
+    await updateUserRole(userId, isAdmin);
+  };
 
-      const sortedUsers = users?.sort((a, b) => {
-        return a.email.localeCompare(b.email);
-      });
+  // const sortedUsers = users?.sort((a, b) => {
+  //   return a.email.localeCompare(b.email);
+  // });
 
-    useEffect(() => {
-        console.log('Calling getAllUsers...');
-        getAllUsers();
-      }, [getAllUsers]);
-      
-    return(
-        <Container size="xl">
+  useEffect(() => {
+    console.log('Calling getAllUsers...');
+    getAllUsers();
+  }, []);
+
+  return (
+    <Container size="xl">
       <Box
         sx={{
           display: 'flex',
@@ -28,8 +36,8 @@ export function AdminUserControl() {
         }}
       >
         <Title>User management</Title>
-        {sortedUsers &&
-          sortedUsers.map((user) => (
+        {users &&
+          users.map((user) => (
             <MediaQuery
               key={user._id}
               query="(max-width: 500px)"
@@ -46,21 +54,19 @@ export function AdminUserControl() {
                     },
                   }}
                 >
-                 
-                  <Group>
-                    <Button
-                      variant="outline"
-                      onClick={() => handleMakeAdmin(user._id, !user.isAdmin)}
-                      color={user.isAdmin ? 'red' : 'green'}
-                    >
-                      {user.isAdmin ? 'Remove Admin' : 'Make Admin'}
-                    </Button>
-                  </Group>
+                  {user.email}
+                  <Button
+                    variant="outline"
+                    onClick={() => handleMakeAdmin(user._id, !user.isAdmin)}
+                    color={user.isAdmin ? 'red' : 'green'}
+                  >
+                    {user.isAdmin ? 'Remove Admin' : 'Make Admin'}
+                  </Button>
                 </Flex>
               </Paper>
             </MediaQuery>
           ))}
       </Box>
     </Container>
-    )
+  );
 }

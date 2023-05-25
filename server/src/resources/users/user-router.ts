@@ -4,14 +4,15 @@ import isAdmin from '../../middlewares/isAdmin';
 import {
   getAllUsers,
   getLoggedInUser,
-  loginUser, logoutUser,
+  loginUser,
+  logoutUser,
   registerUser,
-  updateUserRole
+  updateUserRole,
 } from './user-controller';
 
 const userRouter = express
   .Router()
-  .get('/api/users', isAdmin, getAllUsers)
+  .get('/api/users', getAllUsers)
   .post('/api/users/register', registerUser)
   .post('/api/users/login', loginUser)
   .post('/api/users/logout', logoutUser)
