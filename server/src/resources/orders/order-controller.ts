@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import * as Yup from 'yup';
+import { ProductModel } from '../products/product-model';
 import { UserModel } from '../users/user-model';
 import { OrderModel } from './order-model';
 import orderValidationSchema from './order-validation';
@@ -31,12 +32,28 @@ export async function createOrder(req: Request, res: Response) {
       return;
     }
 
-    // TODO: Hämta ut produkterna från databasen och verifiera att de finns och sätt rätt pris
+    // Process each orderItem to include price and calculate total price
+    const orderItems = [];
+    let totalPrice = 0;
+    for (const item of validatedBody.orderItems) {
+      const product = await ProductModel.findById(item.product);
+      if (!product) {
+        res.status(404).json('Product not found');
+        return;
+      }
+      const price = product.price;
+      const totalItemPrice = price * item.quantity;
+      orderItems.push({ ...item, price: totalItemPrice }); // price here is total price for this item
+      totalPrice += totalItemPrice;
+    }
 
     // Create the order with the associated user
     const orderData = {
       user: user._id,
-      ...validatedBody,
+      orderItems,
+      totalPrice,
+      deliveryAddress: validatedBody.deliveryAddress, // assuming deliveryAddress is part of the request body
+      status: 'in progress', // assuming the status is always 'in progress' when order is first created
     };
     const order = new OrderModel(orderData);
     const savedOrder = await order.save();
