@@ -7,6 +7,7 @@
     "test": "vitest -c tests/vitest.config.ts"
   },
   "dependencies": {
+    "@esbuild/darwin-x64": "^0.17.19",
     "argon2": "^0.30.3",
     "busboy": "^1.6.0",
     "cookie-session": "^2.0.0",
