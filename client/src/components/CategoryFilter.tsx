@@ -63,6 +63,7 @@ const Item = forwardRef<HTMLDivElement, SelectItemProps>(
 interface CategoryFilterProps {
   products: Product[];
   setSelectedCategories: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedCategories: string[];
 }
 
 const CategoryFilter: React.FC<CategoryFilterProps> = ({

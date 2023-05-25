@@ -5,5 +5,5 @@ export const categoryData = [
   { value: 'cards', label: 'Cards' },
   { value: 'calendars', label: 'Calendars' },
   { value: 'planners', label: 'Planners' },
-  { value: 'desk-accessories', label: 'Desk accessories' },
+  { value: 'accessories', label: 'Accessories' },
 ];
