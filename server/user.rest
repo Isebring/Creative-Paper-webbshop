@@ -37,7 +37,6 @@ Content-Type: application/json
       "quantity": 1
     }
   ],
-    "totalPrice": 1000,
     "deliveryAddress": {
     "fullName": "Eleanor Shellstrop",
     "email": "eleanor.shellstrop@example.com",
