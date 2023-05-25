@@ -1,4 +1,11 @@
-import { Box, Button, Group, MultiSelect, TextInput } from '@mantine/core';
+import {
+  Box,
+  Button,
+  FileInput,
+  Group,
+  MultiSelect,
+  TextInput,
+} from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +22,7 @@ interface ProductFormProps {
 }
 
 const schema = Yup.object().shape({
-  image: Yup.string().url('Invalid URL').required('Image URL is required'),
+  imageId: Yup.string().required('Image is required'),
   title: Yup.string()
     .min(2, 'Title should have at least 2 letters')
     .required('Title is required'),
@@ -43,6 +50,7 @@ function ProductForm({
     initialValues: {
       id: '',
       image: '',
+      imageId: '',
       title: '',
       description: '',
       price: null as never,
@@ -75,6 +83,14 @@ function ProductForm({
     navigate('/admin');
   };
 
+  const handleImageUpload = async (file: File | null) => {
+    if (!file) return;
+    // Skapa FormData och lägg till filen
+    // Skicka till API
+    // Spara ID i formet
+    form.setFieldValue('imageId', '1234');
+  };
+
   return (
     <Box maw={300} mx="auto">
       <form
@@ -90,11 +106,12 @@ function ProductForm({
           data-cy="product-title"
           errorProps={{ 'data-cy': 'product-title-error' }}
         />
-        <TextInput
+        <FileInput
           withAsterisk
           label="Image URL"
           placeholder="https://www.image.com/image1.png"
-          {...form.getInputProps('image')}
+          {...form.getInputProps('imageId')}
+          onChange={handleImageUpload}
           data-cy="product-image"
           errorProps={{ 'data-cy': 'product-image-error' }}
         />
