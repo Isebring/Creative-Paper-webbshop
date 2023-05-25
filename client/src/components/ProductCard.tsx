@@ -13,7 +13,8 @@ import { notifications } from '@mantine/notifications';
 import { IconShoppingCartPlus } from '@tabler/icons-react';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Product, useProduct } from '../contexts/ProductContext';
+import { Product } from '../contexts/ProductContext';
+import { useProductContext } from '../contexts/UseProductContext';
 import { useShoppingCart } from '../contexts/UseShoppingCart';
 
 type ProductCardProps = {
@@ -26,7 +27,7 @@ type ProductCardProps = {
 const ProductCard: React.FC<ProductCardProps> = ({ productId }) => {
   const theme = useMantineTheme();
   const { increaseCartQuantity } = useShoppingCart();
-  const { products } = useProduct();
+  const { products } = useProductContext();
 
   // Find the product by ID in the products array
   const product = products?.find((product) => product._id === productId);
