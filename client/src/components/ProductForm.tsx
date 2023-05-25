@@ -10,7 +10,7 @@ import { useForm, yupResolver } from '@mantine/form';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
-import { Product } from '../../data';
+import { Product } from '../contexts/ProductContext';
 import generateID from '../utils/generateID';
 import { categoryData } from './CategoryData';
 
@@ -48,7 +48,7 @@ function ProductForm({
   const form = useForm<Product>({
     validate: yupResolver(schema),
     initialValues: {
-      id: '',
+      _id: '',
       image: '',
       imageId: '',
       title: '',
@@ -71,13 +71,13 @@ function ProductForm({
   const handleSubmit = (values: Product) => {
     const editedProduct = {
       ...values,
-      id: product?.id || '',
+      id: product?._id || '',
       category: values.category || [],
     };
     if (isEditing) {
       onSubmit(editedProduct);
     } else {
-      addProduct({ ...editedProduct, id: generateID() });
+      addProduct({ ...editedProduct, _id: generateID() });
     }
     form.reset();
     navigate('/admin');

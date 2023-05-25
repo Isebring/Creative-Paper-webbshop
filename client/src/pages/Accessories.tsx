@@ -1,17 +1,14 @@
 import { Button, Container, Group, SimpleGrid } from '@mantine/core';
 import { useContext, useEffect, useState } from 'react';
-import { Product } from '../../data/index';
 import CategoryFilter from '../components/CategoryFilter';
 import { PageHero } from '../components/PageHero';
 import ProductCard from '../components/ProductCard';
-import { ProductContext } from '../contexts/ProductContext';
+import { Product, ProductContext } from '../contexts/ProductContext';
 
 export function Accessories() {
   const { products } = useContext(ProductContext);
   const [sortDirection, setSortDirection] = useState('');
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([
-    'accessories',
-  ]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [sortedProducts, setSortedProducts] = useState(products);
   const [activeButton, setActiveButton] = useState('');
 
@@ -77,11 +74,13 @@ export function Accessories() {
         >
           Sort by highest price
         </Button>
-        <CategoryFilter
-          products={products}
-          selectedCategories={selectedCategories}
-          setSelectedCategories={setSelectedCategories}
-        />
+        {products && (
+          <CategoryFilter
+            products={products}
+            selectedCategories={selectedCategories}
+            setSelectedCategories={setSelectedCategories}
+          />
+        )}
       </Group>
       <SimpleGrid
         cols={3}
@@ -94,10 +93,11 @@ export function Accessories() {
       >
         {sortedProducts.map((product: Product) => (
           <ProductCard
-            key={product.id}
+            key={product._id}
             product={product}
             sortedProducts={sortedProducts}
             sortDirection={sortDirection === 'ascending' ? 'lowest' : 'highest'}
+            productId={''}
           />
         ))}
       </SimpleGrid>

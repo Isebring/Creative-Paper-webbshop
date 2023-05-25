@@ -1,7 +1,7 @@
 import { Box, Button, Card, Group, Image, Text, Title } from '@mantine/core';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Product } from '../../data/index';
+import { Product } from '../contexts/ProductContext';
 
 interface Props {
   product: Product;

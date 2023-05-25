@@ -24,7 +24,7 @@ function Home() {
 
     if (selectedCategories.length > 0) {
       sorted = sorted.filter((product) =>
-        product.category.some((category) =>
+        product.category.some((category: string) =>
           selectedCategories.includes(category),
         ),
       );

@@ -9,12 +9,13 @@ export interface Product {
   description: string;
   summary: string[];
   price: number;
+  category: string[];
   rating: number;
   usersRated: number;
 }
 
 interface ProductContextType {
-  products: Product[] | null;
+  products: Product[];
   getProductById: (_id: string) => Promise<Product | null>;
   addProduct: (product: Product) => void;
   deleteProduct: (_id: string) => void;
@@ -22,7 +23,7 @@ interface ProductContextType {
 }
 
 export const ProductContext = createContext<ProductContextType>({
-  products: null,
+  products: [],
   getProductById: () => Promise.resolve(null),
   addProduct: () => {},
   deleteProduct: () => {},
@@ -61,7 +62,6 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
       console.log('getProductById', _id);
       if (response.ok) {
         const data = await response.json();
-        console.log('varför är det wildflowers?? Ingen vet', data);
         return data;
       } else {
         throw new Error('Product not found');

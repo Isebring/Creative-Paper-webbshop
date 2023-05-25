@@ -1,12 +1,15 @@
 import { Box, Button, Group, Image, Input, Text } from '@mantine/core';
 import { IconMinus, IconPlus } from '@tabler/icons-react';
 import { useContext } from 'react';
-import { CartItem } from '../../data/index';
-import { ProductContext } from '../contexts/ProductContext';
+import { Product, ProductContext } from '../contexts/ProductContext';
 import { useShoppingCart } from '../contexts/UseShoppingCart';
 
 interface Props {
   cartItem: CartItem;
+}
+
+export interface CartItem extends Product {
+  quantity: number;
 }
 
 function CartProduct({ cartItem }: Props) {
