@@ -93,10 +93,11 @@ export function Notebooks() {
       >
         {sortedProducts.map((product: Product) => (
           <ProductCard
-            key={product.id}
+            key={product._id}
             product={product}
             sortedProducts={sortedProducts}
             sortDirection={sortDirection === 'ascending' ? 'lowest' : 'highest'}
+            productId={''}
           />
         ))}
       </SimpleGrid>

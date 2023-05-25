@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 export interface Product {
   _id: string;
   image: string;
+  imageId: string;
   secondImage: string;
   title: string;
   description: string;
