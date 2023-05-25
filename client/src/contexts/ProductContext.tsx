@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
 export interface Product {
   _id: string;
@@ -30,8 +30,6 @@ export const ProductContext = createContext<ProductContextType>({
   deleteProduct: () => {},
   updateProduct: () => {},
 });
-
-export const useProduct = () => useContext(ProductContext);
 
 export interface ProductProviderProps {
   children: React.ReactNode;

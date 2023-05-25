@@ -21,11 +21,12 @@ import { Autoplay, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import 'swiper/swiper.min.css';
-import { Product, useProduct } from '../contexts/ProductContext';
+import { Product } from '../contexts/ProductContext';
+import { useProductContext } from '../contexts/UseProductContext';
 import { useShoppingCart } from '../contexts/UseShoppingCart';
 
 function ProductDetails() {
-  const { getProductById } = useProduct();
+  const { getProductById } = useProductContext();
   const { _id } = useParams<{ _id: string }>();
   const { increaseCartQuantity } = useShoppingCart();
   const [product, setProduct] = useState<Product | null>(null);
