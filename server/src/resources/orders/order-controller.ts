@@ -9,8 +9,8 @@ export async function getOrders(req: Request, res: Response) {
   // res.status(200).json(products);
 }
 export async function getAllOrders(req: Request, res: Response) {
-  // const products = await ProductModel.find();
-  // res.status(200).json(products);
+  const products = await OrderModel.find({}).populate('orderItems.product');
+  res.status(200).json(products);
 }
 
 export async function createOrder(req: Request, res: Response) {
@@ -30,6 +30,8 @@ export async function createOrder(req: Request, res: Response) {
       res.status(404).json('User not found');
       return;
     }
+
+    // TODO: Hämta ut produkterna från databasen och verifiera att de finns och sätt rätt pris
 
     // Create the order with the associated user
     const orderData = {

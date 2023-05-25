@@ -1,4 +1,5 @@
-import { InferSchemaType, Schema, model } from 'mongoose';
+import { InferSchemaType, Schema, Types, model } from 'mongoose';
+import { Product } from '../products/product-model';
 
 const orderItemSchema = new Schema(
   {
@@ -14,12 +15,14 @@ const orderItemSchema = new Schema(
   },
   {
     _id: false, // Ska MongoDB ge ett id till varje orderItem?!
+    toJSON: { virtuals: true },
   },
 );
 // Virtual property for price
 orderItemSchema.virtual('price').get(function () {
   // Calculate the price based on the product or any other logic
-  return this.quantity * 1; // Replace with your logic
+  if (Types.ObjectId.isValid(this.product)) return 0;
+  return this.quantity * (this.product as unknown as Product).price; // Replace with your logic
 });
 
 const orderSchema = new Schema(
