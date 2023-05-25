@@ -1,4 +1,4 @@
-import { Button, Container, Group, SimpleGrid, Title } from '@mantine/core';
+import { Button, Container, Flex, Group, SimpleGrid, Title } from '@mantine/core';
 import { IconShieldPlus } from '@tabler/icons-react';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
@@ -10,10 +10,16 @@ function AdminProductManagement() {
 
   return (
     <Container size="xl">
-      <Title mb="lg" ta="center">
-        Admin - Product Management
+      <Flex
+      justify="space-between"
+      align="center"
+      mt="xl"
+      mb="sm"
+      >
+      <Title>
+        Product Management
       </Title>
-      <Group position="center" mb="xl">
+      <Group position="center">
         <Link to="/admin/product/new" data-cy="admin-add-product">
           <Button
             leftIcon={<IconShieldPlus size="1.2rem" />}
@@ -24,6 +30,7 @@ function AdminProductManagement() {
           </Button>
         </Link>
       </Group>
+      </Flex>
       <SimpleGrid
         cols={3}
         spacing="xl"

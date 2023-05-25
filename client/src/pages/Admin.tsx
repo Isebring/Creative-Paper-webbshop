@@ -1,4 +1,4 @@
-import { Box, Button, Container } from '@mantine/core';
+import { Box, Button, Container, Title } from '@mantine/core';
 import { useState } from 'react';
 import AdminOrderTable from '../components/AdminOrderTable';
 import AdminProductManagement from '../components/AdminProductManagement';
@@ -10,6 +10,7 @@ function Admin() {
       size="xl"
       sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
     >
+      <Title>My Page</Title>
       <Box>
         <Button
           onClick={() => setSelectedComponent('component1')}
