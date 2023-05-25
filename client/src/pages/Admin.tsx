@@ -2,6 +2,7 @@ import { Box, Button, Container, Title } from '@mantine/core';
 import { useState } from 'react';
 import AdminOrderTable from '../components/AdminOrderTable';
 import AdminProductManagement from '../components/AdminProductManagement';
+import { AdminUserControl } from '../components/AdminUserControl';
 
 function Admin() {
   const [selectedComponent, setSelectedComponent] = useState('');
@@ -40,7 +41,7 @@ function Admin() {
 
       {selectedComponent === 'component1' && <AdminProductManagement />}
       {selectedComponent === 'component2' && <AdminOrderTable />}
-      {selectedComponent === 'component3' && <AdminOrderTable />}
+      {selectedComponent === 'component3' && <AdminUserControl />}
       {selectedComponent === 'component4' && <AdminOrderTable />}
     </Container>
   );

@@ -74,6 +74,7 @@ export async function loginUser(req: Request, res: Response) {
   res.status(200).json(userResponse);
 }
 
+
 export async function getLoggedInUser(req: Request, res: Response) {
   // Create a new user object without the password field
   const userResponse = {
@@ -94,4 +95,21 @@ export function logoutUser(req: Request, res: Response) {
     `session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`,
   );
   res.sendStatus(204);
+}
+
+export async function updateUserRole(req: Request, res: Response) {
+  const userId = req.params.id;
+  const { isAdmin } = req.body;
+  const user = await UserModel.findById(userId);
+
+  if (!user) {
+    return res.status(404).json('User not found');
+  }
+  user.isAdmin = isAdmin;
+  await user.save();
+  return res.status(200).json({
+    _id: user._id,
+    email: user.email,
+    isAdmin: user.isAdmin,
+  });
 }
