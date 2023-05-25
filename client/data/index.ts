@@ -33,7 +33,7 @@ export const products: Product[] = [
     usersRated: 7,
     secondImage:
       'https://papier.imgix.net/https%3A%2F%2Fd1o785do8fyxgx.cloudfront.net%2Fproduct%2Fproduct_images%2Fimages%2F000%2F002%2F501%2Foriginal%2F1022_PMTEST_Wildflower_Generic_Resized.jpg%3F1665401173?ixlib=rb-3.2.1&w=700&auto=format%2Ccompress&s=8644b53c80f4bbf2f3287972643c3cf2',
-      category: ['',],
+    category: [''],
   },
   {
     _id: '2',
@@ -52,7 +52,7 @@ export const products: Product[] = [
     usersRated: 5,
     secondImage:
       'https://papier.imgix.net/https%3A%2F%2Fd1o785do8fyxgx.cloudfront.net%2Fproduct%2Fproduct_images%2Fimages%2F000%2F002%2F405%2Foriginal%2FFLOWERBED_RACINGGREEN_NOTEBOOK_0422_1.jpg%3F1660300078?ixlib=rb-3.2.1&w=700&auto=format%2Ccompress&s=97b04953ff2d1ba38a2470bf1addf16a',
-      category: ['',],
+    category: [''],
   },
   {
     _id: '3',
@@ -71,7 +71,7 @@ export const products: Product[] = [
     usersRated: 3,
     secondImage:
       'https://papier.imgix.net/https%3A%2F%2Fd1o785do8fyxgx.cloudfront.net%2Fproduct_type_name_images%2Fimages%2F000%2F000%2F799%2Foriginal%2FMeal-Planner-Lifestyle-Shot-1-PNG24.png%3F1658229327?ixlib=rb-3.2.1&w=700&auto=format%2Ccompress&s=f2af75991a7b407bb50993fa7fbf1386',
-      category: ['',],
+    category: [''],
   },
   {
     _id: '4',
@@ -90,7 +90,7 @@ export const products: Product[] = [
     usersRated: 8,
     secondImage:
       'https://papier.imgix.net/https%3A%2F%2Fd1o785do8fyxgx.cloudfront.net%2Fproduct%2Fproduct_images%2Fimages%2F000%2F003%2F032%2Foriginal%2FJAG_DESKPLANNER_0123_1.jpg%3F1671550462?ixlib=rb-3.2.1&w=700&auto=format%2Ccompress&s=8034d3ab27f72d1f104fcd22fbbe3d07',
-      category: ['',],
+    category: [''],
   },
   {
     _id: '5',
@@ -109,7 +109,7 @@ export const products: Product[] = [
     usersRated: 2,
     secondImage:
       'https://papier.imgix.net/https%3A%2F%2Fd1o785do8fyxgx.cloudfront.net%2Fproduct%2Fproduct_images%2Fimages%2F000%2F003%2F082%2Foriginal%2FNOSE_IN_BOOK_READING_JOURNAL_1.jpg%3F1675943202?ixlib=rb-3.2.1&w=700&auto=format%2Ccompress&s=1a275b48f47fd0912dcda9254cdc672f',
-      category: ['',],
+    category: [''],
   },
   {
     _id: '6',
@@ -128,6 +128,6 @@ export const products: Product[] = [
     usersRated: 4,
     secondImage:
       'https://papier.imgix.net/https%3A%2F%2Fd1o785do8fyxgx.cloudfront.net%2Fproduct_type_name_images%2Fimages%2F000%2F000%2F616%2Foriginal%2FWELLNESS_INSIDE_FILLED_0922_2.jpg%3F1667300139?ixlib=rb-3.2.1&w=700&auto=format%2Ccompress&s=daafd91868da4b00a3702387e1cafa6c',
-      category: ['',],
+    category: [''],
   },
 ];
