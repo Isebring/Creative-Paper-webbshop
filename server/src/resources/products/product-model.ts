@@ -1,7 +1,6 @@
 import { InferSchemaType, Schema, model } from 'mongoose';
 
 const productSchema = new Schema({
-  // _id: { type: String, required: true }, // mongodbId
   title: { type: String, required: true },
   description: { type: String, required: true },
   summary: { type: String, required: true },
@@ -17,5 +16,7 @@ const productSchema = new Schema({
   usersRated: { type: Number, required: true },
 });
 
-export type Product = InferSchemaType<typeof productSchema>;
+export type Product = InferSchemaType<typeof productSchema> & {
+  imageURL: string;
+};
 export const ProductModel = model('Product', productSchema);

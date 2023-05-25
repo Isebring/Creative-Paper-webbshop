@@ -1,15 +1,17 @@
-import { Button, Container, Group, SimpleGrid, Title } from '@mantine/core';
+import { Button, Container, Group, SimpleGrid } from '@mantine/core';
 import { useContext, useEffect, useState } from 'react';
+import { Product } from '../../data/index';
 import CategoryFilter from '../components/CategoryFilter';
-import HeroSlide from '../components/HeroSlide';
 import { PageHero } from '../components/PageHero';
 import ProductCard from '../components/ProductCard';
 import { ProductContext } from '../contexts/ProductContext';
 
-function Home() {
+export function Accessories() {
   const { products } = useContext(ProductContext);
   const [sortDirection, setSortDirection] = useState('');
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([
+    'accessories',
+  ]);
   const [sortedProducts, setSortedProducts] = useState(products);
   const [activeButton, setActiveButton] = useState('');
 
@@ -23,8 +25,8 @@ function Home() {
     }
 
     if (selectedCategories.length > 0) {
-      sorted = sorted.filter((product) =>
-        product.category.some((category) =>
+      sorted = sorted.filter((product: Product) =>
+        product.category.some((category: string) =>
           selectedCategories.includes(category),
         ),
       );
@@ -44,16 +46,12 @@ function Home() {
   }
 
   return (
-    <Container size="xl">
-      <HeroSlide />
+    <Container size="lg">
       <PageHero
-        title="Creative Paper"
-        line1="Unleash Your Creativity with Our Stationary,"
-        line2="Where Ideas Take Flight on Pages Delight!"
+        title="Accessories"
+        line1="The extra things"
+        line2="you didn't know you needed."
       />
-      <Title sx={{ marginBottom: '1rem' }} ta="center">
-        Browse our collection
-      </Title>
       <Group spacing={5} mb="md">
         <Button
           sx={{
@@ -81,8 +79,8 @@ function Home() {
         </Button>
         <CategoryFilter
           products={products}
-          setSelectedCategories={setSelectedCategories}
           selectedCategories={selectedCategories}
+          setSelectedCategories={setSelectedCategories}
         />
       </Group>
       <SimpleGrid
@@ -94,10 +92,9 @@ function Home() {
           { maxWidth: '36rem', cols: 1, spacing: 'sm' },
         ]}
       >
-        {sortedProducts?.map((product) => (
+        {sortedProducts.map((product: Product) => (
           <ProductCard
-            key={product._id}
-            productId={product._id}
+            key={product.id}
             product={product}
             sortedProducts={sortedProducts}
             sortDirection={sortDirection === 'ascending' ? 'lowest' : 'highest'}
@@ -107,5 +104,3 @@ function Home() {
     </Container>
   );
 }
-
-export default Home;
