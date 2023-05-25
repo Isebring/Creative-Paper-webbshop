@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { Types as MongooseTypes } from 'mongoose';
 import * as Yup from 'yup';
 import { ProductModel } from '../products/product-model';
 import { UserModel } from '../users/user-model';
@@ -52,8 +53,8 @@ export async function createOrder(req: Request, res: Response) {
       user: user._id,
       orderItems,
       totalPrice,
-      deliveryAddress: validatedBody.deliveryAddress, // assuming deliveryAddress is part of the request body
-      status: 'in progress', // assuming the status is always 'in progress' when order is first created
+      deliveryAddress: validatedBody.deliveryAddress,
+      status: 'in progress',
     };
     const order = new OrderModel(orderData);
     const savedOrder = await order.save();
@@ -84,8 +85,19 @@ export async function createOrder(req: Request, res: Response) {
 }
 
 export async function getOrderById(req: Request, res: Response) {
-  // const products = await ProductModel.find();
-  // res.status(200).json(products);
+  const orderId = req.params.id;
+  // Check if the provided postId is a valid ObjectId
+  if (!MongooseTypes.ObjectId.isValid(orderId)) {
+    return res.status(400).json({ error: `Invalid order ID.` });
+  }
+  const order = await OrderModel.findById(orderId).populate(
+    'orderItems.product',
+  );
+  if (order) {
+    res.status(200).json(order);
+  } else {
+    res.status(404).json(`/${orderId} not found.`);
+  }
 }
 
 export async function updateOrderStatus(req: Request, res: Response) {
