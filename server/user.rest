@@ -22,6 +22,12 @@ Content-Type: application/json
 ### LOGOUT USER
 POST  http://localhost:3000/api/users/logout
 
+### GET ALL ORDERS
+GET http://localhost:3000/api/orders/all
+
+### GET ORDER BY ID
+GET http://localhost:3000/api/orders/646f7f4f07d689e14bddaab3
+
 ### CREATE ORDER
 POST http://localhost:3000/api/orders
 Content-Type: application/json
