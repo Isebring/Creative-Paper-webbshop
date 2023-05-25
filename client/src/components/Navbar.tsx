@@ -120,6 +120,8 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
   const { cartQuantity } = useShoppingCart();
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const [logoType, setLogoType] = useState('dark');
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
+
   // const theme = useMantineTheme();
 
   const handleToggle = () => {
@@ -171,6 +173,15 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const headerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -209,84 +220,94 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
   }
 
   return (
-    <Header
-      height={HEADER_HEIGHT}
-      mb={headerRef.current ? (isBurgerVisible ? 200 : 0) : 0}
-      ref={headerRef}
-      className={classes.root}
-    >
-      <Container sx={{ maxWidth: 'none' }} className={classes.header}>
-        <MediaQuery
-          query="(max-width: 460px)"
-          styles={{
-            img: {
-              width: '6rem',
-              height: '6rem',
-            },
-          }}
-        >
-          <Link to="./" onClick={handleLinkClick}>
-            <Group spacing={1}>{logo}</Group>
-          </Link>
-        </MediaQuery>
-        <Group spacing={5} className={classes.links}>
-          {items}
-        </Group>
-        <Group spacing={1}>
-          <ToggleDarkAndLightMode />
-          <Link to="/admin" data-cy="admin-link">
-            <Button size="xs" variant="subtle" radius="xl">
-              <IconUserShield size="1.8rem" stroke="1.3" />
-            </Button>
-          </Link>
-          <UserDropdownMenu />
-          <Link to="/checkout">
-            <Button
-              onClick={handleLinkClick}
-              size="xs"
-              variant="subtle"
-              data-cy="cart-link"
-              radius="xl"
-            >
-              <IconShoppingCart size="1.8rem" stroke="1.2" />
-              {cartQuantity > 0 && (
-                <Box
-                  sx={{
-                    borderRadius: '10rem',
-                    background: 'black',
-                    color: 'white',
-                    width: '1.1rem',
-                    height: '1.1rem',
-                    position: 'absolute',
-                    bottom: 0,
-                    right: 0,
-                    display: 'flex',
-                    transform: 'translate(-30%, -95%)',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                  data-cy="cart-items-count-badge"
-                >
-                  {cartQuantity}
-                </Box>
-              )}
-            </Button>
-          </Link>
-        </Group>
-        <Burger
-          opened={opened}
-          onClick={toggle}
-          className={classes.burger}
-          size="sm"
-        />
-        <Transition transition="pop-top-right" duration={200} mounted={opened}>
-          {(styles) => (
-            <Paper className={classes.dropdown} withBorder style={styles}>
-              {items}
-            </Paper>
-          )}
-        </Transition>
-      </Container>
-    </Header>
+    <>
+      <Header
+        height={HEADER_HEIGHT}
+        mb={headerRef.current ? (isBurgerVisible ? 200 : 0) : 0}
+        ref={headerRef}
+        className={classes.root}
+      >
+        <Container sx={{ maxWidth: 'none' }} className={classes.header}>
+          <Group spacing={5}></Group>
+          <Group spacing={5}></Group>
+
+          <MediaQuery
+            query="(max-width: 460px)"
+            styles={{
+              img: {
+                width: '6rem',
+                height: '6rem',
+              },
+            }}
+          >
+            <Link to="./" onClick={handleLinkClick}>
+              <Group spacing={1}>{logo}</Group>
+            </Link>
+          </MediaQuery>
+          <Group spacing={1}>
+            <ToggleDarkAndLightMode />
+            <Link to="/admin" data-cy="admin-link">
+              <Button size="xs" variant="subtle" radius="xl">
+                <IconUserShield size="1.8rem" stroke="1.3" />
+              </Button>
+            </Link>
+            <UserDropdownMenu />
+            <Link to="/checkout">
+              <Button
+                onClick={handleLinkClick}
+                size="xs"
+                variant="subtle"
+                data-cy="cart-link"
+                radius="xl"
+              >
+                <IconShoppingCart size="1.8rem" stroke="1.2" />
+                {cartQuantity > 0 && (
+                  <Box
+                    sx={{
+                      borderRadius: '10rem',
+                      background: 'black',
+                      color: 'white',
+                      width: '1.1rem',
+                      height: '1.1rem',
+                      position: 'absolute',
+                      bottom: 0,
+                      right: 0,
+                      display: 'flex',
+                      transform: 'translate(-30%, -95%)',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                    data-cy="cart-items-count-badge"
+                  >
+                    {cartQuantity}
+                  </Box>
+                )}
+              </Button>
+            </Link>
+          </Group>
+          <Burger
+            opened={opened}
+            onClick={toggle}
+            className={classes.burger}
+            size="sm"
+          />
+          <Transition
+            transition="pop-top-right"
+            duration={200}
+            mounted={opened}
+          >
+            {(styles) => (
+              <Paper className={classes.dropdown} withBorder style={styles}>
+                {items}
+              </Paper>
+            )}
+          </Transition>
+        </Container>
+      </Header>
+
+      {isDesktop && (
+        <Box style={{ display: 'flex', justifyContent: 'center' }}>{items}</Box>
+      )}
+    </>
   );
 }
