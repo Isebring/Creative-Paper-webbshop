@@ -1,10 +1,9 @@
 import { Button, Container, Group, SimpleGrid } from '@mantine/core';
 import { useContext, useEffect, useState } from 'react';
-import { Product } from '../../data/index';
 import CategoryFilter from '../components/CategoryFilter';
 import { PageHero } from '../components/PageHero';
 import ProductCard from '../components/ProductCard';
-import { ProductContext } from '../contexts/ProductContext';
+import { Product, ProductContext } from '../contexts/ProductContext';
 
 export function Calendars() {
   const { products } = useContext(ProductContext);
@@ -17,6 +16,7 @@ export function Calendars() {
   const [activeButton, setActiveButton] = useState('');
 
   useEffect(() => {
+    if (products === null) return;
     let sorted = [...products];
 
     if (sortDirection === 'ascending') {
@@ -95,10 +95,11 @@ export function Calendars() {
       >
         {sortedProducts.map((product: Product) => (
           <ProductCard
-            key={product.id}
+            key={product._id}
             product={product}
             sortedProducts={sortedProducts}
             sortDirection={sortDirection === 'ascending' ? 'lowest' : 'highest'}
+            productId={''}
           />
         ))}
       </SimpleGrid>

@@ -1,10 +1,9 @@
 import { Button, Container, Group, SimpleGrid } from '@mantine/core';
 import { useContext, useEffect, useState } from 'react';
-import { Product } from '../../data';
 import CategoryFilter from '../components/CategoryFilter';
 import { PageHero } from '../components/PageHero';
 import ProductCard from '../components/ProductCard';
-import { ProductContext } from '../contexts/ProductContext';
+import { Product, ProductContext } from '../contexts/ProductContext';
 
 export function Notebooks() {
   const { products } = useContext(ProductContext);
@@ -94,10 +93,11 @@ export function Notebooks() {
       >
         {sortedProducts.map((product: Product) => (
           <ProductCard
-            key={product.id}
+            key={product._id}
             product={product}
             sortedProducts={sortedProducts}
             sortDirection={sortDirection === 'ascending' ? 'lowest' : 'highest'}
+            productId={''}
           />
         ))}
       </SimpleGrid>

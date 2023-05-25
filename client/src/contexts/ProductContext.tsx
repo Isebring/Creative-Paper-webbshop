@@ -1,29 +1,83 @@
-import { createContext, ReactNode } from 'react';
-import { products as mockedProducts, Product } from '../../data/index';
-import useLocalStorage from '../hooks/useLocalStorage';
+/* eslint-disable @typescript-eslint/no-empty-function */
+import { createContext, useEffect, useState } from 'react';
 
-interface ContextValue {
+export interface Product {
+  _id: string;
+  image: string;
+  imageId: string;
+  secondImage: string;
+  title: string;
+  description: string;
+  summary: string[];
+  price: number;
+  category: string[];
+  rating: number;
+  usersRated: number;
+}
+
+interface ProductContextType {
   products: Product[];
-  deleteProduct: (id: string) => void;
+  getProductById: (_id: string) => Promise<Product | null>;
   addProduct: (product: Product) => void;
+  deleteProduct: (_id: string) => void;
   updateProduct: (product: Product) => void;
 }
 
-export const ProductContext = createContext<ContextValue>(null as never);
+export const ProductContext = createContext<ProductContextType>({
+  products: [],
+  getProductById: () => Promise.resolve(null),
+  addProduct: () => {},
+  deleteProduct: () => {},
+  updateProduct: () => {},
+});
 
-interface Props {
-  children: ReactNode;
+export interface ProductProviderProps {
+  children: React.ReactNode;
 }
 
-function ProductProvider({ children }: Props) {
-  const [products, setProducts] = useLocalStorage<Product[]>(
-    'products',
-    mockedProducts,
-  );
+export const ProductProvider = ({ children }: ProductProviderProps) => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  function deleteProduct(id: string) {
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/api/products');
+        const data = await response.json();
+        setProducts(data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  async function getProductById(_id: string): Promise<Product | null> {
+    try {
+      const response = await fetch(`/api/products/${_id}`);
+      console.log('getProductById', _id);
+      if (response.ok) {
+        const data = await response.json();
+        return data;
+      } else {
+        throw new Error('Product not found');
+      }
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  }
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  function deleteProduct(_id: string) {
     setProducts((currentProducts) => {
-      return currentProducts.filter((product) => product.id !== id);
+      return currentProducts.filter((product) => product._id !== _id);
     });
   }
 
@@ -33,7 +87,7 @@ function ProductProvider({ children }: Props) {
 
   const updateProduct = (updatedProduct: Product) => {
     const newProducts = products.map((product) =>
-      product.id === updatedProduct.id ? updatedProduct : product,
+      product._id === updatedProduct._id ? updatedProduct : product,
     );
 
     setProducts(newProducts);
@@ -42,11 +96,17 @@ function ProductProvider({ children }: Props) {
 
   return (
     <ProductContext.Provider
-      value={{ products, deleteProduct, addProduct, updateProduct }}
+      value={{
+        products,
+        getProductById,
+        deleteProduct,
+        addProduct,
+        updateProduct,
+      }}
     >
       {children}
     </ProductContext.Provider>
   );
-}
+};
 
 export default ProductProvider;

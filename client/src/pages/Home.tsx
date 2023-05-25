@@ -24,7 +24,7 @@ function Home() {
 
     if (selectedCategories.length > 0) {
       sorted = sorted.filter((product) =>
-        product.category.some((category) =>
+        product.category.some((category: string) =>
           selectedCategories.includes(category),
         ),
       );
@@ -94,9 +94,10 @@ function Home() {
           { maxWidth: '36rem', cols: 1, spacing: 'sm' },
         ]}
       >
-        {sortedProducts.map((product) => (
+        {sortedProducts?.map((product) => (
           <ProductCard
-            key={product.id}
+            key={product._id}
+            productId={product._id}
             product={product}
             sortedProducts={sortedProducts}
             sortDirection={sortDirection === 'ascending' ? 'lowest' : 'highest'}

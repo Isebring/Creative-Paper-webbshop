@@ -8,7 +8,7 @@ import {
   rem,
 } from '@mantine/core';
 import { forwardRef, useState } from 'react';
-import { Product } from '../../data/index';
+import { Product } from '../contexts/ProductContext';
 import { categoryData } from './CategoryData';
 
 function Value({

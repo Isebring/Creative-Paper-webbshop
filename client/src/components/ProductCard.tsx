@@ -11,26 +11,38 @@ import {
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IconShoppingCartPlus } from '@tabler/icons-react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Product } from '../../data/index';
+import { Product } from '../contexts/ProductContext';
+import { useProductContext } from '../contexts/UseProductContext';
 import { useShoppingCart } from '../contexts/UseShoppingCart';
 
-export interface Props {
+type ProductCardProps = {
+  productId: string;
   product: Product;
-  sortDirection: 'lowest' | 'highest';
-  sortedProducts: Product[];
-}
+  sortedProducts?: Product[];
+  sortDirection?: string;
+};
 
-function ProductCard({ product }: Props) {
+const ProductCard: React.FC<ProductCardProps> = ({ productId }) => {
   const theme = useMantineTheme();
   const { increaseCartQuantity } = useShoppingCart();
-  const link = '/product/' + product.id;
+  const { products } = useProductContext();
+
+  // Find the product by ID in the products array
+  const product = products?.find((product) => product._id === productId);
+
+  if (!product) {
+    return <div>Loading...</div>;
+  }
+
+  const link = '/products/' + product._id;
 
   return (
     <>
       <Card shadow="xl" radius="lg" withBorder data-cy="product">
         <Card.Section>
-          <Link to={link} style={{ textDecoration: 'none', color: 'inherit' }}>
+          <Link to={link} style={{ textDecoration: 'none', color: 'inhFerit' }}>
             <Image src={product.image} height={300} fit="cover" />
             <Box pl="md" pr="md">
               <Group
@@ -74,7 +86,7 @@ function ProductCard({ product }: Props) {
               color: 'white',
             }}
             onClick={() => {
-              increaseCartQuantity(product.id);
+              increaseCartQuantity(product._id);
               notifications.show({
                 icon: <IconShoppingCartPlus />,
                 title: `${product.title}`,
@@ -113,12 +125,12 @@ function ProductCard({ product }: Props) {
             align="left"
             data-cy="product-price"
           >
-            ${product.price}
+            ${product?.price}
           </Title>
         </Group>
       </Card>
     </>
   );
-}
+};
 
 export default ProductCard;
