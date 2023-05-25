@@ -54,6 +54,10 @@ function AdminProductCard({ product, onDelete }: Props) {
                 {product.id}
               </Text>
             </Group>
+            <Group position="left" mt="sm" mb="md">
+              <Text color="dimmed">Quantity:</Text>
+              <Text color="dimmed">{/*product.quantity*/ 2}</Text>
+            </Group>
             <Text size="md" align="left">
               {product.description}
             </Text>
@@ -100,7 +104,7 @@ function AdminProductCard({ product, onDelete }: Props) {
             align="right"
             data-cy="product-price"
           >
-            {product.price}€
+            ${product.price}
           </Title>
         </Group>
       </Card>
