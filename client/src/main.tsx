@@ -25,12 +25,12 @@ export const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="/faq" element={<Faq />} />
       <Route path="/contact" element={<Contact />} />
-      <Route path="/product/:id" element={<ProductDetails />} />
+      <Route path="/products/:_id" element={<ProductDetails />} />
       <Route path="/checkout" element={<Cart />} />
       <Route path="/admin" element={<Admin />} />
-      <Route path="/admin/product/:id" element={<EditProduct />} />
-      <Route path="/admin/product/:id/edit" element={<EditProduct />} />
-      <Route path="/admin/product/new" element={<NewProduct />} />
+      <Route path="/admin/products/:_id" element={<EditProduct />} />
+      <Route path="/admin/products/:_id/edit" element={<EditProduct />} />
+      <Route path="/admin/products/new" element={<NewProduct />} />
       <Route path="/confirmation" element={<Confirmation />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/createaccount" element={<CreateAccount />} />

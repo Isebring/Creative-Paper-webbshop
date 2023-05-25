@@ -35,7 +35,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId }) => {
     return <div>Loading...</div>;
   }
 
-  const link = '/api/product/' + product._id;
+  const link = '/products/' + product._id;
 
   return (
     <>

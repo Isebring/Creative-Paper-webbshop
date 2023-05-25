@@ -15,24 +15,21 @@ import {
   IconStarFilled,
   IconUserStar,
 } from '@tabler/icons-react';
-import { useContext, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { Autoplay, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import 'swiper/swiper.min.css';
-import {
-  Product,
-  ProductContext,
-  useProduct,
-} from '../contexts/ProductContext';
+import { Product, useProduct } from '../contexts/ProductContext';
 import { useShoppingCart } from '../contexts/UseShoppingCart';
 
 function ProductDetails() {
   const { getProductById } = useProduct();
   const { _id = '' } = useParams();
+  const { pathname } = useLocation();
   const { increaseCartQuantity } = useShoppingCart();
-  const { products } = useContext(ProductContext);
+  // const { products } = useContext(ProductContext);
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -43,6 +40,11 @@ function ProductDetails() {
   useEffect(() => {
     const fetchProduct = async () => {
       const product = await getProductById(_id);
+      console.log(_id, product);
+      if (!product) {
+        return null;
+      }
+
       if (product) {
         setProduct(product);
       }
@@ -102,14 +104,14 @@ function ProductDetails() {
               }}
             >
               <IconStarFilled size="1.1rem" />
-              {product?.rating}
+              {product.rating}
             </Box>
             <IconUserStar
               style={{ marginRight: '.2rem' }}
               stroke="0.04rem"
               size="1.5rem"
             />
-            {product?.usersRated}
+            {product.usersRated}
           </Box>
           <Swiper
             spaceBetween={0}
@@ -122,16 +124,16 @@ function ProductDetails() {
           >
             <SwiperSlide>
               <Image
-                src={product?.image}
-                key={product?._id}
-                alt={product?.title}
+                src={product.image}
+                key={product._id}
+                alt={product.title}
                 fit="contain"
               />
             </SwiperSlide>
             <SwiperSlide>
               <Image
-                src={product?.secondImage}
-                alt={product?.title}
+                src={product.secondImage}
+                alt={product.title}
                 fit="contain"
               />
             </SwiperSlide>
@@ -147,11 +149,11 @@ function ProductDetails() {
             }}
           >
             <Title order={3} align="center">
-              About this {product?.title}
+              About this {product.title}
             </Title>
           </Box>
           <Text size="md" align="left" mt="md" data-cy="product-description">
-            {product?.description}
+            {product.description}
           </Text>
           <Group position="right">
             <Title
@@ -168,7 +170,7 @@ function ProductDetails() {
             mt="md"
             radius="md"
             onClick={() => {
-              increaseCartQuantity(product!._id);
+              increaseCartQuantity(product._id);
               notifications.show({
                 icon: <IconShoppingCartPlus />,
                 title: `${product?.title}`,
@@ -186,7 +188,7 @@ function ProductDetails() {
               mt="md"
               radius="md"
               onClick={() => {
-                increaseCartQuantity(product!._id);
+                increaseCartQuantity(product._id);
               }}
             >
               Buy now

@@ -10,10 +10,11 @@ export async function getAllProducts(req: Request, res: Response) {
 }
 
 export async function getProductById(req: Request, res: Response) {
-  const productId = req.params._id;
   try {
-    const product = await ProductModel.findById(productId);
+    const productId = req.body._id;
+    const product = await ProductModel.findOne(productId);
     if (!product) {
+      console.log('varför??');
       return res.status(404).json({ message: 'Product not found' });
     }
     return res.status(200).json(product);

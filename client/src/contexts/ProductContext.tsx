@@ -15,15 +15,15 @@ export interface Product {
 
 interface ProductContextType {
   products: Product[] | null;
-  getProductById: (id: string) => Promise<Product | null>;
+  getProductById: (_id: string) => Promise<Product | null>;
   addProduct: (product: Product) => void;
-  deleteProduct: (id: string) => void;
+  deleteProduct: (_id: string) => void;
   updateProduct: (product: Product) => void;
 }
 
 export const ProductContext = createContext<ProductContextType>({
   products: null,
-  getProductById: async (id: string) => null,
+  getProductById: async (_id: string) => null,
   addProduct: () => {},
   deleteProduct: () => {},
   updateProduct: () => {},
@@ -37,6 +37,7 @@ export interface ProductProviderProps {
 
 export const ProductProvider = ({ children }: ProductProviderProps) => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -44,9 +45,11 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
         const response = await fetch('/api/products');
         const data = await response.json();
         setProducts(data);
+        setLoading(false);
         // console.log('Products fetched:', data);
       } catch (error) {
         console.error('Error fetching products:', error);
+        setLoading(false);
       }
     };
 
@@ -55,6 +58,7 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
 
   async function getProductById(_id: string): Promise<Product | null> {
     try {
+      console.log('Fetching product with id:', _id);
       const response = await fetch(`/api/products/${_id}`);
       if (response.ok) {
         const data = await response.json();
@@ -68,9 +72,13 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
     }
   }
 
-  function deleteProduct(id: string) {
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  function deleteProduct(_id: string) {
     setProducts((currentProducts) => {
-      return currentProducts.filter((product) => product._id !== id);
+      return currentProducts.filter((product) => product._id !== _id);
     });
   }
 
