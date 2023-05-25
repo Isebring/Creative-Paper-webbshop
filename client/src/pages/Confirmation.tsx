@@ -12,10 +12,14 @@ function Confirmation() {
   const formData = lastOrder.cartProducts.find(
     (item): item is { formData: FormValues } => 'formData' in item,
   )?.formData;
+
   function calculateLastOrderTotal() {
+    if (!products) {
+      return;
+    }
     return lastOrder.cartProducts.reduce((total, item) => {
-      if ('id' in item) {
-        const product = products.find((i) => i.id === item.id);
+      if ('_id' in item) {
+        const product = products.find((i) => i._id === item._id);
         return total + (product?.price || 0) * item.quantity;
       }
       return total;
@@ -47,7 +51,7 @@ function Confirmation() {
           <List listStyleType="none">
             {lastOrder.cartProducts.map(
               (product, index) =>
-                'id' in product && (
+                '_id' in product && (
                   <List.Item key={index}>
                     {product.title} - ${product.price} - Quantity:{' '}
                     {product.quantity}

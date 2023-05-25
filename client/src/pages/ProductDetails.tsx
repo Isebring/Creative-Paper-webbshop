@@ -15,28 +15,42 @@ import {
   IconStarFilled,
   IconUserStar,
 } from '@tabler/icons-react';
-import { useContext, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Autoplay, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import 'swiper/swiper.min.css';
-import { ProductContext } from '../contexts/ProductContext';
+import { Product } from '../contexts/ProductContext';
+import { useProductContext } from '../contexts/UseProductContext';
 import { useShoppingCart } from '../contexts/UseShoppingCart';
 
 function ProductDetails() {
-  const { id } = useParams();
-  const { products } = useContext(ProductContext);
-  const product = products.find((p) => p.id === id);
+  const { getProductById } = useProductContext();
+  const { _id } = useParams<{ _id: string }>();
   const { increaseCartQuantity } = useShoppingCart();
+  const [product, setProduct] = useState<Product | null>(null);
 
   const goBack = () => {
     window.history.back();
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    if (_id) {
+      const fetchSingleProduct = async () => {
+        const fetchedProduct = await getProductById(_id);
+        if (fetchedProduct) {
+          setProduct(fetchedProduct);
+        }
+      };
+
+      fetchSingleProduct();
+    }
+  }, [_id, getProductById]);
+
+  if (!product) {
+    return <div>Sorry! The product was not found.</div>;
+  }
 
   if (!product) {
     return (
@@ -101,7 +115,7 @@ function ProductDetails() {
             <SwiperSlide>
               <Image
                 src={product.image}
-                key={product.id}
+                key={product._id}
                 alt={product.title}
                 fit="contain"
               />
@@ -146,10 +160,10 @@ function ProductDetails() {
             mt="md"
             radius="md"
             onClick={() => {
-              increaseCartQuantity(product.id);
+              increaseCartQuantity(product._id);
               notifications.show({
                 icon: <IconShoppingCartPlus />,
-                title: `${product.title}`,
+                title: `${product?.title}`,
                 message: 'has been added',
               });
             }}
@@ -164,7 +178,7 @@ function ProductDetails() {
               mt="md"
               radius="md"
               onClick={() => {
-                increaseCartQuantity(product.id);
+                increaseCartQuantity(product._id);
               }}
             >
               Buy now

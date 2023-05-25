@@ -1,7 +1,7 @@
 import { Box, Button, Card, Group, Image, Text, Title } from '@mantine/core';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Product } from '../../data/index';
+import { Product } from '../contexts/ProductContext';
 
 interface Props {
   product: Product;
@@ -9,7 +9,7 @@ interface Props {
 }
 
 function AdminProductCard({ product, onDelete }: Props) {
-  const edit = '/admin/product/' + product.id + '/edit';
+  const edit = '/admin/product/' + product._id + '/edit';
 
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
@@ -51,7 +51,7 @@ function AdminProductCard({ product, onDelete }: Props) {
             <Group position="left" mt="sm" mb="md">
               <Text color="dimmed">Product id:</Text>
               <Text color="dimmed" data-cy="product-id">
-                {product.id}
+                {product._id}
               </Text>
             </Group>
             <Text size="md" align="left">

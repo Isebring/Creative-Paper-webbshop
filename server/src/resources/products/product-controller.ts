@@ -10,12 +10,13 @@ export async function getAllProducts(req: Request, res: Response) {
 }
 
 export async function getProductById(req: Request, res: Response) {
-  const productId = req.params.id;
   try {
+    const productId = req.params.id;
     const product = await ProductModel.findById(productId);
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
+
     return res.status(200).json(product);
   } catch (error) {
     console.error(error);
@@ -31,7 +32,7 @@ export async function createProduct(
   const incomingProduct = req.body;
 
   const productValidationSchema = yup.object({
-    _id: yup.string().required(),
+    // _id: yup.string().required(),
     title: yup.string().trim().min(2).required(),
     description: yup.string().trim().min(5).required(),
     summary: yup.string().trim().min(3).required(),
@@ -69,7 +70,7 @@ export async function updateProduct(
   res: Response,
   next: NextFunction,
 ) {
-  const productId = req.params.id;
+  const productId = req.params._id;
   const product = await ProductModel.findById(productId);
 
   if (!product) {
@@ -112,7 +113,7 @@ export async function updateProduct(
 
 export async function deleteProduct(req: Request, res: Response) {
   try {
-    const productId = req.params.id;
+    const productId = req.params._id;
     const deletedProduct = await ProductModel.findById(productId);
 
     if (!deletedProduct) {

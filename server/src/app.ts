@@ -2,6 +2,7 @@ import cookieSession from 'cookie-session';
 import express from 'express';
 import 'express-async-errors';
 import errorHandler from './middlewares/error-handler';
+import imageRouter from './resources/images/image-router';
 import orderRouter from './resources/orders/order-router';
 import productRouter from './resources/products/product-router';
 import userRouter from './resources/users/user-router';
@@ -22,8 +23,8 @@ app.use(
 // Routes
 app.use(orderRouter);
 // app.use(categoryRouter);
+app.use(imageRouter);
 app.use(productRouter);
-// app.use(imageRouter);
 app.use(userRouter);
 
 // GLOBAL ERROR HANDLER

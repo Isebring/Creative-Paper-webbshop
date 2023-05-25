@@ -33,11 +33,11 @@ function Admin() {
           { maxWidth: '36rem', cols: 1, spacing: 'sm' },
         ]}
       >
-        {products.map((product) => (
+        {products?.map((product) => (
           <AdminProductCard
-            key={product.id}
+            key={product._id}
             product={product}
-            onDelete={() => deleteProduct(product.id)}
+            onDelete={() => deleteProduct(product._id)}
           />
         ))}
       </SimpleGrid>

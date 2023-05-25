@@ -8,7 +8,7 @@ import {
   rem,
 } from '@mantine/core';
 import { forwardRef, useState } from 'react';
-import { Product } from '../../data/index';
+import { Product } from '../contexts/ProductContext';
 import { categoryData } from './CategoryData';
 
 function Value({
@@ -63,6 +63,7 @@ const Item = forwardRef<HTMLDivElement, SelectItemProps>(
 interface CategoryFilterProps {
   products: Product[];
   setSelectedCategories: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedCategories: string[];
 }
 
 const CategoryFilter: React.FC<CategoryFilterProps> = ({
