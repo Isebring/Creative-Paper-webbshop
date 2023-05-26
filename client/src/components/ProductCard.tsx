@@ -42,7 +42,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId }) => {
     <>
       <Card shadow="xl" radius="lg" withBorder data-cy="product">
         <Card.Section>
-          <Link to={link} style={{ textDecoration: 'none', color: 'inhFerit' }}>
+          <Link to={link} style={{ textDecoration: 'none', color: 'inherit' }}>
             <Image src={product.image} height={300} fit="cover" />
             <Box pl="md" pr="md">
               <Group
