@@ -102,7 +102,7 @@ export async function getOrderById(req: Request, res: Response) {
 }
 
 // Update order status
-export async function updateOrderStatus(req: Request, res: Response) {
-  // const products = await ProductModel.find();
-  // res.status(200).json(products);
-}
+// export async function updateOrderStatus(req: Request, res: Response) {
+//   // const products = await ProductModel.find();
+//   // res.status(200).json(products);
+// }
