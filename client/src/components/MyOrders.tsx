@@ -2,7 +2,7 @@ import { Checkbox, Table } from '@mantine/core';
 import { useState } from 'react';
 
 function MyOrders() {
-  const [data, setData] = useState([
+  const [data] = useState([
     {
       id: 1,
       date: '2023-01-01',
@@ -31,14 +31,6 @@ function MyOrders() {
       status: false,
     },
   ]);
-
-  const handleStatusChange = (id: number) => {
-    setData((prevData) =>
-      prevData.map((row) =>
-        row.id === id ? { ...row, status: !row.status } : row,
-      ),
-    );
-  };
 
   const rows = data.map((row) => (
     <tr key={row.id}>

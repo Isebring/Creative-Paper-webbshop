@@ -18,7 +18,6 @@ import {
   IconMoonStars,
   IconShoppingCart,
   IconSunHigh,
-  IconUserShield,
 } from '@tabler/icons-react';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';

@@ -8,10 +8,11 @@ import {
   Title,
 } from '@mantine/core';
 import { useEffect } from 'react';
-import { useUser } from '../contexts/UserContext';
+import { useUserContext } from '../contexts/UseUserContext';
+import { User } from '../contexts/UserContext';
 
 export function AdminUserControl() {
-  const { users, updateUserRole, getAllUsers } = useUser();
+  const { users, updateUserRole, getAllUsers } = useUserContext();
 
   const handleMakeAdmin = async (userId: string, isAdmin: boolean) => {
     await updateUserRole(userId, isAdmin);
@@ -24,6 +25,7 @@ export function AdminUserControl() {
   useEffect(() => {
     console.log('Calling getAllUsers...');
     getAllUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -37,7 +39,7 @@ export function AdminUserControl() {
       >
         <Title>User management</Title>
         {users &&
-          users.map((user) => (
+          users.map((user: User) => (
             <MediaQuery
               key={user._id}
               query="(max-width: 500px)"

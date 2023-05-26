@@ -12,7 +12,7 @@ function Admin() {
       size="xl"
       sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
     >
-      <Title>My Page</Title>
+      <Title>My Account</Title>
       <Box>
         <Button
           onClick={() => setSelectedComponent('component1')}

@@ -1,4 +1,5 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
+import { useUserContext } from './UseUserContext';
 
 export interface User {
   email: string;
@@ -25,24 +26,30 @@ interface UserContextProps {
 export const UserContext = createContext<UserContextProps>({
   user: null,
   users: null,
-  setUsers: () => {},
+  setUsers: () => {
+    throw new Error('setUsers function not implemented');
+  },
   login: () => {
     return new Promise((_, reject) => {
       reject(new Error('Login function not implemented'));
     });
   },
   logout: () => Promise.resolve(),
-  register: async () => '',
-  getAllUsers: async () => {},
-  updateUserRole: async (_userId: string, _newRole: boolean) => {},
+  register: async () => {
+    throw new Error('register function not implemented');
+  },
+  getAllUsers: async () => {
+    throw new Error('getAllUsers function not implemented');
+  },
+  updateUserRole: async () => {
+    throw new Error('updateUserRole function not implemented');
+  },
 });
-
-export const useUser = () => useContext(UserContext);
 
 export const UserProvider = ({ children }: Props) => {
   const [user, setUser] = useState<User | null>(null);
   const [users, setUsers] = useState<User[] | null>(null);
-  const { user: loggedInUser } = useUser();
+  const { user: loggedInUser } = useUserContext();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -160,8 +167,6 @@ export const UserProvider = ({ children }: Props) => {
       });
 
       if (response.ok) {
-        const updatedUser = await response.json();
-
         if (users) {
           const updatedUsers = users.map((user) => {
             if (user._id === userId) {
