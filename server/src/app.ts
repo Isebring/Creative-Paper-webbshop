@@ -8,6 +8,8 @@ import productRouter from './resources/products/product-router';
 import userRouter from './resources/users/user-router';
 
 // const port = process.env.PORT || 3000;
+// console.log(process.env.NODE_ENV);
+// console.log(process.env.MONGODB_URI);
 
 export const app = express();
 
