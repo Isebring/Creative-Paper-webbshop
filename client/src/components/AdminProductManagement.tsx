@@ -4,7 +4,7 @@ import {
   Flex,
   Group,
   SimpleGrid,
-  Title
+  Title,
 } from '@mantine/core';
 import { IconShieldPlus } from '@tabler/icons-react';
 import { useContext } from 'react';
