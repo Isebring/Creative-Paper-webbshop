@@ -3,6 +3,7 @@ import { useState } from 'react';
 import AdminOrderTable from '../components/AdminOrderTable';
 import AdminProductManagement from '../components/AdminProductManagement';
 import { AdminUserControl } from '../components/AdminUserControl';
+import MyOrders from '../components/MyOrders';
 
 function Admin() {
   const [selectedComponent, setSelectedComponent] = useState('');
@@ -42,7 +43,7 @@ function Admin() {
       {selectedComponent === 'component1' && <AdminProductManagement />}
       {selectedComponent === 'component2' && <AdminOrderTable />}
       {selectedComponent === 'component3' && <AdminUserControl />}
-      {selectedComponent === 'component4' && <AdminOrderTable />}
+      {selectedComponent === 'component4' && <MyOrders />}
     </Container>
   );
 }

@@ -3,13 +3,13 @@ import {
 } from '@mantine/core';
 import { useState } from 'react';
 
-function AdminOrders() {
+function MyOrders() {
   const [data, setData] = useState ([
     {
       id: 1,
       date: '2023-01-01',
       orderId: '0001',
-      customer: 'John Doe',
+      name: 'Jane Smith',
       amount: 5,
       price: '$100',
       status: false, 
@@ -18,7 +18,7 @@ function AdminOrders() {
       id: 2,
       date: '2023-02-01',
       orderId: '0002',
-      customer: 'Jane Smith',
+      name: 'Jane Smith',
       amount: 3,
       price: '$60',
       status: false, 
@@ -27,7 +27,7 @@ function AdminOrders() {
       id: 3,
       date: '2023-03-01',
       orderId: '0003',
-      customer: 'Bob Johnson',
+      name: 'Jane Smith',
       amount: 4,
       price: '$80',
       status: false, 
@@ -46,7 +46,7 @@ function AdminOrders() {
     <tr key={row.id}>
       <td>{row.date}</td>
       <td>{row.orderId}</td>
-      <td>{row.customer}</td>
+      <td>{row.name}</td>
       <td>{row.amount}</td>
       <td>{row.price}</td>
       <td>
@@ -65,7 +65,7 @@ function AdminOrders() {
         <tr>
           <th>Date</th>
           <th>Order Id</th>
-          <th>Customer</th>
+          <th>Name</th>
           <th>Amount</th>
           <th>Price</th>
           <th>Status</th>
@@ -76,4 +76,5 @@ function AdminOrders() {
   );
 }
 
-export default AdminOrders;
+export default MyOrders;
+
