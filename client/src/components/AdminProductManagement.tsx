@@ -4,7 +4,7 @@ import {
   Flex,
   Group,
   SimpleGrid,
-  Title,
+  Title
 } from '@mantine/core';
 import { IconShieldPlus } from '@tabler/icons-react';
 import { useContext } from 'react';
@@ -42,9 +42,9 @@ function AdminProductManagement() {
       >
         {products.map((product) => (
           <AdminProductCard
-            key={product.id}
+            key={product._id}
             product={product}
-            onDelete={() => deleteProduct(product.id)}
+            onDelete={() => deleteProduct(product._id)}
           />
         ))}
       </SimpleGrid>
