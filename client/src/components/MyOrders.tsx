@@ -52,7 +52,7 @@ import { useState } from 'react';
         <td>
         <Checkbox
             checked={row.status}
-            onChange={() => handleStatusChange(row.id)}
+            disabled={true}
             color="green"
           />
         </td>
