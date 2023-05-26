@@ -10,14 +10,17 @@ import { UserModel } from '../users/user-model';
 import { OrderModel } from './order-model';
 import orderValidationSchema from './order-validation';
 
-// Get orders
+// Get orders for a logged in user
 export async function getOrders(req: Request, res: Response) {
   // Verify if the user is logged in
   if (!req.session?.userId) {
     throw new UnauthorizedError('You must login to view your orders');
   }
-  // Retrieve user's orders from the database
-  const orders = await OrderModel.find({ user: req.session.userId });
+  // Retrieve user's orders from the database and populate the necessary fields
+  const orders = await OrderModel.find({ user: req.session.userId }).populate(
+    'orderItems.product',
+  ); // Populate the orderItems.product field
+
   res.status(200).json({
     success: true,
     data: orders,
