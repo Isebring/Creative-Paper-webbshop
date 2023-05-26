@@ -2,7 +2,6 @@ import { createContext, useEffect, useState } from 'react';
 
 export interface User {
   email: string;
-  password: string;
   _id: string;
 }
 
@@ -37,7 +36,7 @@ export const UserProvider = ({ children }: Props) => {
         const response = await fetch(`/api/users/auth`);
         if (response.ok) {
           const userResponse = await response.json();
-          setUser(userResponse);
+          setUser({ _id: userResponse._id, email: userResponse.email });
         } else if (response.status === 401) {
           setUser(null);
         } else {
@@ -64,7 +63,7 @@ export const UserProvider = ({ children }: Props) => {
         return errorMessage;
       }
       const user = await response.json();
-      setUser(user);
+      setUser({ _id: user._id, email: user.email });
       return '';
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -75,6 +74,7 @@ export const UserProvider = ({ children }: Props) => {
     }
   };
 
+  // LogInUser
   const LogInUser = async (email: string, password: string) => {
     try {
       const response = await fetch('/api/users/login', {
@@ -86,8 +86,8 @@ export const UserProvider = ({ children }: Props) => {
         throw new Error('Failed to log in user');
       }
       const user = await response.json();
-      setUser(user);
-      return user;
+      setUser({ _id: user._id, email: user.email });
+      return { _id: user._id, email: user.email }; // Return only necessary info
     } catch (error: unknown) {
       if (error instanceof Error) {
         throw new Error(error.message || 'Failed to log in user');
@@ -140,3 +140,5 @@ export const UserProvider = ({ children }: Props) => {
     </UserContext.Provider>
   );
 };
+
+export default UserProvider;
