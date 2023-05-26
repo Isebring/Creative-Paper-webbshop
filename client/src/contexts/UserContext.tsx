@@ -144,31 +144,31 @@ export const UserProvider = ({ children }: Props) => {
     const response = await fetch('/api/users');
     if (response.ok) {
       const data = await response.json();
-      console.log("fetched users:", data)
+      console.log('fetched users:', data);
       setUsers(data);
-  } else {
+    } else {
       throw new Error('Error fetching users');
-  }
+    }
   };
 
   const updateUserRole = async (userId: string, newRole: boolean) => {
     try {
-      const response = await fetch(`/api/users/${userId}`, { 
+      const response = await fetch(`/api/users/${userId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ isAdmin: newRole }),
       });
-      
+
       if (response.ok) {
         const updatedUser = await response.json();
 
-        if(users) {
+        if (users) {
           const updatedUsers = users.map((user) => {
             if (user._id === userId) {
               if (user._id === loggedInUser?._id) {
                 setUser({ ...user, isAdmin: newRole });
               }
-    
+
               return { ...user, isAdmin: newRole };
             } else {
               return user;
