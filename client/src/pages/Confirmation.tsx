@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { FormValues } from '../components/CheckoutForm';
 import InitBackgroundAnimation from '../components/ConfirmationPageAnimation';
 import { ProductContext } from '../contexts/ProductContext';
-import { useShoppingCart } from '../contexts/UseShoppingCart';
+import { useShoppingCart } from '../contexts/UseShoppingCartContext';
 
 function Confirmation() {
   const { products } = useContext(ProductContext);
