@@ -66,6 +66,7 @@ function ProductForm({
       stock: null as never,
     },
   });
+
   useEffect(() => {
     if (isEditing && product) {
       form.setValues(product);
@@ -108,9 +109,22 @@ function ProductForm({
     form.reset();
     navigate('/admin');
   };
+
+  const [loading, setLoading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    if (selectedFile) {
+      handleImageUpload(selectedFile);
+    }
+  }, [selectedFile]);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedFile(event.target.files?.[0] || null);
+  };
   
 
-  const handleImageUpload = async (file: File | null) => {
+  const handleImageUpload = async (file: File) => {
     if (!file) return;
     setLoading(true);
     // Indicate that image is being uploaded.
@@ -133,10 +147,6 @@ function ProductForm({
     setLoading(false);
   };
   
-  const [loading, setLoading] = useState(false);
-
-  
-
   return (
     <Box maw={300} mx="auto">
       <form
@@ -154,10 +164,10 @@ function ProductForm({
         />
         <FileInput
           withAsterisk
-          label="Image URL"
+          label="Image"
           placeholder="https://www.image.com/image1.png"
-          {...form.getInputProps('imageId')}
-          onChange={handleImageUpload}
+          value={selectedFile}
+          onChange={handleFileChange}
           data-cy="product-image"
           errorProps={{ 'data-cy': 'product-image-error' }}
         />
