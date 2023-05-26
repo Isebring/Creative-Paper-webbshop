@@ -24,7 +24,7 @@ export async function getOrders(req: Request, res: Response) {
   });
 }
 
-// Get all orders
+// Get all orders (admin only)
 export async function getAllOrders(req: Request, res: Response) {
   const products = await OrderModel.find({}).populate('orderItems.product');
   res.status(200).json(products);
