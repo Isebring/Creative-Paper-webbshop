@@ -14,6 +14,11 @@ const productSchema = new Schema({
   secondImageURL: { type: String, required: true },
   rating: { type: Number, required: true },
   usersRated: { type: Number, required: true },
+  isArchived: { type: Boolean, default: false },
+});
+
+productSchema.pre('find', function () {
+  this.getFilter().isArchived = { $ne: true };
 });
 
 export type Product = InferSchemaType<typeof productSchema> & {
