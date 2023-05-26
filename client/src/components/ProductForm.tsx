@@ -85,10 +85,14 @@ function ProductForm({
 
   const handleImageUpload = async (file: File | null) => {
     if (!file) return;
-    // Skapa FormData och lägg till filen
-    // Skicka till API
-    // Spara ID i formet
-    form.setFieldValue('imageId', '1234');
+    const imageData = new FormData();
+    imageData.append('file', file);
+    const response = await fetch('api/image', {
+      method: 'POST',
+      body: imageData,
+    });
+    const imageId = await response.json();
+    form.setFieldValue('imageId', imageId);
   };
 
   return (
