@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom/client';
 import {
   createBrowserRouter,
   createRoutesFromElements,
-  Route,
+  Route
 } from 'react-router-dom';
 import App from './App';
 import './index.css';
@@ -34,9 +34,9 @@ export const router = createBrowserRouter(
       <Route path="/products/:_id" element={<ProductDetails />} />
       <Route path="/checkout" element={<Cart />} />
       <Route path="/admin" element={<Admin />} />
-      <Route path="/admin/products/:_id" element={<EditProduct />} />
-      <Route path="/admin/products/:_id/edit" element={<EditProduct />} />
       <Route path="/admin/products/new" element={<NewProduct />} />
+      <Route path="/admin/products/:_id/edit" element={<EditProduct />} />
+      <Route path="/admin/products/:_id" element={<EditProduct />} />
       <Route path="/confirmation" element={<Confirmation />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/createaccount" element={<CreateAccount />} />

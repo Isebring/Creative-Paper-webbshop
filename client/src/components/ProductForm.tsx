@@ -4,10 +4,10 @@ import {
   FileInput,
   Group,
   MultiSelect,
-  TextInput,
+  TextInput
 } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Product } from '../contexts/ProductContext';
@@ -23,6 +23,7 @@ interface ProductFormProps {
 
 const schema = Yup.object().shape({
   imageId: Yup.string().required('Image is required'),
+  secondImageId: Yup.string().required('Second Image ID is required'),
   title: Yup.string()
     .min(2, 'Title should have at least 2 letters')
     .required('Title is required'),
@@ -36,6 +37,8 @@ const schema = Yup.object().shape({
   category: Yup.array()
     .of(Yup.string().min(2))
     .required('At least one category is required'),
+    stock: Yup.number()
+    .required('Stock is required'),
 });
 
 function ProductForm({
@@ -49,16 +52,18 @@ function ProductForm({
     validate: yupResolver(schema),
     initialValues: {
       _id: '',
-      image: '',
+      imageURL: '',
       imageId: '',
       title: '',
       description: '',
       price: null as never,
       secondImage: '',
+      secondImageId: '',
       summary: [],
       rating: 0,
       usersRated: 0,
       category: [] as never,
+      stock: null as never,
     },
   });
   useEffect(() => {
@@ -68,7 +73,26 @@ function ProductForm({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product, isEditing, form.setValues]);
 
-  const handleSubmit = (values: Product) => {
+  const addProductToDatabase = async (product: Product) => {
+    const response = await fetch('/api/products', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(product)
+    });
+
+    if (!response.ok) {
+      throw new Error(`Could not save product: ${response.statusText}`);
+    }
+
+    const savedProduct = await response.json();
+    return savedProduct;
+  };
+
+  const handleSubmit =  async (values: Product, event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  
     const editedProduct = {
       ...values,
       id: product?._id || '',
@@ -77,19 +101,41 @@ function ProductForm({
     if (isEditing) {
       onSubmit(editedProduct);
     } else {
-      addProduct({ ...editedProduct, _id: generateID() });
+      const newProduct = { ...editedProduct, _id: generateID() };
+      const savedProduct = await addProductToDatabase(newProduct);
+      addProduct(savedProduct);
     }
     form.reset();
     navigate('/admin');
   };
+  
 
   const handleImageUpload = async (file: File | null) => {
     if (!file) return;
-    // Skapa FormData och lägg till filen
-    // Skicka till API
-    // Spara ID i formet
-    form.setFieldValue('imageId', '1234');
+    setLoading(true);
+    // Indicate that image is being uploaded.
+    form.setFieldValue('imageId', 'uploading...');
+  
+    const formData = new FormData();
+    formData.append('file', file);
+  
+    const response = await fetch('/api/image', {
+      method: 'POST',
+      body: formData,
+    });
+  
+    if (!response.ok) {
+      throw new Error(`Could not upload file: ${response.statusText}`);
+    }
+  
+    const data = await response.json();
+    form.setFieldValue('imageId', data._id);
+    setLoading(false);
   };
+  
+  const [loading, setLoading] = useState(false);
+
+  
 
   return (
     <Box maw={300} mx="auto">
@@ -118,7 +164,7 @@ function ProductForm({
         <TextInput
           label="Second Image URL"
           placeholder="https://www.image.com/image2.png"
-          {...form.getInputProps('secondImage')}
+          {...form.getInputProps('secondImageId')}
           errorProps={{ 'data-cy': 'product-image-error' }}
         />
         <TextInput
@@ -139,6 +185,14 @@ function ProductForm({
           data-cy="product-price"
           errorProps={{ 'data-cy': 'product-price-error' }}
         />
+         <TextInput
+          withAsterisk
+          type="number"
+          label="Stock"
+          placeholder="100"
+          {...form.getInputProps('stock')}
+          onChange={(e) => form.setFieldValue('stock', Number(e.target.value))}
+        />
         <MultiSelect
           data={categoryData}
           label="Category"
@@ -148,7 +202,7 @@ function ProductForm({
         />
 
         <Group mt="xl">
-          <Button type="submit">
+          <Button type="submit" disabled={loading}>
             {isEditing ? 'Save changes' : 'Add new Product'}
           </Button>
         </Group>

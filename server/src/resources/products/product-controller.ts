@@ -30,20 +30,20 @@ export async function createProduct(
   next: NextFunction,
 ) {
   const incomingProduct = req.body;
-
+  console.log(incomingProduct);
   const productValidationSchema = yup.object({
     // _id: yup.string().required(),
-    title: yup.string().trim().min(2).required(),
-    description: yup.string().trim().min(5).required(),
-    summary: yup.string().trim().min(3).required(),
-    categories: yup.string().trim().min(2).required(),
+    title: yup.string().min(2).required(),
+    description: yup.string().min(5).required(),
+    summary: yup.string().min(3).required(),
+    category: yup.array().of(yup.string().min(2)).required(),
     price: yup.number().min(1).required(),
     quantity: yup.number().required(),
     stock: yup.number().required(),
-    imageId: yup.string().trim().min(2).required(),
-    imageURL: yup.string().trim().min(2).required(),
-    secondImageId: yup.string().trim().min(2).required(),
-    secondImageURL: yup.string().trim().min(2).required(),
+    imageId: yup.string().min(2).required(),
+    imageURL: yup.string().min(2).required(),
+    secondImageId: yup.string().min(2).required(),
+    secondImage: yup.string().min(2).required(),
     rating: yup.number().required(),
     usersRated: yup.number().required(),
   });
@@ -81,7 +81,7 @@ export async function updateProduct(
     title: yup.string().trim().min(2).required(),
     description: yup.string().trim().min(5).required(), // Ska dessa verkligen vara required vid en edit?
     summary: yup.string().trim().min(3).required(),
-    categories: yup.string().trim().min(2).required(),
+    category: yup.string().trim().min(2).required(),
     price: yup.number().min(1).required(),
     quantity: yup.number().required(),
     stock: yup.number().required(),

@@ -3,7 +3,7 @@ import { createContext, useEffect, useState } from 'react';
 
 export interface Product {
   _id: string;
-  image: string;
+  imageURL: string;
   imageId: string;
   secondImage: string;
   title: string;
@@ -13,6 +13,8 @@ export interface Product {
   category: string[];
   rating: number;
   usersRated: number;
+  secondImageId: string;
+  stock: number;
 }
 
 interface ProductContextType {
