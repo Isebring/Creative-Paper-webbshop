@@ -5,6 +5,7 @@ import { MockDB, mockDB } from './mock';
 import { loginUser } from './support/utils';
 
 describe('Authenticating a user (POST)', () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let db: MockDB;
 
   beforeEach(async () => {
