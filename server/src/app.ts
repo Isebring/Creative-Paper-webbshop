@@ -7,6 +7,8 @@ import orderRouter from './resources/orders/order-router';
 import productRouter from './resources/products/product-router';
 import userRouter from './resources/users/user-router';
 
+// const port = process.env.PORT || 3000;
+
 export const app = express();
 
 // GLOBAL MIDDLEWARE
