@@ -1,6 +1,8 @@
 import express from 'express';
+import { isUserAuthenticated } from '../../middlewares/auth-user';
 import {
   getAllUsers,
+  getLoggedInUser,
   loginUser,
   logoutUser,
   registerUser,
@@ -11,6 +13,6 @@ const userRouter = express
   .get('/api/users', getAllUsers)
   .post('/api/users/register', registerUser)
   .post('/api/users/login', loginUser)
-  .post('/api/users/logout', logoutUser);
-// .get('/api/users/auth', isUserAuthenticated, getLoggedInUser);
+  .post('/api/users/logout', logoutUser)
+  .get('/api/users/auth', isUserAuthenticated, getLoggedInUser);
 export default userRouter;
