@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import CartProduct from '../components/CartProduct';
 import CheckoutForm from '../components/CheckoutForm';
 import { ProductContext } from '../contexts/ProductContext';
-import { useShoppingCart } from '../contexts/UseShoppingCart';
+import { useShoppingCart } from '../contexts/UseShoppingCartContext';
 
 function Cart() {
   const { cartProducts, cartQuantity } = useShoppingCart();

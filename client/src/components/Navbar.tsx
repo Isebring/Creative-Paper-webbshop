@@ -22,7 +22,7 @@ import {
 } from '@tabler/icons-react';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useShoppingCart } from '../contexts/UseShoppingCart';
+import { useShoppingCart } from '../contexts/UseShoppingCartContext';
 import UserDropdownMenu from './UserDropdownMenu';
 
 const HEADER_HEIGHT = rem(70);

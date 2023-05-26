@@ -11,7 +11,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "npx eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "format": "prettier --check \"src/**/*.{ts,tsx}\""
+    "format": "prettier --check \"src/**/*.{ts,tsx}\"",
+    "start": "http-server dist --proxy http://localhost:3000"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",

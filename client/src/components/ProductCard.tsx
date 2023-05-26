@@ -15,7 +15,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Product } from '../contexts/ProductContext';
 import { useProductContext } from '../contexts/UseProductContext';
-import { useShoppingCart } from '../contexts/UseShoppingCart';
+import { useShoppingCart } from '../contexts/UseShoppingCartContext';
 
 type ProductCardProps = {
   productId: string;
@@ -42,7 +42,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId }) => {
     <>
       <Card shadow="xl" radius="lg" withBorder data-cy="product">
         <Card.Section>
-          <Link to={link} style={{ textDecoration: 'none', color: 'inhFerit' }}>
+          <Link to={link} style={{ textDecoration: 'none', color: 'inherit' }}>
             <Image src={product.image} height={300} fit="cover" />
             <Box pl="md" pr="md">
               <Group

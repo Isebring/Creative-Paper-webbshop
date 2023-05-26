@@ -1,11 +1,12 @@
 import argon2 from 'argon2';
 import request from 'supertest';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { UserModel } from '../src';
-import { app } from '../src/app';
+import { UserModel } from '..';
+import { app } from '../app';
 import { MockDB, mockDB } from './mock';
 
 describe('Registering a user (POST)', () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let db: MockDB;
 
   beforeEach(async () => {
@@ -59,6 +60,7 @@ describe('Registering a user (POST)', () => {
 
     // Missing values
     for (const key of Object.keys(user)) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const faultyUser: any = { ...user };
       delete faultyUser[key];
 

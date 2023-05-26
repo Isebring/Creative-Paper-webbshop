@@ -4,7 +4,8 @@
     "build": "tsc",
     "lint": "npx eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --check \"src/**/*.{ts,tsx}\"",
-    "test": "vitest -c tests/vitest.config.ts"
+    "test": "vitest -c src/tests/vitest.config.ts",
+    "start": "node dist/server.js"
   },
   "dependencies": {
     "argon2": "^0.30.3",

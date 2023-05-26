@@ -2,14 +2,14 @@ import { Box, Button, Group, TextInput, Title } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import { useNavigate } from 'react-router';
 import * as Yup from 'yup';
-import { useShoppingCart } from '../contexts/UseShoppingCart';
+import { useShoppingCart } from '../contexts/UseShoppingCartContext';
 
 export interface FormValues {
   fullName: string;
   email: string;
   adress: string;
   zipCode: string;
-  mobileNr: string;
+  phoneNumber: string;
   city: string;
 }
 
@@ -28,7 +28,7 @@ const schema = Yup.object().shape({
     .min(5, 'this field should be 5 numbers long')
     .max(5, 'this field should be 5 numbers long')
     .required('This field is required'),
-  mobileNr: Yup.string()
+  phoneNumber: Yup.string()
     .min(10, 'Your phone nr should be 10 numbers long')
     .max(10, 'Your phone nr should be 10 numbers long')
     .required('This field is required'),
@@ -53,7 +53,7 @@ function CheckoutForm() {
       email: '',
       adress: '',
       zipCode: '',
-      mobileNr: '',
+      phoneNumber: '',
       city: '',
     },
   });
@@ -122,9 +122,9 @@ function CheckoutForm() {
           autoComplete="tel"
           type="number"
           withAsterisk
-          label="Mobile nr"
+          label="Phone number"
           placeholder="ex: 0700415160"
-          {...form.getInputProps('mobileNr')}
+          {...form.getInputProps('phoneNumber')}
           data-cy="customer-phone"
           errorProps={{ 'data-cy': 'customer-phone-error' }}
         />

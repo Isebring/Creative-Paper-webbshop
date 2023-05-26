@@ -9,7 +9,7 @@ export default defineConfig({
       '**/.{idea,git,cache,output,temp}/**',
     ],
     reporters: ['verbose'],
-    setupFiles: ['tests/support/setup.ts'],
+    setupFiles: ['src/tests/support/setup.ts'],
     threads: false,
   },
 });

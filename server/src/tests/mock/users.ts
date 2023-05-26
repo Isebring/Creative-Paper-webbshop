@@ -1,4 +1,4 @@
-import { User, UserModel } from '../../src';
+import { User, UserModel } from '../..';
 import { toJSON } from '../support/utils';
 
 export function getMockUser(
