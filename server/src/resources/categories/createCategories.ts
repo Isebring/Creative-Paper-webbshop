@@ -4,9 +4,10 @@ import { categoryModel } from './category-model';
 
 dotenv.config();
 
-const defaultCategories = ['Electronics', 'Books', 'Clothing', 'Food'];
+const defaultCategories = ['Pens', 'Notebooks', 'Journals', 'Cards', 'Calendars', 'Planners', 'Accessories'];
 
 async function createCategories() {
+    console.log("create categories is running!")
     if (!process.env.MONGO_URL) {
         throw new Error('MONGO_URL environment variable is not set.');
     }

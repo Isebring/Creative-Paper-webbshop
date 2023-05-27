@@ -2,6 +2,7 @@ import cookieSession from 'cookie-session';
 import express from 'express';
 import 'express-async-errors';
 import errorHandler from './middlewares/error-handler';
+import categoryRouter from './resources/categories/category-router';
 import imageRouter from './resources/images/image-router';
 import orderRouter from './resources/orders/order-router';
 import productRouter from './resources/products/product-router';

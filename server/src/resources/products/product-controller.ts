@@ -52,6 +52,16 @@ export async function createProduct(
   try {
     await productValidationSchema.validate(incomingProduct);
 
+    // Fetch categories to assign to the product
+    const categoryNamesToAssign = incomingProduct.categories; // Categories from the request
+    const categoriesToAssign = await categoryModel.find({ name: { $in: categoryNamesToAssign } });
+
+    // Remove the categories field from incomingProduct before adding the actual categories
+    delete incomingProduct.categories;
+
+    // Add category IDs to the incoming product
+    incomingProduct.categories = categoriesToAssign.map(category => category._id);
+
     const newProduct = new ProductModel(incomingProduct);
     newProduct.quantity = incomingProduct.stock;
     const savedProduct = await newProduct.save();

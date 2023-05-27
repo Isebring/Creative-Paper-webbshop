@@ -16,4 +16,4 @@ const categorySchema = new Schema (
 
 export type Category = InferSchemaType<typeof categorySchema>;
 
-export const categoryModel = model('category', categorySchema);
+export const categoryModel = model('category', categorySchema, 'category');
