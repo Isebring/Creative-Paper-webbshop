@@ -83,18 +83,55 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
     });
   }
 
-  function addProduct(product: Product) {
-    setProducts((currentProducts) => [...currentProducts, product]);
+  async function addProduct(product: Product) {
+    try {
+      const response = await fetch('/api/products', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(product)
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Could not save product: ${response.statusText}`);
+      }
+  
+      const savedProduct = await response.json();
+  
+      setProducts((currentProducts) => [...currentProducts, savedProduct]);
+    } catch (error) {
+      console.error('Error saving product:', error);
+    }
   }
 
-  const updateProduct = (updatedProduct: Product) => {
-    const newProducts = products.map((product) =>
-      product._id === updatedProduct._id ? updatedProduct : product,
-    );
-
-    setProducts(newProducts);
-    localStorage.setItem('products', JSON.stringify(newProducts));
-  };
+  async function updateProduct(updatedProduct: Product) {
+    try {
+      const response = await fetch(`/api/products/${updatedProduct._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedProduct)
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Could not update product: ${response.statusText}`);
+      }
+  
+      const savedProduct = await response.json();
+      
+      setProducts((currentProducts) => 
+        currentProducts.map((product) =>
+          product._id === updatedProduct._id ? savedProduct : product
+        )
+      );
+    } catch (error) {
+      console.error('Error updating product:', error);
+    }
+  }
+  
+  
 
   return (
     <ProductContext.Provider

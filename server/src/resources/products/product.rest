@@ -18,21 +18,21 @@ POST http://localhost:3000/api/products
 Content-Type: application/json
 
 {
-  "_id": "cde321",
   "title": "Testprodukt",
   "description": "Info about product",
-  "summary": ["1 sak", "2 sak", "3 sak"],
-  "categories": "Testkategori",
+  "summary": "test",
+  "category": ["testkategori"],
   "price": "50",
   "quantity": "30",
   "stock": "20",
   "imageId": "12",
-  "imageURL": "www.test.se",
+  "imageURL": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpusheen.com%2F&psig=AOvVaw1T0MVg2Peb63mhZlx1nTKf&ust=1685263526782000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCPjzlYGOlf8CFQAAAAAdAAAAABAF",
   "secondImageId": "25",
-  "secondImageURL": "www.test2.se",
+  "secondImage": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpusheen.com%2F&psig=AOvVaw1T0MVg2Peb63mhZlx1nTKf&ust=1685263526782000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCPjzlYGOlf8CFQAAAAAdAAAAABAF",
   "rating": "4.5",
   "usersRated": "7"
 }
+
 
 ### Delete
 
