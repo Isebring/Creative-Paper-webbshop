@@ -15,15 +15,15 @@ POST http://localhost:3000/api/users/login
 Content-Type: application/json
 
 {
-    "email": "hejsan@hello.com",
-    "password": "hejsan12345"
+    "email": "hej@hello.com",
+    "password": "hej12345"
 }
 
 ### LOGOUT USER
 POST  http://localhost:3000/api/users/logout
 
 ### GET ORDERS
-GET http://localhost:3000/api/orders
+GET http://localhost:3000/api/orders/user
 
 ### GET ALL ORDERS
 GET http://localhost:3000/api/orders/all
@@ -38,11 +38,11 @@ Content-Type: application/json
 {
   "orderItems": [
     {
-      "product": "646c89ff625c6e08624dfe39",
+      "product": "646f280e23e61bd9b6b6ece2",
       "quantity": 2
     },
     {
-      "product": "646c89ff625c6e08624dfe38",
+      "product": "646f280e23e61bd9b6b6ecdf",
       "quantity": 1
     }
   ],
