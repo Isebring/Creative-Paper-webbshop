@@ -53,7 +53,7 @@ function ProductForm({
       imageId: '',
       title: '',
       description: '',
-      price: null as never,
+      price: '' as never,
       secondImage: '',
       summary: [],
       rating: 0,
@@ -83,16 +83,21 @@ function ProductForm({
     navigate('/admin');
   };
 
-  const handleImageUpload = async (file: File | null) => {
+  const handleImageUpload = async (file: File) => {
     if (!file) return;
     const imageData = new FormData();
     imageData.append('file', file);
-    const response = await fetch('api/image', {
+    const response = await fetch('/api/image', {
       method: 'POST',
       body: imageData,
     });
-    const imageId = await response.json();
-    form.setFieldValue('imageId', imageId);
+    console.log(response);
+    try {
+      const imageId = await response.json();
+      form.setFieldValue('imageId', imageId);
+    } catch (error) {
+      console.error('Error parsing JSON response', error);
+    }
   };
 
   return (
