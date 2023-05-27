@@ -24,11 +24,12 @@ function Home() {
 
     if (selectedCategories.length > 0) {
       sorted = sorted.filter((product) =>
-        product.category.some((category: string) =>
+        product.category && product.category.some((category: string) =>
           selectedCategories.includes(category),
         ),
       );
     }
+    
 
     setSortedProducts(sorted);
   }, [products, sortDirection, selectedCategories]);

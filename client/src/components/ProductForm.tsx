@@ -4,7 +4,7 @@ import {
   FileInput,
   Group,
   MultiSelect,
-  TextInput,
+  SelectItem, TextInput
 } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import { useEffect, useState } from 'react';
@@ -12,7 +12,6 @@ import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Product } from '../contexts/ProductContext';
 import generateID from '../utils/generateID';
-import { categoryData } from './CategoryData';
 
 interface ProductFormProps {
   onSubmit: (product: Product) => void;
@@ -66,6 +65,30 @@ function ProductForm({
       stock: null as never,
     },
   });
+
+  const [categoryData, setCategoryData] = useState<SelectItem[]>([]);
+
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const response = await fetch('/api/category');
+      const categories = await response.json();
+      
+      // Log the original data from the server
+      console.log("Original Data:", categories);
+  
+      const formattedCategories = categories
+      .filter((category: any) => typeof category.name === 'string')
+      .map((category: any) => ({ value: category.name, label: category.name }));
+    
+    console.log("Formatted Data:", formattedCategories);
+    
+  
+      setCategoryData(formattedCategories);
+    };
+    fetchCategories();
+  }, []);
+  
 
   useEffect(() => {
     if (isEditing && product) {
@@ -167,6 +190,13 @@ function ProductForm({
     setLoading(false);
   };
 
+  const customFilter = (value: string, selected: boolean, item: SelectItem) => {
+    return typeof item.label === 'string' 
+      ? item.label.toLowerCase().includes(value.toLowerCase()) 
+      : false;
+  };
+  
+
   return (
     <Box maw={300} mx="auto">
       <form
@@ -226,6 +256,7 @@ function ProductForm({
         <MultiSelect
           data={categoryData}
           label="Category"
+          filter={customFilter}
           placeholder="Select categories"
           {...form.getInputProps('category')}
           errorProps={{ 'data-cy': 'product-categories-error' }}

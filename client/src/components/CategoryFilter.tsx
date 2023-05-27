@@ -3,13 +3,10 @@ import {
   CloseButton,
   Flex,
   MultiSelect,
-  MultiSelectValueProps,
-  SelectItemProps,
-  rem,
+  MultiSelectValueProps, rem, SelectItem, SelectItemProps
 } from '@mantine/core';
-import { forwardRef, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { Product } from '../contexts/ProductContext';
-import { categoryData } from './CategoryData';
 
 function Value({
   label,
@@ -60,6 +57,15 @@ const Item = forwardRef<HTMLDivElement, SelectItemProps>(
   },
 );
 
+const customFilter = (value: string, selected: boolean, item: SelectItem) => {
+  return typeof item.label === 'string' 
+    ? item.label.toLowerCase().includes(value.toLowerCase()) 
+    : false;
+};
+
+
+
+
 interface CategoryFilterProps {
   products: Product[];
   setSelectedCategories: React.Dispatch<React.SetStateAction<string[]>>;
@@ -70,8 +76,32 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
   setSelectedCategories,
 }) => {
   const [selectedCategories, _setSelectedCategories] = useState<string[]>([]);
+  const [categoryData, setCategoryData] = useState<SelectItem[]>([]);
+
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const response = await fetch('/api/category');
+      const categories = await response.json();
+      
+      // Log the original data from the server
+      console.log("Original Data:", categories);
+  
+      const formattedCategories = categories
+      .filter((category: any) => typeof category.name === 'string')
+      .map((category: any) => ({ value: category.name, label: category.name }));
+    
+    console.log("Formatted Data:", formattedCategories);
+    
+  
+      setCategoryData(formattedCategories);
+    };
+    fetchCategories();
+  }, []);
+  
 
   const handleSelect = (values: string[]) => {
+    console.log("Selected Categories:", values); 
     _setSelectedCategories(values);
     setSelectedCategories(values);
   };
@@ -86,6 +116,7 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
         value={selectedCategories}
         onChange={handleSelect}
         placeholder="Filter by category"
+        filter={customFilter}
       />
     </div>
   );
