@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { ObjectId } from 'mongodb';
 import * as yup from 'yup';
 import { ProductModel } from './product-model';
 
@@ -32,26 +33,28 @@ export async function createProduct(
   const incomingProduct = req.body;
 
   const productValidationSchema = yup.object({
-    // _id: yup.string().required(),
     title: yup.string().trim().min(2).required(),
     description: yup.string().trim().min(5).required(),
-    summary: yup.string().trim().min(3).required(),
-    categories: yup.string().trim().min(2).required(),
+    summary: yup.string().trim(),
+    categories: yup.string().trim().min(2),
     price: yup.number().min(1).required(),
-    quantity: yup.number().required(),
-    stock: yup.number().required(),
+    quantity: yup.number(),
+    stock: yup.number(),
     imageId: yup.string().trim().min(2).required(),
-    imageURL: yup.string().trim().min(2).required(),
-    secondImageId: yup.string().trim().min(2).required(),
-    secondImageURL: yup.string().trim().min(2).required(),
-    rating: yup.number().required(),
-    usersRated: yup.number().required(),
+    imageURL: yup.string().trim().min(2),
+    secondImageId: yup.string().trim().min(2),
+    secondImageURL: yup.string().trim().min(2),
+    rating: yup.number(),
+    usersRated: yup.number(),
   });
 
   try {
     await productValidationSchema.validate(incomingProduct);
 
-    const newProduct = new ProductModel(incomingProduct);
+    const newProduct = new ProductModel({
+      ...incomingProduct,
+      _id: new ObjectId(),
+    });
     newProduct.quantity = incomingProduct.stock;
     const savedProduct = await newProduct.save();
     const responseObj = {
@@ -80,17 +83,17 @@ export async function updateProduct(
   const productUpdateSchema = yup.object({
     title: yup.string().trim().min(2).required(),
     description: yup.string().trim().min(5).required(), // Ska dessa verkligen vara required vid en edit?
-    summary: yup.string().trim().min(3).required(),
-    categories: yup.string().trim().min(2).required(),
+    summary: yup.string().trim(),
+    categories: yup.array().of(yup.string().trim().min(2)),
     price: yup.number().min(1).required(),
-    quantity: yup.number().required(),
-    stock: yup.number().required(),
+    quantity: yup.number(),
+    stock: yup.number(),
     imageId: yup.string().trim().min(2).required(),
-    imageURL: yup.string().trim().min(2).required(),
-    secondImageId: yup.string().trim().min(2).required(),
-    secondImageURL: yup.string().trim().min(2).required(),
-    rating: yup.number().required(),
-    usersRated: yup.number().required(),
+    imageURL: yup.string().trim().min(2),
+    secondImageId: yup.string().trim().min(2),
+    secondImageURL: yup.string().trim().min(2),
+    rating: yup.number(),
+    usersRated: yup.number(),
   });
 
   try {

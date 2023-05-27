@@ -11,7 +11,6 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Product } from '../contexts/ProductContext';
-import generateID from '../utils/generateID';
 import { categoryData } from './CategoryData';
 
 interface ProductFormProps {
@@ -38,12 +37,7 @@ const schema = Yup.object().shape({
     .required('At least one category is required'),
 });
 
-function ProductForm({
-  onSubmit,
-  addProduct,
-  isEditing,
-  product,
-}: ProductFormProps) {
+function ProductForm({ isEditing, product }: ProductFormProps) {
   const navigate = useNavigate();
   const form = useForm<Product>({
     validate: yupResolver(schema),
@@ -55,7 +49,7 @@ function ProductForm({
       description: '',
       price: '' as never,
       secondImage: '',
-      summary: [],
+      summary: '' as never,
       rating: 0,
       usersRated: 0,
       category: [] as never,
@@ -68,17 +62,41 @@ function ProductForm({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product, isEditing, form.setValues]);
 
-  const handleSubmit = (values: Product) => {
+  const handleSubmit = async (values: Product) => {
     const editedProduct = {
       ...values,
       id: product?._id || '',
       category: values.category || [],
     };
-    if (isEditing) {
-      onSubmit(editedProduct);
-    } else {
-      addProduct({ ...editedProduct, _id: generateID() });
+
+    const method = isEditing ? 'PUT' : 'POST';
+    const endpoint = isEditing
+      ? `/api/products/${editedProduct._id}`
+      : '/api/products';
+
+    try {
+      const response = await fetch(endpoint, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...editedProduct,
+        }),
+      });
+
+      console.log('Raw server response:', response.clone());
+
+      if (response.ok) {
+        console.log('Product saved successfully');
+      } else {
+        const errorData = await response.json();
+        console.error('Error saving product:', errorData);
+      }
+    } catch (error) {
+      console.error('Error saving product:', error);
     }
+
     form.reset();
     navigate('/admin');
   };
@@ -91,10 +109,12 @@ function ProductForm({
       method: 'POST',
       body: imageData,
     });
-    console.log(response);
+    console.log('response before parsing:', response);
     try {
       const imageId = await response.json();
+      console.log('imageId:', imageId);
       form.setFieldValue('imageId', imageId);
+      console.log('response after parsing:', response);
     } catch (error) {
       console.error('Error parsing JSON response', error);
     }
