@@ -30,6 +30,7 @@ app.use(orderRouter);
 app.use(imageRouter);
 app.use(productRouter);
 app.use(userRouter);
+app.use(categoryRouter)
 
 // GLOBAL ERROR HANDLER
 app.use(errorHandler);
