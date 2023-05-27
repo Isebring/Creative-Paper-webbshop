@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import * as yup from 'yup';
+import { categoryModel } from '../categories/category-model';
 import { ProductModel } from './product-model';
 
 // const testSchema
@@ -12,7 +13,7 @@ export async function getAllProducts(req: Request, res: Response) {
 export async function getProductById(req: Request, res: Response) {
   try {
     const productId = req.params.id;
-    const product = await ProductModel.findById(productId);
+    const product = await ProductModel.findById(productId).populate('categories');
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
@@ -60,6 +61,11 @@ export async function createProduct(
     };
     res.set('content-type', 'application/json');
     res.status(201).send(JSON.stringify(responseObj));
+
+    await categoryModel.updateMany(
+      { _id: { $in: savedProduct.categories } },
+      { $push: { products: savedProduct._id } }
+    );
   } catch (error) {
     next(error); // är detta globala error handlern? Oklart
   }
@@ -119,6 +125,11 @@ export async function deleteProduct(req: Request, res: Response) {
     if (!deletedProduct) {
       return res.status(404).json('product not found');
     }
+
+    await categoryModel.updateMany(
+      { _id: { $in: deletedProduct.categories } },
+      { $pull: { products: productId } }
+    );
 
     await ProductModel.findByIdAndDelete(productId);
     res.status(204).end();

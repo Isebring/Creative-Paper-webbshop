@@ -4,7 +4,10 @@ const productSchema = new Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
   summary: { type: String, required: true },
-  category: { type: [String], required: true },  // fråga David?
+  categories: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Category',
+  }],
   price: { type: Number, required: true },
   quantity: { type: Number, required: true },
   stock: { type: Number, required: true },
