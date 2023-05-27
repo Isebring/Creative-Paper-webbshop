@@ -32,6 +32,6 @@ async function createCategories() {
     console.log('Done');
 }
 
-// createCategories().catch(console.error);
+ createCategories().catch(console.error);
 
 export default createCategories;
