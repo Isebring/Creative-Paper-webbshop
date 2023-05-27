@@ -13,15 +13,25 @@ async function createCategories() {
     }
 
     await mongoose.connect(process.env.MONGO_URL);
+    mongoose.connection.once('open', () => {
+        console.log("Connected to database:", mongoose.connection.name);
+    });
+    
 
     for (const name of defaultCategories) {
-        const category = new categoryModel({ name });
-        await category.save();
-        console.log(`Category ${name} created`);
+        const existingCategory = await categoryModel.findOne({ name });
+        if (!existingCategory) {
+            const category = new categoryModel({ name });
+            await category.save();
+            console.log(`Category ${name} created`);
+        } else {
+            console.log(`Category ${name} already exists.`);
+        }
     }
-
     await mongoose.connection.close();
     console.log('Done');
 }
 
-createCategories().catch(console.error);
+// createCategories().catch(console.error);
+
+export default createCategories;

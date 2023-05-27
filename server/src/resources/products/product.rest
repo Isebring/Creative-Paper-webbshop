@@ -21,7 +21,7 @@ Content-Type: application/json
   "title": "Testprodukt",
   "description": "Info about product",
   "summary": "test",
-  "category": ["testkategori"],
+  "category": ["Pens"],
   "price": "50",
   "quantity": "30",
   "stock": "20",
