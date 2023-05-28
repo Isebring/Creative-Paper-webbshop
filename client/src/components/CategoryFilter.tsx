@@ -76,23 +76,17 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
   setSelectedCategories,
 }) => {
   const [selectedCategories, _setSelectedCategories] = useState<string[]>([]);
-  const [categoryData, setCategoryData] = useState<SelectItem[]>([]);
+  const [categoryData, setCategoryData] = useState<(string | SelectItem)[]>([]);
 
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const response = await fetch('/api/category');
+      const response = await fetch('/api/categories');
       const categories = await response.json();
       
-      // Log the original data from the server
-      console.log("Original Data:", categories);
-  
       const formattedCategories = categories
       .filter((category: any) => typeof category.name === 'string')
       .map((category: any) => ({ value: category.name, label: category.name }));
-    
-    console.log("Formatted Data:", formattedCategories);
-    
   
       setCategoryData(formattedCategories);
     };

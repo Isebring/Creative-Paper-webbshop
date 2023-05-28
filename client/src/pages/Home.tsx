@@ -14,6 +14,26 @@ function Home() {
   const [activeButton, setActiveButton] = useState('');
 
   useEffect(() => {
+    const fetchProducts = async () => {
+      const response = await fetch('/api/categories/:category/products', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          categories: selectedCategories,
+        }),
+      });
+      const newProducts = await response.json();
+      setSortedProducts(newProducts);
+    };
+
+    if (selectedCategories.length > 0) {
+      fetchProducts();
+    }
+  }, [selectedCategories]);
+
+  useEffect(() => {
     let sorted = [...products];
 
     if (sortDirection === 'ascending') {
