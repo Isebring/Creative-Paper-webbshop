@@ -41,8 +41,8 @@ const schema = Yup.object().shape({
 function CheckoutForm() {
   const navigate = useNavigate();
   const { createOrder, cartItems } = useShoppingCart();
-  const onSubmit = (data: FormValues) => {
-    createOrder(cartItems, data);
+  const onSubmit = async (data: FormValues) => {
+    await createOrder(cartItems, data);
     navigate('/confirmation');
   };
 
