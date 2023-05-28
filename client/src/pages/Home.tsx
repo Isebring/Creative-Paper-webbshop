@@ -95,7 +95,7 @@ function Home() {
           { maxWidth: '36rem', cols: 1, spacing: 'sm' },
         ]}
       >
-        {sortedProducts?.map((product) => (
+        {sortedProducts?.map((product) => ( 
           <ProductCard
             key={product._id}
             productId={product._id}

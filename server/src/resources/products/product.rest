@@ -18,7 +18,7 @@ POST http://localhost:3000/api/products
 Content-Type: application/json
 
 {
-  "title": "Catto",
+  "title": "Hund",
   "description": "Info about cats",
   "summary": "test",
   "categories": ["Notebooks"],

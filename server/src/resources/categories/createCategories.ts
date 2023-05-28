@@ -12,6 +12,7 @@ async function createCategories() {
         throw new Error('MONGO_URL environment variable is not set.');
     }
 
+    try {
     await mongoose.connect(process.env.MONGO_URL);
     mongoose.connection.once('open', () => {
         console.log("Connected to database:", mongoose.connection.name);
@@ -28,10 +29,17 @@ async function createCategories() {
             console.log(`Category ${name} already exists.`);
         }
     }
+} catch (error) {
+    console.error('Failed to connect to the database:', error);
+} finally {
     await mongoose.connection.close();
     console.log('Done');
 }
+}
 
- createCategories().catch(console.error);
+
+
+
+ //createCategories().catch(console.error);
 
 export default createCategories;

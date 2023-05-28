@@ -13,7 +13,7 @@ async function main() {
   await mongoose.connect(process.env.MONGO_URL);
   console.log('Connected to Database');
 
-  //await createCategories();
+  await createCategories();
 
   app.listen(3000, () => {
     console.log('Server is running: http://localhost:3000');

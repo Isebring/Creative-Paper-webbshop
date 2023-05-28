@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-import { Types } from 'mongoose';
 import * as yup from 'yup';
 import { categoryModel } from '../categories/category-model';
 import { ProductModel } from './product-model';
@@ -14,7 +13,9 @@ export async function getAllProducts(req: Request, res: Response) {
 export async function getProductById(req: Request, res: Response) {
   try {
     const productId = req.params.id;
-    const product = await ProductModel.findById(productId).populate('categories');
+    const product = await ProductModel.findById(productId).populate(
+      'categories',
+    );
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
@@ -34,7 +35,6 @@ export async function createProduct(
   const incomingProduct = req.body;
   console.log(incomingProduct);
   const productValidationSchema = yup.object({
-    // _id: yup.string().required(),
     title: yup.string().min(2).required(),
     description: yup.string().min(5).required(),
     summary: yup.string().min(3).required(),
@@ -53,36 +53,29 @@ export async function createProduct(
   try {
     await productValidationSchema.validate(incomingProduct);
 
-    // Convert category names to category IDs
-    const categoryIds: Types.ObjectId[] = []; 
-    for (let categoryName of incomingProduct.categories) {
-      const category = await categoryModel.findOne({ name: categoryName });
-      if (category) {
-        categoryIds.push(category._id);
-      }
-    }
-
-    // Prepare the actual product data
-    const productData = {...incomingProduct, categories: categoryIds};
-
-    const newProduct = new ProductModel(productData);
+    // We save the product without the categories first.
+    const newProduct = new ProductModel({ ...incomingProduct, categories: [] });
     newProduct.quantity = incomingProduct.stock;
     const savedProduct = await newProduct.save();
 
-    // Update the categories
-    for (let categoryId of categoryIds) {
-      const categoryToUpdate = await categoryModel.findById(categoryId);
-      
-      if (categoryToUpdate) {
-        categoryToUpdate.products.push(savedProduct._id);
-        await categoryToUpdate.save();
+    // Then, we lookup the categories and add them to the product.
+    for (const categoryName of incomingProduct.categories) {
+      const category = await categoryModel.findOne({ name: categoryName });
+      if (category) {
+        category.products.push(savedProduct._id);
+        savedProduct.categories.push(category._id);
+        await category.save();
+      } else {
+        console.log(`Category ${categoryName} not found.`);
       }
     }
+    
+    // Now we save the product again with the correct categories.
+    await savedProduct.save();
 
     const responseObj = {
       message: 'Product added',
       ...savedProduct.toJSON(),
-      categories: incomingProduct.categories // Send back the category names, not IDs
     };
     res.set('content-type', 'application/json');
     res.status(201).send(JSON.stringify(responseObj));
@@ -90,6 +83,7 @@ export async function createProduct(
     next(error);
   }
 }
+
 
 export async function updateProduct(
   req: Request,
@@ -148,7 +142,7 @@ export async function deleteProduct(req: Request, res: Response) {
 
     await categoryModel.updateMany(
       { _id: { $in: deletedProduct.categories } },
-      { $pull: { products: productId } }
+      { $pull: { products: productId } },
     );
 
     await ProductModel.findByIdAndDelete(productId);
