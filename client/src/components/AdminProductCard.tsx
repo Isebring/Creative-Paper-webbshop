@@ -9,7 +9,7 @@ interface Props {
 }
 
 function AdminProductCard({ product, onDelete }: Props) {
-  const edit = '/admin/products/' + product._id + '/edit';
+  const edit = '/admin/products/' + product._id;
 
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 

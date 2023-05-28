@@ -15,7 +15,6 @@ import { categoryData } from './CategoryData';
 
 interface ProductFormProps {
   onSubmit: (product: Product) => void;
-  addProduct: (product: Product) => void;
   isEditing: boolean;
   product?: Product;
 }
@@ -37,7 +36,8 @@ const schema = Yup.object().shape({
     .required('At least one category is required'),
 });
 
-function ProductForm({ isEditing, product }: ProductFormProps) {
+function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
+  // const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const form = useForm<Product>({
     validate: yupResolver(schema),
@@ -65,37 +65,11 @@ function ProductForm({ isEditing, product }: ProductFormProps) {
   const handleSubmit = async (values: Product) => {
     const editedProduct = {
       ...values,
-      id: product?._id || '',
+      _id: product?._id || '',
       category: values.category || [],
     };
 
-    const method = isEditing ? 'PUT' : 'POST';
-    const endpoint = isEditing
-      ? `/api/products/${editedProduct._id}`
-      : '/api/products';
-
-    try {
-      const response = await fetch(endpoint, {
-        method,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...editedProduct,
-        }),
-      });
-
-      console.log('Raw server response:', response.clone());
-
-      if (response.ok) {
-        console.log('Product saved successfully');
-      } else {
-        const errorData = await response.json();
-        console.error('Error saving product:', errorData);
-      }
-    } catch (error) {
-      console.error('Error saving product:', error);
-    }
+    onSubmit(editedProduct);
 
     form.reset();
     navigate('/admin');

@@ -62,7 +62,7 @@ export async function createProduct(
       ...savedProduct.toJSON(),
     };
     res.set('content-type', 'application/json');
-    res.status(201).send(JSON.stringify(responseObj));
+    res.status(201).json(responseObj);
   } catch (error) {
     next(error); // är detta globala error handlern? Oklart
   }
@@ -73,7 +73,7 @@ export async function updateProduct(
   res: Response,
   next: NextFunction,
 ) {
-  const productId = req.params._id;
+  const productId = req.params.id;
   const product = await ProductModel.findById(productId);
 
   if (!product) {
@@ -84,7 +84,7 @@ export async function updateProduct(
     title: yup.string().trim().min(2).required(),
     description: yup.string().trim().min(5).required(), // Ska dessa verkligen vara required vid en edit?
     summary: yup.string().trim(),
-    categories: yup.array().of(yup.string().trim().min(2)),
+    categories: yup.string().trim().min(2),
     price: yup.number().min(1).required(),
     quantity: yup.number(),
     stock: yup.number(),
@@ -97,6 +97,7 @@ export async function updateProduct(
   });
 
   try {
+    console.log('Update product:', { params: req.params, body: req.body });
     const validatedProduct = await productUpdateSchema.validate(req.body);
 
     if (validatedProduct.stock !== product.stock) {
@@ -116,7 +117,7 @@ export async function updateProduct(
 
 export async function deleteProduct(req: Request, res: Response) {
   try {
-    const productId = req.params._id;
+    const productId = req.params.id;
     const deletedProduct = await ProductModel.findById(productId);
 
     if (!deletedProduct) {
