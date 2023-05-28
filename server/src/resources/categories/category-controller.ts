@@ -15,3 +15,25 @@ const getAllCategories = async (_: Request, res: Response) => {
 };
 
 export { getAllCategories };
+export { getProductsByCategory };
+
+const getProductsByCategory = async (req: Request, res: Response) => {
+    const { category } = req.params;
+    
+    try {
+      const categoryInstance = await categoryModel.findOne({ name: category }).populate('products');
+      
+      if (!categoryInstance) {
+        return res.status(404).json({ error: 'Category not found' });
+      }
+      
+      res.status(200).json(categoryInstance.products);
+    } catch (error) {
+      if (error instanceof Error) {
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: 'An unexpected error occurred.' });
+      }
+    }
+  };
+  

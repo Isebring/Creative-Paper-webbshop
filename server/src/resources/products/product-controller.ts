@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { Types } from 'mongoose';
 import * as yup from 'yup';
 import { categoryModel } from '../categories/category-model';
 import { ProductModel } from './product-model';
@@ -37,7 +38,7 @@ export async function createProduct(
     title: yup.string().min(2).required(),
     description: yup.string().min(5).required(),
     summary: yup.string().min(3).required(),
-    category: yup.array().of(yup.string().min(2)).required(),
+    categories: yup.array().of(yup.string().min(2)).required(),
     price: yup.number().min(1).required(),
     quantity: yup.number().required(),
     stock: yup.number().required(),
@@ -52,32 +53,41 @@ export async function createProduct(
   try {
     await productValidationSchema.validate(incomingProduct);
 
-    // Fetch categories to assign to the product
-    const categoryNamesToAssign = incomingProduct.category; // Categories from the request
-    const categoriesToAssign = await categoryModel.find({ name: { $in: categoryNamesToAssign } });
+    // Convert category names to category IDs
+    const categoryIds: Types.ObjectId[] = []; 
+    for (let categoryName of incomingProduct.categories) {
+      const category = await categoryModel.findOne({ name: categoryName });
+      if (category) {
+        categoryIds.push(category._id);
+      }
+    }
 
-    // Remove the categories field from incomingProduct before adding the actual categories
-    delete incomingProduct.categories;
+    // Prepare the actual product data
+    const productData = {...incomingProduct, categories: categoryIds};
 
-    // Add category IDs to the incoming product
-    incomingProduct.categories = categoriesToAssign.map(category => category._id);
-
-    const newProduct = new ProductModel(incomingProduct);
+    const newProduct = new ProductModel(productData);
     newProduct.quantity = incomingProduct.stock;
     const savedProduct = await newProduct.save();
+
+    // Update the categories
+    for (let categoryId of categoryIds) {
+      const categoryToUpdate = await categoryModel.findById(categoryId);
+      
+      if (categoryToUpdate) {
+        categoryToUpdate.products.push(savedProduct._id);
+        await categoryToUpdate.save();
+      }
+    }
+
     const responseObj = {
       message: 'Product added',
       ...savedProduct.toJSON(),
+      categories: incomingProduct.categories // Send back the category names, not IDs
     };
     res.set('content-type', 'application/json');
     res.status(201).send(JSON.stringify(responseObj));
-
-    await categoryModel.updateMany(
-      { _id: { $in: savedProduct.categories } },
-      { $push: { products: savedProduct._id } }
-    );
   } catch (error) {
-    next(error); // är detta globala error handlern? Oklart
+    next(error);
   }
 }
 
@@ -97,7 +107,7 @@ export async function updateProduct(
     title: yup.string().trim().min(2).required(),
     description: yup.string().trim().min(5).required(), // Ska dessa verkligen vara required vid en edit?
     summary: yup.string().trim().min(3).required(),
-    category: yup.string().trim().min(2).required(),
+    categories: yup.string().trim().min(2).required(),
     price: yup.number().min(1).required(),
     quantity: yup.number().required(),
     stock: yup.number().required(),

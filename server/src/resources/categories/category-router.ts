@@ -1,8 +1,9 @@
 import express from 'express';
-import { getAllCategories } from './category-controller';
+import { getAllCategories, getProductsByCategory } from './category-controller';
 
 const categoryRouter = express
 .Router()
-.get('/api/category', getAllCategories)
+.get('/api/categories', getAllCategories)
+.get('/api/categories/:category/products', getProductsByCategory)
 
 export default categoryRouter;

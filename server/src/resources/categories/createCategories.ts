@@ -19,10 +19,10 @@ async function createCategories() {
     
 
     for (const name of defaultCategories) {
-        const existingCategory = await categoryModel.findOne({ name });
-        if (!existingCategory) {
-            const category = new categoryModel({ name });
-            await category.save();
+        const existingCategories = await categoryModel.findOne({ name });
+        if (!existingCategories) {
+            const categories = new categoryModel({ name });
+            await categories.save();
             console.log(`Category ${name} created`);
         } else {
             console.log(`Category ${name} already exists.`);

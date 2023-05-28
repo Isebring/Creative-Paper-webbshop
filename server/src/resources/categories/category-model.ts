@@ -1,6 +1,6 @@
 import { InferSchemaType, model, Schema } from "mongoose";
 
-const categorySchema = new Schema (
+const categoriesSchema = new Schema (
     {
         name: {
             type: String,
@@ -9,11 +9,11 @@ const categorySchema = new Schema (
         },
         products: [{
             type: Schema.Types.ObjectId,
-            ref: 'Product'
+            ref: 'Product',
         }]
     }
 )
 
-export type Category = InferSchemaType<typeof categorySchema>;
+export type Category = InferSchemaType<typeof categoriesSchema>;
 
-export const categoryModel = model('category', categorySchema, 'category');
+export const categoryModel = model('categories', categoriesSchema, 'categories');
