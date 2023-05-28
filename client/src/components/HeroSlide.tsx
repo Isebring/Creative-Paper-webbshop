@@ -28,7 +28,7 @@ function HeroSlide() {
         navigation
         pagination={{ clickable: true }}
       >
-        {products?.slice(0, 4).map((product) => (
+        {products?.map((product) => (
           <SwiperSlide style={{ height: '22rem' }} key={product._id}>
             <HeroSlideItem imageSrc={product.secondImage} />
           </SwiperSlide>

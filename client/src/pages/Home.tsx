@@ -10,7 +10,7 @@ function Home() {
   const { products } = useContext(ProductContext);
   const [sortDirection, setSortDirection] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [sortedProducts, setSortedProducts] = useState(products);
+  const [sortedProducts, setSortedProducts] = useState(products || []);
   const [activeButton, setActiveButton] = useState('');
 
   useEffect(() => {

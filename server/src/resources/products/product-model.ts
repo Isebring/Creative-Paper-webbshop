@@ -1,12 +1,12 @@
-import { InferSchemaType, model, Schema } from 'mongoose';
+import mongoose, { InferSchemaType, model, Schema } from 'mongoose';
 
 const productSchema = new Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
   summary: { type: String, required: true },
   categories: [{
-    type: Schema.Types.ObjectId,
-    ref: 'categories',
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category',
   }],
   price: { type: Number, required: true },
   quantity: { type: Number, required: true },

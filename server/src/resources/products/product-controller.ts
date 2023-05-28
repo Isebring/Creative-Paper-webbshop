@@ -6,7 +6,7 @@ import { ProductModel } from './product-model';
 // const testSchema
 
 export async function getAllProducts(req: Request, res: Response) {
-  const products = await ProductModel.find();
+  const products = await ProductModel.find().populate('categories', 'name -_id');
   res.status(200).json(products);
 }
 
@@ -73,12 +73,20 @@ export async function createProduct(
     // Now we save the product again with the correct categories.
     await savedProduct.save();
 
-    const responseObj = {
-      message: 'Product added',
-      ...savedProduct.toJSON(),
-    };
-    res.set('content-type', 'application/json');
-    res.status(201).send(JSON.stringify(responseObj));
+    // We populate the categories field before sending the response.
+    const populatedProduct = await ProductModel.findById(savedProduct._id).populate('categories', 'name -_id');
+
+    if (populatedProduct) {
+      const responseObj = {
+        message: 'Product added',
+        ...populatedProduct.toJSON(),
+      };
+
+      res.set('content-type', 'application/json');
+      res.status(201).send(JSON.stringify(responseObj));
+    } else {
+      throw new Error('Product not found after creation');
+    }
   } catch (error) {
     next(error);
   }
@@ -120,11 +128,13 @@ export async function updateProduct(
       validatedProduct.quantity = validatedProduct.stock;
     }
 
-    const updatedProduct = await ProductModel.findByIdAndUpdate(
+    await ProductModel.findByIdAndUpdate(
       productId,
       validatedProduct,
-      { new: true },
+      { new: false }, 
     );
+
+    const updatedProduct = await ProductModel.findById(productId).populate('categories', 'name -_id');
     res.status(200).json(updatedProduct);
   } catch (error) {
     next(error);
