@@ -39,7 +39,6 @@ interface OrderContextProps {
   getOrdersByUser: () => void;
   getAllOrders: () => void;
   getOrderById: (_id: string) => Promise<Order | null>;
-  createOrder: (order: Order) => Promise<Order | null>;
 }
 
 export const OrderContext = createContext<OrderContextProps>({
@@ -49,7 +48,6 @@ export const OrderContext = createContext<OrderContextProps>({
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   getAllOrders: () => {},
   getOrderById: () => Promise.resolve(null),
-  createOrder: () => Promise.resolve(null),
 });
 
 export const OrderProvider = ({ children }: Props) => {
@@ -96,26 +94,6 @@ export const OrderProvider = ({ children }: Props) => {
     }
   };
 
-  const createOrder = async (order: Order): Promise<Order | null> => {
-    try {
-      const res = await fetch('/api/orders', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(order),
-      });
-      if (!res.ok) {
-        throw new Error('Failed to create order.');
-      }
-      const data = await res.json();
-      return data;
-    } catch (error) {
-      console.error(error);
-      return null;
-    }
-  };
-
   return (
     <OrderContext.Provider
       value={{
@@ -123,7 +101,6 @@ export const OrderProvider = ({ children }: Props) => {
         getOrdersByUser,
         getAllOrders,
         getOrderById,
-        createOrder,
       }}
     >
       {children}
