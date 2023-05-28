@@ -1,22 +1,5 @@
 import React, { createContext, useState } from 'react';
-
-export interface Product {
-  _id: string;
-  title: string;
-  description: string;
-  summary: string;
-  categories: string; // This might need to be adjusted based on the actual data type.
-  price: number;
-  quantity: number;
-  stock: number;
-  imageId: string;
-  imageURL: string;
-  secondImageId: string;
-  secondImageURL: string;
-  rating: number;
-  usersRated: number;
-  isArchived: boolean;
-}
+import { Product } from './ProductContext';
 
 export interface OrderItem {
   product: Product;
@@ -53,7 +36,6 @@ interface Props {
 
 interface OrderContextProps {
   orders: Order[];
-  currentOrder: Order | null;
   getOrdersByUser: () => void;
   getAllOrders: () => void;
   getOrderById: (_id: string) => Promise<Order | null>;
@@ -62,7 +44,6 @@ interface OrderContextProps {
 
 export const OrderContext = createContext<OrderContextProps>({
   orders: [],
-  currentOrder: null,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   getOrdersByUser: () => {},
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -75,7 +56,6 @@ export const OrderContext = createContext<OrderContextProps>({
 
 export const OrderProvider = ({ children }: Props) => {
   const [orders, setOrders] = useState<Order[]>([]);
-  const [currentOrder, setCurrentOrder] = useState<Order | null>(null);
 
   const getOrdersByUser = async () => {
     try {
@@ -142,7 +122,6 @@ export const OrderProvider = ({ children }: Props) => {
     <OrderContext.Provider
       value={{
         orders,
-        currentOrder,
         getOrdersByUser,
         getAllOrders,
         getOrderById,
