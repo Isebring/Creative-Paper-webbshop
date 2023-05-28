@@ -32,16 +32,16 @@ function Root() {
           withGlobalStyles
           withNormalizeCSS
         >
-          <Notifications data-cy="added-to-cart-toast" />
-          <ProductProvider>
-            <UserProvider>
-              <ShoppingCartProvider>
-                <OrderProvider>
+          <OrderProvider>
+            <Notifications data-cy="added-to-cart-toast" />
+            <ProductProvider>
+              <UserProvider>
+                <ShoppingCartProvider>
                   <RouterProvider router={router} />
-                </OrderProvider>
-              </ShoppingCartProvider>
-            </UserProvider>
-          </ProductProvider>
+                </ShoppingCartProvider>
+              </UserProvider>
+            </ProductProvider>
+          </OrderProvider>
         </MantineProvider>
       </ColorSchemeProvider>
     </React.StrictMode>
