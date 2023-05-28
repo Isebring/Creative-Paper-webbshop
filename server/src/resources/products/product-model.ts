@@ -9,7 +9,7 @@ const productSchema = new Schema({
   quantity: { type: Number },
   stock: { type: Number },
   imageId: { type: String, required: true }, // Schematypes? Path? }, // Schematypes? Path?
-  secondImageURL: { type: String },
+  secondImageId: { type: String },
   rating: { type: Number },
   usersRated: { type: Number },
 });

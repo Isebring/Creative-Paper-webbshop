@@ -5,7 +5,7 @@ export interface Product {
   _id: string;
   image: string;
   imageId: string;
-  secondImage: string;
+  secondImageId: string;
   title: string;
   description: string;
   summary: string[];

@@ -48,7 +48,7 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
       title: '',
       description: '',
       price: '' as never,
-      secondImage: '',
+      secondImageId: '',
       summary: '' as never,
       rating: 0,
       usersRated: 0,
@@ -94,6 +94,25 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
     }
   };
 
+  const handleSecondImageUpload = async (file: File) => {
+    if (!file) return;
+    const imageData = new FormData();
+    imageData.append('file', file);
+    const response = await fetch('/api/image', {
+      method: 'POST',
+      body: imageData,
+    });
+    console.log('response before parsing:', response);
+    try {
+      const secondImageId = await response.json();
+      console.log('secondImageId:', secondImageId);
+      form.setFieldValue('secondImageId', secondImageId);
+      console.log('response after parsing:', response);
+    } catch (error) {
+      console.error('Error parsing JSON response', error);
+    }
+  };
+
   return (
     <Box maw={300} mx="auto">
       <form
@@ -113,15 +132,16 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
           withAsterisk
           label="Image URL"
           placeholder="https://www.image.com/image1.png"
-          {...form.getInputProps('imageId')}
+          // {...form.getInputProps('imageId')}
           onChange={handleImageUpload}
           data-cy="product-image"
           errorProps={{ 'data-cy': 'product-image-error' }}
         />
-        <TextInput
+        <FileInput
           label="Second Image URL"
           placeholder="https://www.image.com/image2.png"
-          {...form.getInputProps('secondImage')}
+          onChange={handleSecondImageUpload}
+          // {...form.getInputProps('secondImage')}
           errorProps={{ 'data-cy': 'product-image-error' }}
         />
         <TextInput
