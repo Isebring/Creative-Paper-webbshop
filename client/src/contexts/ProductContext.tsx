@@ -8,7 +8,7 @@ export interface Product {
   secondImageId: string;
   title: string;
   description: string;
-  summary: string[];
+  summary: string;
   price: number;
   category: string[];
   rating: number;

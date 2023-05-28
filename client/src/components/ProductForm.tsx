@@ -20,6 +20,9 @@ interface ProductFormProps {
 }
 
 const schema = Yup.object().shape({
+  summary: Yup.string()
+    .min(2, 'Summary should have at least 2 letters')
+    .required('Summary is required'),
   imageId: Yup.string().required('Image is required'),
   title: Yup.string()
     .min(2, 'Title should have at least 2 letters')
@@ -147,10 +150,16 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
         <TextInput
           withAsterisk
           label="Description"
-          placeholder="This is the description of this product."
+          placeholder="This is the description of this product"
           {...form.getInputProps('description')}
           data-cy="product-description"
           errorProps={{ 'data-cy': 'product-description-error' }}
+        />
+        <TextInput
+          label="Summary"
+          placeholder="Separate summaries with a comma"
+          {...form.getInputProps('summary')}
+          errorProps={{ 'data-cy': 'product-summary-error' }}
         />
         <TextInput
           withAsterisk

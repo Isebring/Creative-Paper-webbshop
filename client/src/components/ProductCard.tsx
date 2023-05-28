@@ -71,10 +71,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId }) => {
                 </Badge>
               </Group>
               <List style={{ fontFamily: 'Poppins, sans-serif' }}>
-                {Array.isArray(product.summary) &&
-                  product.summary.map((item) => (
-                    <List.Item key={item}>{item}</List.Item>
-                  ))}
+                {product.summary &&
+                  product.summary
+                    .split(',')
+                    .map((item) => item.trim())
+                    .map((item) => <List.Item key={item}>{item}</List.Item>)}
               </List>
             </Box>
           </Link>
