@@ -9,7 +9,7 @@ function Confirmation() {
   const { products } = useContext(ProductContext);
   const { orders } = useShoppingCart();
   const lastOrder = orders[orders.length - 1];
-  const formData = lastOrder.cartProducts.find(
+  const formData = lastOrder.cartItems.find(
     (item): item is { formData: FormValues } => 'formData' in item,
   )?.formData;
 
@@ -17,7 +17,7 @@ function Confirmation() {
     if (!products) {
       return;
     }
-    return lastOrder.cartProducts.reduce((total, item) => {
+    return lastOrder.cartItems.reduce((total, item) => {
       if ('_id' in item) {
         const product = products.find((i) => i._id === item._id);
         return total + (product?.price || 0) * item.quantity;
@@ -40,7 +40,7 @@ function Confirmation() {
           </Title>
           <Text>Name: {formData.fullName}</Text>
           <Text>Email: {formData.email}</Text>
-          <Text>Address: {formData.adress}</Text>
+          <Text>Address: {formData.address}</Text>
           <Text>Zip Code: {formData.zipCode}</Text>
           <Text>Phone nr: {formData.phoneNumber}</Text>
           <Text>City: {formData.city}</Text>
@@ -49,7 +49,7 @@ function Confirmation() {
             Ordered Products
           </Title>
           <List listStyleType="none">
-            {lastOrder.cartProducts.map(
+            {lastOrder.cartItems.map(
               (product, index) =>
                 '_id' in product && (
                   <List.Item key={index}>
