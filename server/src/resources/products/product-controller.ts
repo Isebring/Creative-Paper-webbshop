@@ -6,16 +6,20 @@ import { ProductModel } from './product-model';
 // const testSchema
 
 export async function getAllProducts(req: Request, res: Response) {
-  const products = await ProductModel.find().populate('categories', 'name -_id');
+  const products = await ProductModel.find().populate(
+    'categories',
+    'name -_id',
+  );
   res.status(200).json(products);
 }
 
 export async function getProductById(req: Request, res: Response) {
   try {
     const productId = req.params.id;
-    const product = await ProductModel.findById(productId).populate(
-      {path: 'categories', select: '-products'}
-    );
+    const product = await ProductModel.findById(productId).populate({
+      path: 'categories',
+      select: '-products',
+    });
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
@@ -69,12 +73,14 @@ export async function createProduct(
         console.log(`Category ${categoryName} not found.`);
       }
     }
-    
+
     // Now we save the product again with the correct categories.
     await savedProduct.save();
 
     // We populate the categories field before sending the response.
-    const populatedProduct = await ProductModel.findById(savedProduct._id).populate('categories', 'name -_id');
+    const populatedProduct = await ProductModel.findById(
+      savedProduct._id,
+    ).populate('categories', 'name -_id');
 
     if (populatedProduct) {
       const responseObj = {
@@ -92,13 +98,12 @@ export async function createProduct(
   }
 }
 
-
 export async function updateProduct(
   req: Request,
   res: Response,
   next: NextFunction,
 ) {
-  const productId = req.params._id;
+  const productId = req.params.id;
   const product = await ProductModel.findById(productId);
 
   if (!product) {
@@ -109,7 +114,7 @@ export async function updateProduct(
     title: yup.string().trim().min(2).required(),
     description: yup.string().trim().min(5).required(), // Ska dessa verkligen vara required vid en edit?
     summary: yup.string().trim().min(3).required(),
-    categories: yup.string().trim().min(2).required(),
+    categories: yup.array().of(yup.string().min(2)).required(),
     price: yup.number().min(1).required(),
     quantity: yup.number().required(),
     stock: yup.number().required(),
@@ -124,17 +129,27 @@ export async function updateProduct(
   try {
     const validatedProduct = await productUpdateSchema.validate(req.body);
 
-    if (validatedProduct.stock !== product.stock) {
-      validatedProduct.quantity = validatedProduct.stock;
+    let categoryIds = [];
+    for (const categoryName of validatedProduct.categories) {
+      const category = await categoryModel.findOne({ name: categoryName });
+      if (category) {
+        categoryIds.push(category._id);
+      } else {
+        console.log(`Category ${categoryName} not found.`);
+      }
     }
 
-    await ProductModel.findByIdAndUpdate(
-      productId,
-      validatedProduct,
-      { new: false }, 
-    );
+    // Define update data object
+    const updateData = {
+      ...validatedProduct,
+      categories: categoryIds,
+    };
 
+    await ProductModel.findByIdAndUpdate(productId, updateData, { new: false });
+
+    // Fetch the updated product
     const updatedProduct = await ProductModel.findById(productId).populate('categories', 'name -_id');
+    
     res.status(200).json(updatedProduct);
   } catch (error) {
     next(error);
@@ -143,7 +158,7 @@ export async function updateProduct(
 
 export async function deleteProduct(req: Request, res: Response) {
   try {
-    const productId = req.params._id;
+    const productId = req.params.id;
     const deletedProduct = await ProductModel.findById(productId);
 
     if (!deletedProduct) {

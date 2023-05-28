@@ -56,7 +56,7 @@ Content-Type: application/json
 }
 
 ### PUT 
-PUT http://localhost:3000/api/products/cde321
+PUT http://localhost:3000/api/products/6473a11011bc161d77238824
 Content-Type: application/json
 
 {
