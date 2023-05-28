@@ -52,8 +52,6 @@ export const OrderContext = createContext<OrderContextProps>({
   createOrder: () => Promise.resolve(null),
 });
 
-// export const useOrderContext = () => useContext(OrderContext); // in another file
-
 export const OrderProvider = ({ children }: Props) => {
   const [orders, setOrders] = useState<Order[]>([]);
 
