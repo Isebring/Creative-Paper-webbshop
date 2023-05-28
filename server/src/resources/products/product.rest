@@ -3,7 +3,7 @@ GET http://localhost:3000/api/products
 Content-Type:  application/json
 
 ### GET specific
-GET http://localhost:3000/api/products/646c89ff625c6e08624dfe38
+GET http://localhost:3000/api/products/6473a11011bc161d77238824
 Content-Type:  application/json
 
 ### GET created 
@@ -40,11 +40,10 @@ DELETE http://localhost:3000/api/products/cde321
 Content-Type: application/json
 
 {
-   "_id": "cde321",
-  "title": "Testprodukt",
+  "title": "Product",
   "description": "Info about product",
-  "summary": ["1 sak", "2 sak", "3 sak"],
-  "categories": "Testkategori",
+  "summary": "test",
+  "categories": ["Testkategori"],
   "price": "50",
   "quantity": "30",
   "stock": "20",
@@ -61,17 +60,17 @@ PUT http://localhost:3000/api/products/cde321
 Content-Type: application/json
 
 {
-  "title": "Testprodukten",
-  "description": "Info about product okej kul",
-  "summary": ["1 sak", "2 sak", "3 sak"],
-  "categories": "Testkategori",
-  "price": "900",
+  "title": "Honeybadger",
+  "description": "Info about honeybadger okej kul",
+  "summary": "test",
+  "categories": ["Journals", "Cards", "Pens"],
+  "price": "50",
   "quantity": "30",
   "stock": "20",
   "imageId": "12",
-  "imageURL": "www.testet.se",
+  "imageURL": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpusheen.com%2F&psig=AOvVaw1T0MVg2Peb63mhZlx1nTKf&ust=1685263526782000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCPjzlYGOlf8CFQAAAAAdAAAAABAF",
   "secondImageId": "25",
-  "secondImageURL": "www.test2.se",
+  "secondImageURL": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpusheen.com%2F&psig=AOvVaw1T0MVg2Peb63mhZlx1nTKf&ust=1685263526782000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCPjzlYGOlf8CFQAAAAAdAAAAABAF",
   "rating": "2",
   "usersRated": "7"
 }
