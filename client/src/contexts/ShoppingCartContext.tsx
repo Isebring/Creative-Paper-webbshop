@@ -1,7 +1,8 @@
-import { createContext, ReactNode, useContext } from 'react';
-import { CartItem } from '../components/CartProduct';
+import { createContext, ReactNode, useContext, useState } from 'react';
+import { CartItem } from '../components/CartItem';
 import { FormValues } from '../components/CheckoutForm';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { Order } from './OrderContext';
 import { ProductContext } from './ProductContext';
 
 interface ShoppingCartContext {
@@ -9,15 +10,14 @@ interface ShoppingCartContext {
   increaseCartQuantity: (id: string) => void;
   decreaseCartQuantity: (id: string) => void;
   removeFromCart: (id: string) => void;
-  cartProducts: CartItem[];
+  cartItems: CartItem[];
   cartQuantity: number;
   orders: Order[];
-  addOrder: (cartProducts: CartItem[], formData: FormValues) => void;
-}
-
-interface Order {
-  id: number;
-  cartProducts: (CartItem | { formData: FormValues })[];
+  currentOrderId: string | null;
+  createOrder: (
+    cartItems: CartItem[],
+    formData: FormValues,
+  ) => Promise<Order | null>;
 }
 
 export const ShoppingCartContext = createContext<ShoppingCartContext>(
@@ -30,20 +30,17 @@ interface Props {
 
 function ShoppingCartProvider({ children }: Props) {
   const { products } = useContext(ProductContext);
-  const [cartProducts, setCartProducts] = useLocalStorage<CartItem[]>(
-    'cart',
-    [],
-  );
-
+  const [cartItems, setCartItems] = useLocalStorage<CartItem[]>('cart', []);
+  const [currentOrderId, setCurrentOrderId] = useState<string | null>(null);
   const [orders, setOrders] = useLocalStorage<Order[]>('Orders:', []);
 
-  const cartQuantity = cartProducts.reduce(
+  const cartQuantity = cartItems.reduce(
     (quantity, product) => product.quantity + quantity,
     0,
   );
 
   function getProductQuantity(id: string) {
-    return cartProducts.find((product) => product._id === id)?.quantity || 0;
+    return cartItems.find((product) => product._id === id)?.quantity || 0;
   }
 
   function increaseCartQuantity(id: string) {
@@ -53,7 +50,7 @@ function ShoppingCartProvider({ children }: Props) {
       return;
     }
 
-    setCartProducts((currentProducts) => {
+    setCartItems((currentProducts) => {
       if (currentProducts.find((product) => product._id === id) == null) {
         return [...currentProducts, { ...productToAdd, quantity: 1 }];
       } else {
@@ -69,7 +66,7 @@ function ShoppingCartProvider({ children }: Props) {
   }
 
   function decreaseCartQuantity(id: string) {
-    setCartProducts((currentProducts) => {
+    setCartItems((currentProducts) => {
       if (
         currentProducts.find((product) => product._id === id)?.quantity === 1
       ) {
@@ -87,19 +84,51 @@ function ShoppingCartProvider({ children }: Props) {
   }
 
   function removeFromCart(id: string) {
-    setCartProducts((currentProducts) => {
+    setCartItems((currentProducts) => {
       return currentProducts.filter((product) => product._id !== id);
     });
   }
 
-  const addOrder = (cartProducts: CartItem[], formData: FormValues) => {
-    const newOrder: Order = {
-      id: orders.length + 1,
-      cartProducts: [...cartProducts, { formData }],
+  const createOrder = async (
+    cartItems: CartItem[],
+    formData: FormValues,
+  ): Promise<Order | null> => {
+    console.log('Current Order ID (before setting):', currentOrderId);
+    const orderItems = cartItems.map((item) => ({
+      product: item._id,
+      quantity: item.quantity,
+    }));
+
+    const newOrder = {
+      orderItems,
+      deliveryAddress: formData,
     };
 
-    setOrders((prevOrders) => [...prevOrders, newOrder]);
-    setCartProducts([]);
+    try {
+      const response = await fetch('/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newOrder),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create order.');
+      }
+
+      const responseData = await response.json();
+      console.log('Order created!!!!!: ');
+      const order: Order = responseData.data; // Assuming the order ID is present in the "data" field of the response
+      setCurrentOrderId(order._id);
+      setOrders((prevOrders) => [...prevOrders, order]);
+      setCartItems([]);
+      return order;
+    } catch (error) {
+      console.error(error);
+      // handle error appropriately, for example show an error message to user
+      return null;
+    }
   };
 
   return (
@@ -109,10 +138,11 @@ function ShoppingCartProvider({ children }: Props) {
         increaseCartQuantity,
         decreaseCartQuantity,
         removeFromCart,
-        cartProducts,
+        cartItems,
         cartQuantity,
         orders,
-        addOrder,
+        currentOrderId,
+        createOrder,
       }}
     >
       {children}
