@@ -16,21 +16,68 @@ export async function getOrders(req: Request, res: Response) {
   if (!req.session?.userId) {
     throw new UnauthorizedError('You must login to view your orders');
   }
-  // Retrieve user's orders from the database and populate the necessary fields
-  const orders = await OrderModel.find({ user: req.session.userId }).populate(
-    'orderItems.product',
-  ); // Populate the orderItems.product field
+
+  // Retrieve user's orders from the database
+  const orders = await OrderModel.find({ user: req.session.userId });
+
+  // Fetch the products for each order item
+  const populatedOrders = await Promise.all(
+    orders.map(async (order) => {
+      const populatedOrderItems = await Promise.all(
+        order.orderItems.map(async (orderItem) => {
+          const product = await ProductModel.findById(orderItem.product);
+          if (product) {
+            return {
+              ...orderItem.toObject(),
+              product: product.toObject(),
+            };
+          }
+          return orderItem.toObject();
+        }),
+      );
+
+      return {
+        ...order.toObject(),
+        orderItems: populatedOrderItems,
+      };
+    }),
+  );
 
   res.status(200).json({
     success: true,
-    data: orders,
+    data: populatedOrders,
   });
 }
 
 // Get all orders (admin only)
 export async function getAllOrders(req: Request, res: Response) {
-  const products = await OrderModel.find({}).populate('orderItems.product');
-  res.status(200).json(products);
+  // Retrieve all orders from the database
+  const orders = await OrderModel.find({});
+
+  // Fetch the products for each order item in all orders
+  const populatedOrders = await Promise.all(
+    orders.map(async (order) => {
+      const populatedOrderItems = await Promise.all(
+        order.orderItems.map(async (orderItem) => {
+          const product = await ProductModel.findById(orderItem.product);
+          if (product) {
+            return {
+              ...orderItem.toObject(),
+              product: product.toObject(),
+            };
+          }
+          return orderItem.toObject();
+        }),
+      );
+
+      return {
+        ...order.toObject(),
+        orderItems: populatedOrderItems,
+      };
+    }),
+  );
+
+  res.status(200).json(populatedOrders);
 }
 
 // Create order
@@ -63,7 +110,15 @@ export async function createOrder(req: Request, res: Response) {
     }
     const price = product.price;
     const totalItemPrice = price * item.quantity;
-    orderItems.push({ ...item, price: totalItemPrice }); // price here is total price for this item
+    orderItems.push({
+      product: {
+        _id: product._id,
+        title: product.title,
+        price: product.price,
+      },
+      quantity: item.quantity,
+      price: totalItemPrice, // price here is total price for this item
+    });
     totalPrice += totalItemPrice;
   }
 
@@ -84,7 +139,6 @@ export async function createOrder(req: Request, res: Response) {
   });
 }
 
-// Get order by id
 export async function getOrderById(req: Request, res: Response) {
   const orderId = req.params.id;
 
@@ -93,15 +147,32 @@ export async function getOrderById(req: Request, res: Response) {
     throw new BadRequestError('Invalid order ID.');
   }
 
-  const order = await OrderModel.findById(orderId).populate(
-    'orderItems.product',
-  );
+  const order = await OrderModel.findById(orderId);
 
   if (!order) {
     throw new NotFoundError(`Order with id ${orderId} not found.`);
   }
 
-  res.status(200).json(order);
+  // Fetch the products for each order item
+  const populatedOrderItems = await Promise.all(
+    order.orderItems.map(async (orderItem) => {
+      const product = await ProductModel.findById(orderItem.product);
+      if (product) {
+        return {
+          ...orderItem.toObject(),
+          product: product.toObject(),
+        };
+      }
+      return orderItem.toObject();
+    }),
+  );
+
+  const populatedOrder = {
+    ...order.toObject(),
+    orderItems: populatedOrderItems,
+  };
+
+  res.status(200).json(populatedOrder);
 }
 
 // Update order status
