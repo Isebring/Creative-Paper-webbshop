@@ -23,8 +23,8 @@ export function Accessories() {
 
     if (selectedCategories.length > 0) {
       sorted = sorted.filter((product: Product) =>
-        product.category.some((category: string) =>
-          selectedCategories.includes(category),
+        product.categories.some((categories: string) =>
+          selectedCategories.includes(categories),
         ),
       );
     }

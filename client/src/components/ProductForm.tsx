@@ -34,7 +34,7 @@ const schema = Yup.object().shape({
     .min(1, 'Nothing is this cheap...')
     .required('Price is required')
     .strict(),
-  category: Yup.array()
+  categories: Yup.array()
     .of(Yup.string().min(2))
     .required('At least one category is required'),
 });
@@ -55,7 +55,7 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
       summary: '' as never,
       rating: 0,
       usersRated: 0,
-      category: [] as never,
+      categories: [] as never,
     },
   });
   useEffect(() => {
@@ -69,7 +69,7 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
     const editedProduct = {
       ...values,
       _id: product?._id || '',
-      category: values.category || [],
+      categories: values.categories || [],
     };
 
     onSubmit(editedProduct);
@@ -173,9 +173,9 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
         />
         <MultiSelect
           data={categoryData}
-          label="Category"
+          label="Categories"
           placeholder="Select categories"
-          {...form.getInputProps('category')}
+          {...form.getInputProps('categories')}
           errorProps={{ 'data-cy': 'product-categories-error' }}
         />
 

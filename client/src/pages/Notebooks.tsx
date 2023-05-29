@@ -26,7 +26,7 @@ export function Notebooks() {
 
     if (selectedCategories.length > 0) {
       sorted = sorted.filter((product: Product) =>
-        product.category.some((category: string) =>
+        product.categories.some((category: string) =>
           selectedCategories.includes(category),
         ),
       );
