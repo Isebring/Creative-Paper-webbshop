@@ -1,12 +1,13 @@
 import {
   ColorScheme,
   ColorSchemeProvider,
-  MantineProvider,
+  MantineProvider
 } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import React, { useState } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import ProductProvider from './contexts/ProductContext';
+import { ProductUpdateProvider } from './contexts/ProductUpdateContext';
 import ShoppingCartProvider from './contexts/ShoppingCartContext';
 import { UserProvider } from './contexts/UserContext';
 import './index.css';
@@ -35,7 +36,9 @@ function Root() {
           <ProductProvider>
             <UserProvider>
               <ShoppingCartProvider>
+                <ProductUpdateProvider>
                 <RouterProvider router={router} />
+                </ProductUpdateProvider>
               </ShoppingCartProvider>
             </UserProvider>
           </ProductProvider>

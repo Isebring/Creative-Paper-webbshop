@@ -4,6 +4,7 @@ import CategoryFilter from '../components/CategoryFilter';
 import { PageHero } from '../components/PageHero';
 import ProductCard from '../components/ProductCard';
 import { Product } from '../contexts/ProductContext';
+import { useProductUpdate } from '../contexts/ProductUpdateContext';
 
 export function Pens() {
   const [sortDirection, setSortDirection] = useState('');
@@ -12,10 +13,12 @@ export function Pens() {
   ]);
   const [sortedProducts, setSortedProducts] = useState<Product[]>([]);
   const [activeButton, setActiveButton] = useState('');
+  const { update, setUpdate } = useProductUpdate();
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+    setUpdate(false);
+  }, [update]);
 
   const fetchProducts = async () => {
     try {
