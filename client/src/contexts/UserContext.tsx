@@ -15,7 +15,7 @@ interface UserContextProps {
   user: User | null;
   users: User[] | null;
   setUsers: (users: User[] | null) => void;
-  login: (email: string, password: string) => Promise<User>;
+  login: (email: string, password: string, isAdmin: boolean) => Promise<User>;
   logout: () => Promise<void>;
   register: (email: string, password: string) => Promise<string>;
   getAllUsers: () => Promise<void>;
@@ -56,7 +56,11 @@ export const UserProvider = ({ children }: Props) => {
         const response = await fetch(`/api/users/auth`);
         if (response.ok) {
           const userResponse = await response.json();
-          setUser({ _id: userResponse._id, email: userResponse.email });
+          setUser({
+            _id: userResponse._id,
+            email: userResponse.email,
+            isAdmin: false,
+          });
         } else if (response.status === 401) {
           setUser(null);
         } else {
@@ -83,7 +87,7 @@ export const UserProvider = ({ children }: Props) => {
         return errorMessage;
       }
       const user = await response.json();
-      setUser({ _id: user._id, email: user.email });
+      setUser({ _id: user._id, email: user.email, isAdmin: false });
       return '';
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -106,8 +110,16 @@ export const UserProvider = ({ children }: Props) => {
         throw new Error('Failed to log in user');
       }
       const user = await response.json();
-      setUser({ _id: user._id, email: user.email });
-      return { _id: user._id, email: user.email }; // Return only necessary info
+      setUser({
+        _id: user._id,
+        email: user.email,
+        isAdmin: user.isAdmin || false,
+      });
+      return {
+        _id: user._id,
+        email: user.email,
+        isAdmin: user.isAdmin || false,
+      };
     } catch (error: unknown) {
       if (error instanceof Error) {
         throw new Error(error.message || 'Failed to log in user');
