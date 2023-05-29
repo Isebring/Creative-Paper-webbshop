@@ -56,9 +56,10 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
       summary: '' as never,
       rating: 0,
       usersRated: 0,
-      category: [] as never,
+      categories: isEditing && product ? product.categories : [],
     },
   });
+
   useEffect(() => {
     if (isEditing && product) {
       form.setValues(product);
@@ -66,18 +67,39 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product, isEditing, form.setValues]);
 
-  const handleSubmit = async (values: Product) => {
-    const editedProduct = {
-      ...values,
-      _id: product?._id || '',
-      category: values.category || [],
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const response = await fetch('/api/categories');
+      const categories = await response.json();
+
+      const formattedCategories = categories
+        .filter((category: any) => typeof category.name === 'string')
+        .map((category: any) => ({ value: category.name, label: category.name }));
+
+      setCategoryData(formattedCategories);
     };
 
-    onSubmit(editedProduct);
+    fetchCategories();
+  }, []);
+  
 
-    form.reset();
-    navigate('/admin');
+  const handleSubmit = async (values: Product) => {
+    try {
+      const editedProduct = {
+        ...values,
+        _id: product?._id || '',
+        categories: values.categories || [],
+      };
+  
+      await onSubmit(editedProduct);
+  
+      form.reset();
+      navigate('/admin');
+    } catch (error) {
+      console.error('Form submission error:', error);
+    }
   };
+  
 
   const handleImageUpload = async (file: File) => {
     if (!file) return;

@@ -37,6 +37,8 @@ export async function createProduct(
   res: Response,
   next: NextFunction,
 ) {
+  console.log('Incoming product:', req.body);
+
   const incomingProduct = req.body;
 
   const productValidationSchema = yup.object({
