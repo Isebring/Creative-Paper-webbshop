@@ -6,8 +6,8 @@ POST http://localhost:3000/api/users/register
 Content-Type: application/json
 
 {
-    "email": "hejsan@hello.com",
-    "password": "hejsan12345"
+    "email": "lisa@hello.com",
+    "password": "lisa12345"
 }
 
 ### LOGIN USER
@@ -15,8 +15,8 @@ POST http://localhost:3000/api/users/login
 Content-Type: application/json
 
 {
-    "email": "hej@hello.com",
-    "password": "hej12345"
+    "email": "lisa@hello.com",
+    "password": "lisa12345"
 }
 
 ### LOGOUT USER
