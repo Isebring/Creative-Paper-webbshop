@@ -15,7 +15,7 @@ function Home() {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const response = await fetch('/api/categories/:category/products', {
+      const response = await fetch('/api/products/by-category', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -25,34 +25,30 @@ function Home() {
         }),
       });
       const newProducts = await response.json();
-      setSortedProducts(newProducts);
+      let sorted = [...newProducts];
+  
+      if (sortDirection === 'ascending') {
+        sorted.sort((a, b) => a.price - b.price);
+      } else if (sortDirection === 'descending') {
+        sorted.sort((a, b) => b.price - a.price);
+      }
+  
+      setSortedProducts(sorted);
     };
-
+  
     if (selectedCategories.length > 0) {
       fetchProducts();
+    } else {
+      let sorted = [...products];
+      if (sortDirection === 'ascending') {
+        sorted.sort((a, b) => a.price - b.price);
+      } else if (sortDirection === 'descending') {
+        sorted.sort((a, b) => b.price - a.price);
+      }
+      setSortedProducts(sorted);
     }
-  }, [selectedCategories]);
-
-  useEffect(() => {
-    let sorted = [...products];
-
-    if (sortDirection === 'ascending') {
-      sorted.sort((a, b) => a.price - b.price);
-    } else if (sortDirection === 'descending') {
-      sorted.sort((a, b) => b.price - a.price);
-    }
-
-    if (selectedCategories.length > 0) {
-      sorted = sorted.filter((product) =>
-        product.category && product.category.some((category: string) =>
-          selectedCategories.includes(category),
-        ),
-      );
-    }
-    
-
-    setSortedProducts(sorted);
-  }, [products, sortDirection, selectedCategories]);
+  }, [selectedCategories, sortDirection, products]);
+  
 
   function sortProductsByLowestPrice() {
     setSortDirection('ascending');
