@@ -47,7 +47,12 @@ function UserDropdownMenu() {
               <Text fw={700}>{user?.email}</Text>
             </Menu.Item>
             <Menu.Divider />
-            <Menu.Item icon={<IconUser size={14} />}>My account</Menu.Item>
+            <Menu.Item
+              icon={<IconUser size={14} />}
+              onClick={() => navigate('/admin')}
+            >
+              My account
+            </Menu.Item>
             <Menu.Item icon={<IconSettings size={14} />}>Settings</Menu.Item>
             <Menu.Divider />
             <Menu.Item
