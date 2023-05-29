@@ -133,9 +133,14 @@ export async function createOrder(req: Request, res: Response) {
   const order = new OrderModel(orderData);
   const savedOrder = await order.save();
 
+  // Fetch the full order details, populating product details
+  const populatedOrder = await OrderModel.findById(savedOrder._id).populate(
+    'orderItems.product',
+  );
+
   res.status(201).json({
     success: true,
-    data: savedOrder,
+    data: populatedOrder,
   });
 }
 
