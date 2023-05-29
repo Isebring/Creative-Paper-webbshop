@@ -7,6 +7,7 @@ export function OrdersByUser() {
 
   useEffect(() => {
     getOrdersByUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
