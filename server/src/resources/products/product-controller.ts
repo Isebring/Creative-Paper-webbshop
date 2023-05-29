@@ -113,11 +113,12 @@ export async function updateProduct(
     const newProduct = new ProductModel({
       ...validatedProduct,
       _id: undefined,
+      previousId: productId,
     });
     const savedProduct = await newProduct.save();
 
     // Send the new product as a response
-    res.status(200).json(savedProduct);
+    res.status(200).json({ newProduct: savedProduct, oldProductId: productId });
   } catch (error) {
     next(error);
   }
