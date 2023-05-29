@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { app } from './app';
+import createCategories from './resources/categories/createCategories';
 
 dotenv.config();
 
@@ -11,6 +12,8 @@ async function main() {
 
   await mongoose.connect(process.env.MONGO_URL);
   console.log('Connected to Database');
+
+  await createCategories();
 
   app.listen(3000, () => {
     console.log('Server is running: http://localhost:3000');
