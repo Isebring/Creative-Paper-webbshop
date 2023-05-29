@@ -114,7 +114,7 @@ function ProductDetails() {
           >
             <SwiperSlide>
               <Image
-                src={product.image}
+                src={'/api/image/' + product.imageId}
                 key={product._id}
                 alt={product.title}
                 fit="contain"
@@ -122,7 +122,7 @@ function ProductDetails() {
             </SwiperSlide>
             <SwiperSlide>
               <Image
-                src={product.secondImage}
+                src={'/api/image/' + product.secondImageId}
                 alt={product.title}
                 fit="contain"
               />

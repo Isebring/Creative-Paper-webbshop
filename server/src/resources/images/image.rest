@@ -1,5 +1,5 @@
 ### Retrieve file
-GET http://localhost:3000/api/image/646e0419af3a9037ca973140
+GET http://localhost:3000/api/image/64709b8e30a73dcbfe6b013e
 
 ### Delete file
 DELETE http://localhost:3000/api/image/646e0419af3a9037ca973140
@@ -11,7 +11,7 @@ Content-Type: multipart/form-data; boundary=FormDataRow
 Content-Disposition: form-data; name="image"; filename="notebook.png"
 Content-Type: image/png
 
-< ../notebook.png
+< ./notebook.png
 --FormDataRow--
 
 ### Tänk på följande:

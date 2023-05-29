@@ -42,8 +42,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId }) => {
     <>
       <Card shadow="xl" radius="lg" withBorder data-cy="product">
         <Card.Section>
-          <Link to={link} style={{ textDecoration: 'none', color: 'inherit' }}>
-            <Image src={product.image} height={300} fit="cover" />
+          <Link to={link} style={{ textDecoration: 'none', color: 'inhFerit' }}>
+            <Image
+              src={'/api/image/' + product.imageId}
+              height={300}
+              fit="cover"
+            />
             <Box pl="md" pr="md">
               <Group
                 mt="xl"
@@ -67,10 +71,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId }) => {
                 </Badge>
               </Group>
               <List style={{ fontFamily: 'Poppins, sans-serif' }}>
-                {Array.isArray(product.summary) &&
-                  product.summary.map((item) => (
-                    <List.Item key={item}>{item}</List.Item>
-                  ))}
+                {product.summary &&
+                  product.summary
+                    .split(',')
+                    .map((item) => item.trim())
+                    .map((item) => <List.Item key={item}>{item}</List.Item>)}
               </List>
             </Box>
           </Link>

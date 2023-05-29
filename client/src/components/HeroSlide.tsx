@@ -9,7 +9,6 @@ import HeroSlideItem from './HeroSlideItem';
 
 function HeroSlide() {
   const { products } = useProductContext();
-
   return (
     <Box
       sx={{
@@ -30,7 +29,7 @@ function HeroSlide() {
       >
         {products?.slice(0, 4).map((product) => (
           <SwiperSlide style={{ height: '22rem' }} key={product._id}>
-            <HeroSlideItem imageSrc={product.secondImage} />
+            <HeroSlideItem imageSrc={`/api/image/${product.secondImageId}`} />
           </SwiperSlide>
         ))}
       </Swiper>

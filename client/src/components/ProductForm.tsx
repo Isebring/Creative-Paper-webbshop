@@ -11,17 +11,18 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Product } from '../contexts/ProductContext';
-import generateID from '../utils/generateID';
 import { categoryData } from './CategoryData';
 
 interface ProductFormProps {
   onSubmit: (product: Product) => void;
-  addProduct: (product: Product) => void;
   isEditing: boolean;
   product?: Product;
 }
 
 const schema = Yup.object().shape({
+  summary: Yup.string()
+    .min(2, 'Summary should have at least 2 letters')
+    .required('Summary is required'),
   imageId: Yup.string().required('Image is required'),
   title: Yup.string()
     .min(2, 'Title should have at least 2 letters')
@@ -38,12 +39,8 @@ const schema = Yup.object().shape({
     .required('At least one category is required'),
 });
 
-function ProductForm({
-  onSubmit,
-  addProduct,
-  isEditing,
-  product,
-}: ProductFormProps) {
+function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
+  // const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const form = useForm<Product>({
     validate: yupResolver(schema),
@@ -53,9 +50,9 @@ function ProductForm({
       imageId: '',
       title: '',
       description: '',
-      price: null as never,
-      secondImage: '',
-      summary: [],
+      price: '' as never,
+      secondImageId: '',
+      summary: '' as never,
       rating: 0,
       usersRated: 0,
       category: [] as never,
@@ -68,27 +65,55 @@ function ProductForm({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product, isEditing, form.setValues]);
 
-  const handleSubmit = (values: Product) => {
+  const handleSubmit = async (values: Product) => {
     const editedProduct = {
       ...values,
-      id: product?._id || '',
+      _id: product?._id || '',
       category: values.category || [],
     };
-    if (isEditing) {
-      onSubmit(editedProduct);
-    } else {
-      addProduct({ ...editedProduct, _id: generateID() });
-    }
+
+    onSubmit(editedProduct);
+
     form.reset();
     navigate('/admin');
   };
 
-  const handleImageUpload = async (file: File | null) => {
+  const handleImageUpload = async (file: File) => {
     if (!file) return;
-    // Skapa FormData och lägg till filen
-    // Skicka till API
-    // Spara ID i formet
-    form.setFieldValue('imageId', '1234');
+    const imageData = new FormData();
+    imageData.append('file', file);
+    const response = await fetch('/api/image', {
+      method: 'POST',
+      body: imageData,
+    });
+    console.log('response before parsing:', response);
+    try {
+      const imageId = await response.json();
+      console.log('imageId:', imageId);
+      form.setFieldValue('imageId', imageId);
+      console.log('response after parsing:', response);
+    } catch (error) {
+      console.error('Error parsing JSON response', error);
+    }
+  };
+
+  const handleSecondImageUpload = async (file: File) => {
+    if (!file) return;
+    const imageData = new FormData();
+    imageData.append('file', file);
+    const response = await fetch('/api/image', {
+      method: 'POST',
+      body: imageData,
+    });
+    console.log('response before parsing:', response);
+    try {
+      const secondImageId = await response.json();
+      console.log('secondImageId:', secondImageId);
+      form.setFieldValue('secondImageId', secondImageId);
+      console.log('response after parsing:', response);
+    } catch (error) {
+      console.error('Error parsing JSON response', error);
+    }
   };
 
   return (
@@ -110,24 +135,31 @@ function ProductForm({
           withAsterisk
           label="Image URL"
           placeholder="https://www.image.com/image1.png"
-          {...form.getInputProps('imageId')}
+          // {...form.getInputProps('imageId')}
           onChange={handleImageUpload}
           data-cy="product-image"
           errorProps={{ 'data-cy': 'product-image-error' }}
         />
-        <TextInput
+        <FileInput
           label="Second Image URL"
           placeholder="https://www.image.com/image2.png"
-          {...form.getInputProps('secondImage')}
+          onChange={handleSecondImageUpload}
+          // {...form.getInputProps('secondImage')}
           errorProps={{ 'data-cy': 'product-image-error' }}
         />
         <TextInput
           withAsterisk
           label="Description"
-          placeholder="This is the description of this product."
+          placeholder="This is the description of this product"
           {...form.getInputProps('description')}
           data-cy="product-description"
           errorProps={{ 'data-cy': 'product-description-error' }}
+        />
+        <TextInput
+          label="Summary"
+          placeholder="Separate summaries with a comma"
+          {...form.getInputProps('summary')}
+          errorProps={{ 'data-cy': 'product-summary-error' }}
         />
         <TextInput
           withAsterisk
