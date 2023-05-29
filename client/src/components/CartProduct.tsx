@@ -30,7 +30,12 @@ function CartProduct({ cartItem }: Props) {
       }}
       data-cy="cart-item"
     >
-      <Image src={cartItem.image} height={150} width={220} fit="cover" />
+      <Image
+        src={'/api/image/' + cartItem.imageId}
+        height={150}
+        width={220}
+        fit="cover"
+      />
 
       <Group position="center" pl="xs" pr="xs" mt="sm" mb="sm">
         <Text

@@ -11,11 +11,7 @@ function NewProduct() {
       <Group position="center" mb="xl">
         <Title>New Product</Title>
       </Group>
-      <ProductForm
-        onSubmit={addProduct}
-        addProduct={addProduct}
-        isEditing={false}
-      />
+      <ProductForm onSubmit={addProduct} isEditing={false} />
     </Container>
   );
 }

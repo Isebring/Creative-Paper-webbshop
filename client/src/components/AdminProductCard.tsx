@@ -9,12 +9,27 @@ interface Props {
 }
 
 function AdminProductCard({ product, onDelete }: Props) {
-  const edit = '/admin/product/' + product._id + '/edit';
+  const edit = '/admin/products/' + product._id;
 
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
-  const handleDelete = () => {
+  async function deleteProduct(productId: string) {
+    try {
+      const response = await fetch(`/api/products/${productId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Error deleting the product');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+  const handleDelete = async () => {
     if (showConfirmDelete) {
+      await deleteProduct(product._id);
       onDelete?.();
     } else {
       setShowConfirmDelete(true);
@@ -36,7 +51,11 @@ function AdminProductCard({ product, onDelete }: Props) {
         data-cy="product"
       >
         <Card.Section>
-          <Image src={product.image} height={230} fit="cover" />
+          <Image
+            src={'/api/image/' + product.imageId}
+            height={230}
+            fit="cover"
+          />
           <Box pl="md" pr="md">
             <Group position="left" mt="sm" mb="sm">
               <Text

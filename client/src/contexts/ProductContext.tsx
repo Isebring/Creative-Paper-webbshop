@@ -5,10 +5,10 @@ export interface Product {
   _id: string;
   image: string;
   imageId: string;
-  secondImage: string;
+  secondImageId: string;
   title: string;
   description: string;
-  summary: string[];
+  summary: string;
   price: number;
   category: string[];
   rating: number;
@@ -20,7 +20,7 @@ interface ProductContextType {
   getProductById: (_id: string) => Promise<Product | null>;
   addProduct: (product: Product) => void;
   deleteProduct: (_id: string) => void;
-  updateProduct: (product: Product) => void;
+  updateProduct: (productId: string, product: Product) => void;
 }
 
 export const ProductContext = createContext<ProductContextType>({
@@ -38,6 +38,7 @@ export interface ProductProviderProps {
 export const ProductProvider = ({ children }: ProductProviderProps) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  // const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -81,19 +82,51 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
     });
   }
 
-  function addProduct(product: Product) {
-    setProducts((currentProducts) => [...currentProducts, product]);
+  async function addProduct(product: Product) {
+    try {
+      const response = await fetch('/api/products', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(product),
+      });
+
+      if (response.ok) {
+        const newProduct = await response.json();
+        setProducts([...products, newProduct]);
+      } else {
+        console.error('Failed to add product');
+      }
+    } catch (error) {
+      console.error('Error adding product:', error);
+    }
   }
 
-  const updateProduct = (updatedProduct: Product) => {
-    const newProducts = products.map((product) =>
-      product._id === updatedProduct._id ? updatedProduct : product,
-    );
+  async function updateProduct(productId: string, updatedProduct: Product) {
+    try {
+      const response = await fetch(`/api/products/${productId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedProduct),
+        credentials: 'same-origin',
+      });
 
-    setProducts(newProducts);
-    localStorage.setItem('products', JSON.stringify(newProducts));
-  };
-
+      if (response.ok) {
+        const updatedProduct = await response.json();
+        const updatedProducts = products.map((p) =>
+          p._id === updatedProduct._id ? updatedProduct : p,
+        );
+        setProducts(updatedProducts);
+      } else {
+        console.error('Failed to update product');
+      }
+    } catch (error) {
+      console.error('Error updating product:', error);
+    }
+  }
   return (
     <ProductContext.Provider
       value={{

@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { ObjectId } from 'mongodb';
 import * as yup from 'yup';
 import { ProductModel } from './product-model';
 
@@ -32,26 +33,28 @@ export async function createProduct(
   const incomingProduct = req.body;
 
   const productValidationSchema = yup.object({
-    // _id: yup.string().required(),
     title: yup.string().trim().min(2).required(),
     description: yup.string().trim().min(5).required(),
-    summary: yup.string().trim().min(3).required(),
-    categories: yup.string().trim().min(2).required(),
+    summary: yup.string().trim(),
+    categories: yup.string().trim().min(2),
     price: yup.number().min(1).required(),
-    quantity: yup.number().required(),
-    stock: yup.number().required(),
+    quantity: yup.number(),
+    stock: yup.number(),
     imageId: yup.string().trim().min(2).required(),
-    imageURL: yup.string().trim().min(2).required(),
-    secondImageId: yup.string().trim().min(2).required(),
-    secondImageURL: yup.string().trim().min(2).required(),
-    rating: yup.number().required(),
-    usersRated: yup.number().required(),
+    imageURL: yup.string().trim().min(2),
+    secondImageId: yup.string().trim().min(2),
+    secondImageURL: yup.string().trim().min(2),
+    rating: yup.number(),
+    usersRated: yup.number(),
   });
 
   try {
     await productValidationSchema.validate(incomingProduct);
 
-    const newProduct = new ProductModel(incomingProduct);
+    const newProduct = new ProductModel({
+      ...incomingProduct,
+      _id: new ObjectId(),
+    });
     newProduct.quantity = incomingProduct.stock;
     const savedProduct = await newProduct.save();
     const responseObj = {
@@ -59,7 +62,7 @@ export async function createProduct(
       ...savedProduct.toJSON(),
     };
     res.set('content-type', 'application/json');
-    res.status(201).send(JSON.stringify(responseObj));
+    res.status(201).json(responseObj);
   } catch (error) {
     next(error); // är detta globala error handlern? Oklart
   }
@@ -70,7 +73,7 @@ export async function updateProduct(
   res: Response,
   next: NextFunction,
 ) {
-  const productId = req.params._id;
+  const productId = req.params.id;
   const product = await ProductModel.findById(productId);
 
   if (!product) {
@@ -80,20 +83,21 @@ export async function updateProduct(
   const productUpdateSchema = yup.object({
     title: yup.string().trim().min(2).required(),
     description: yup.string().trim().min(5).required(), // Ska dessa verkligen vara required vid en edit?
-    summary: yup.string().trim().min(3).required(),
-    categories: yup.string().trim().min(2).required(),
+    summary: yup.string().trim(),
+    categories: yup.string().trim().min(2),
     price: yup.number().min(1).required(),
-    quantity: yup.number().required(),
-    stock: yup.number().required(),
+    quantity: yup.number(),
+    stock: yup.number(),
     imageId: yup.string().trim().min(2).required(),
-    imageURL: yup.string().trim().min(2).required(),
-    secondImageId: yup.string().trim().min(2).required(),
-    secondImageURL: yup.string().trim().min(2).required(),
-    rating: yup.number().required(),
-    usersRated: yup.number().required(),
+    imageURL: yup.string().trim().min(2),
+    secondImageId: yup.string().trim().min(2),
+    secondImageURL: yup.string().trim().min(2),
+    rating: yup.number(),
+    usersRated: yup.number(),
   });
 
   try {
+    console.log('Update product:', { params: req.params, body: req.body });
     const validatedProduct = await productUpdateSchema.validate(req.body);
 
     if (validatedProduct.stock !== product.stock) {
@@ -113,7 +117,7 @@ export async function updateProduct(
 
 export async function deleteProduct(req: Request, res: Response) {
   try {
-    const productId = req.params._id;
+    const productId = req.params.id;
     const deletedProduct = await ProductModel.findById(productId);
 
     if (!deletedProduct) {
