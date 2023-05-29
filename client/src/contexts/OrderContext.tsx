@@ -69,7 +69,7 @@ export const OrderProvider = ({ children }: Props) => {
 
   const getAllOrders = async () => {
     try {
-      const response = await fetch('/api/orders');
+      const response = await fetch('/api/orders/all');
       if (!response.ok) {
         throw new Error('Failed to fetch orders.');
       }
