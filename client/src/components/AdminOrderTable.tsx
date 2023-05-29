@@ -61,11 +61,11 @@ function AdminOrders() {
       <thead>
         <tr>
           <th>Order #</th>
-          <th>Shipping details</th>
+          <th>Shipping Details</th>
           <th>Total Items</th>
           <th>Order Items</th>
           <th>Order Total</th>
-          <th>Date</th>
+          <th>Order Date</th>
           <th>Status</th>
         </tr>
       </thead>
