@@ -4,5 +4,9 @@ GET http://localhost:3000/api/categories
 Content-Type:  application/json
 
 ### POST
-POST http://localhost:3000/api/categories/:category/products
+POST http://localhost:3000/api/products/by-category
 Content-Type:  application/json
+
+{
+    "categories": ["Journals"]
+}
