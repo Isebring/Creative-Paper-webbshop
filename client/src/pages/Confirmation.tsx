@@ -1,66 +1,73 @@
-import { Card, Container, Divider, List, Text, Title } from '@mantine/core';
-import { useContext } from 'react';
-import { FormValues } from '../components/CheckoutForm';
+import {
+  Card,
+  Container,
+  Divider,
+  Image,
+  List,
+  Text,
+  Title,
+} from '@mantine/core';
+import { useContext, useEffect } from 'react';
 import InitBackgroundAnimation from '../components/ConfirmationPageAnimation';
-import { ProductContext } from '../contexts/ProductContext';
-import { useShoppingCart } from '../contexts/UseShoppingCartContext';
+import { ShoppingCartContext } from '../contexts/ShoppingCartContext';
 
 function Confirmation() {
-  const { products } = useContext(ProductContext);
-  const { orders } = useShoppingCart();
-  const lastOrder = orders[orders.length - 1];
-  const formData = lastOrder.cartProducts.find(
-    (item): item is { formData: FormValues } => 'formData' in item,
-  )?.formData;
+  const { orders, currentOrderId } = useContext(ShoppingCartContext);
+  const currentOrder = orders.find((order) => order._id === currentOrderId);
 
-  function calculateLastOrderTotal() {
-    if (!products) {
-      return;
+  useEffect(() => {
+    console.log('Current Order ID in Confirmation component:', currentOrderId);
+  }, [currentOrderId]);
+
+  function calculateCurrentOrderTotal() {
+    if (!currentOrder) {
+      return 0;
     }
-    return lastOrder.cartProducts.reduce((total, item) => {
-      if ('_id' in item) {
-        const product = products.find((i) => i._id === item._id);
-        return total + (product?.price || 0) * item.quantity;
-      }
-      return total;
+    return currentOrder.orderItems.reduce((total, item) => {
+      return total + item.quantity * item.price;
     }, 0);
   }
   InitBackgroundAnimation();
   return (
     <Container size="md" mt="xl" mb="xl">
-      {lastOrder && formData && (
+      {currentOrder && (
         <Card shadow="md" sx={{ textAlign: 'center' }}>
           <Title order={1}>Thank you for your order!</Title>
           <Divider mt="md" mb="sm" size="xs" />
-          <Text>We have sent a confirmation to: {formData.email}</Text>
-          <Text>Your order number: {lastOrder.id}</Text>
+          <Text>
+            We have sent a confirmation to: {currentOrder.deliveryAddress.email}
+          </Text>
+          <Text>Your order number: {currentOrder._id}</Text>
           <Divider mt="md" mb="sm" size="xs" />
           <Title mb="xs" order={2}>
             Order details:
           </Title>
-          <Text>Name: {formData.fullName}</Text>
-          <Text>Email: {formData.email}</Text>
-          <Text>Address: {formData.address}</Text>
-          <Text>Zip Code: {formData.zipCode}</Text>
-          <Text>Phone nr: {formData.phoneNumber}</Text>
-          <Text>City: {formData.city}</Text>
+          <Text>Name: {currentOrder.deliveryAddress.fullName}</Text>
+          <Text>Email: {currentOrder.deliveryAddress.email}</Text>
+          <Text>Address: {currentOrder.deliveryAddress.address}</Text>
+          <Text>Zip Code: {currentOrder.deliveryAddress.zipCode}</Text>
+          <Text>Phone nr: {currentOrder.deliveryAddress.phoneNumber}</Text>
+          <Text>City: {currentOrder.deliveryAddress.city}</Text>
           <Divider mt="md" mb="sm" size="xs" />
           <Title mb="xs" order={2}>
             Ordered Products
           </Title>
           <List listStyleType="none">
-            {lastOrder.cartProducts.map(
-              (product, index) =>
-                '_id' in product && (
-                  <List.Item key={index}>
-                    {product.title} - ${product.price} - Quantity:{' '}
-                    {product.quantity}
-                  </List.Item>
-                ),
-            )}
+            {currentOrder.orderItems.map((orderItem, index) => (
+              <List.Item key={index}>
+                {orderItem.product.title} - ${orderItem.price} - Quantity:{' '}
+                {orderItem.quantity}{' '}
+                <Image
+                  src={orderItem.product.image}
+                  height={150}
+                  width={220}
+                  fit="cover"
+                />
+              </List.Item>
+            ))}
           </List>
           <Divider mt="lg" mb="sm" size="xs" />
-          <h2>Total price: ${calculateLastOrderTotal()}</h2>
+          <h2>Total price: ${calculateCurrentOrderTotal()}</h2>
         </Card>
       )}
     </Container>

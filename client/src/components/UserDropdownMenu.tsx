@@ -24,6 +24,7 @@ function UserDropdownMenu() {
   const handleLogout = async () => {
     try {
       await logout(); // Call the logout function
+      navigate('/');
       console.log('User has been signed out :)');
     } catch (error) {
       console.error(error);
