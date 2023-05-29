@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { CartItem } from '../components/CartItem';
 import { FormValues } from '../components/CheckoutForm';
 import useLocalStorage from '../hooks/useLocalStorage';
@@ -38,6 +44,10 @@ function ShoppingCartProvider({ children }: Props) {
     (quantity, product) => product.quantity + quantity,
     0,
   );
+
+  useEffect(() => {
+    console.log('Current Order ID (after setting):', currentOrderId);
+  }, [currentOrderId]);
 
   function getProductQuantity(id: string) {
     return cartItems.find((product) => product._id === id)?.quantity || 0;
@@ -120,7 +130,8 @@ function ShoppingCartProvider({ children }: Props) {
       const responseData = await response.json();
       console.log('Order created!!!!!: ');
       const order: Order = responseData.data; // Assuming the order ID is present in the "data" field of the response
-      setCurrentOrderId(order._id);
+      const orderId = order._id; // Extract the order ID from the response
+      setCurrentOrderId(orderId);
       setOrders((prevOrders) => [...prevOrders, order]);
       setCartItems([]);
       return order;
