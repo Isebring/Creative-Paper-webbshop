@@ -82,6 +82,10 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
     fetchCategories();
   }, []);
   
+  
+  
+  
+  
 
   const handleSubmit = async (values: Product) => {
     try {
@@ -90,15 +94,16 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
         _id: product?._id || '',
         categories: values.categories || [],
       };
-  
+    
       await onSubmit(editedProduct);
-  
+    
       form.reset();
       navigate('/admin');
     } catch (error) {
       console.error('Form submission error:', error);
     }
   };
+  
   
 
   const handleImageUpload = async (file: File) => {
@@ -198,7 +203,7 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
           data={categoryData}
           label="Category"
           placeholder="Select categories"
-          {...form.getInputProps('category')}
+          {...form.getInputProps('categories')}
           errorProps={{ 'data-cy': 'product-categories-error' }}
         />
 
