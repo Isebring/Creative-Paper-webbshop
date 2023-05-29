@@ -1,10 +1,7 @@
 import { Button, Menu, Text } from '@mantine/core';
 import {
-  IconHelp,
   IconLogin,
   IconLogout,
-  IconSearch,
-  IconSettings,
   IconUser,
   IconUserCircle,
 } from '@tabler/icons-react';

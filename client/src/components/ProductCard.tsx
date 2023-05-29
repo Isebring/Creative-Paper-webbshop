@@ -18,19 +18,26 @@ import { useProductContext } from '../contexts/UseProductContext';
 import { useShoppingCart } from '../contexts/UseShoppingCartContext';
 
 type ProductCardProps = {
-  productId: string;
+  productId?: string;
   product: Product;
   sortedProducts?: Product[];
   sortDirection?: string;
 };
 
-const ProductCard: React.FC<ProductCardProps> = ({ productId }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
   const theme = useMantineTheme();
   const { increaseCartQuantity } = useShoppingCart();
   const { products } = useProductContext();
 
-  // Find the product by ID in the products array
-  const product = products?.find((product) => product._id === productId);
+  if (!product && productId) {
+    const foundProduct = products?.find((p) => p._id === productId);
+    
+    if (foundProduct) {
+      product = foundProduct;
+    } else {
+      return <div>Loading...</div>;
+    }
+  }
 
   if (!product) {
     return <div>Loading...</div>;

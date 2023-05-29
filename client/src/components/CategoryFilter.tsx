@@ -6,7 +6,7 @@ import {
   MultiSelectValueProps,
   rem,
   SelectItem,
-  SelectItemProps,
+  SelectItemProps
 } from '@mantine/core';
 import { forwardRef, useEffect, useState } from 'react';
 import { Product } from '../contexts/ProductContext';

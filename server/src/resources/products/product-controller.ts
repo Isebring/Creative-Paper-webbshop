@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
 import * as yup from 'yup';
-import { ProductModel } from './product-model';
 import { categoryModel } from '../categories/category-model';
+import { ProductModel } from './product-model';
 
 // const testSchema
 
@@ -137,7 +137,7 @@ export async function updateProduct(
       validatedProduct.quantity = validatedProduct.stock;
     }
 
-    let categoryIds = [];
+    const categoryIds = [];
     for (const categoryName of validatedProduct.categories) {
       const category = await categoryModel.findOne({ name: categoryName });
       if (category) {

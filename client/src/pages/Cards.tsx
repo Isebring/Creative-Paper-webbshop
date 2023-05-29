@@ -1,21 +1,43 @@
 import { Button, Container, Group, SimpleGrid } from '@mantine/core';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import CategoryFilter from '../components/CategoryFilter';
 import { PageHero } from '../components/PageHero';
 import ProductCard from '../components/ProductCard';
-import { Product, ProductContext } from '../contexts/ProductContext';
+import { Product } from '../contexts/ProductContext';
 
 export function Cards() {
-  const { products } = useContext(ProductContext);
   const [sortDirection, setSortDirection] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<string[]>([
     'cards',
   ]);
-  const [sortedProducts, setSortedProducts] = useState(products);
+  const [sortedProducts, setSortedProducts] = useState<Product[]>([]);
   const [activeButton, setActiveButton] = useState('');
 
   useEffect(() => {
-    let sorted = [...products];
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch('/api/products/by-category', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ categories: ['Cards'] }),
+      });
+      
+      const data = await response.json();
+      console.log(data);
+      setSortedProducts(data);
+    } catch (error) {
+      console.error('Failed to fetch products:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (sortedProducts.length === 0) return;
+    let sorted = [...sortedProducts];
 
     if (sortDirection === 'ascending') {
       sorted.sort((a, b) => a.price - b.price);
@@ -23,16 +45,8 @@ export function Cards() {
       sorted.sort((a, b) => b.price - a.price);
     }
 
-    if (selectedCategories.length > 0) {
-      sorted = sorted.filter((product: Product) =>
-        product.category.some((category: string) =>
-          selectedCategories.includes(category),
-        ),
-      );
-    }
-
     setSortedProducts(sorted);
-  }, [products, sortDirection, selectedCategories]);
+  }, [sortDirection, selectedCategories]);
 
   function sortProductsByLowestPrice() {
     setSortDirection('ascending');
@@ -77,7 +91,7 @@ export function Cards() {
           Sort by highest price
         </Button>
         <CategoryFilter
-          products={products}
+          products={sortedProducts}
           selectedCategories={selectedCategories}
           setSelectedCategories={setSelectedCategories}
         />
@@ -97,7 +111,7 @@ export function Cards() {
             product={product}
             sortedProducts={sortedProducts}
             sortDirection={sortDirection === 'ascending' ? 'lowest' : 'highest'}
-            productId={''}
+            productId={product._id}
           />
         ))}
       </SimpleGrid>
