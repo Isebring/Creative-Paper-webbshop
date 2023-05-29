@@ -4,14 +4,14 @@ import {
   FileInput,
   Group,
   MultiSelect,
-  TextInput,
+  SelectItem,
+  TextInput
 } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Product } from '../contexts/ProductContext';
-import { categoryData } from './CategoryData';
 
 interface ProductFormProps {
   onSubmit: (product: Product) => void;
@@ -34,7 +34,7 @@ const schema = Yup.object().shape({
     .min(1, 'Nothing is this cheap...')
     .required('Price is required')
     .strict(),
-  category: Yup.array()
+  categories: Yup.array()
     .of(Yup.string().min(2))
     .required('At least one category is required'),
 });
@@ -42,6 +42,7 @@ const schema = Yup.object().shape({
 function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
   // const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const [categoryData, setCategoryData] = useState<(string | SelectItem)[]>([]);
   const form = useForm<Product>({
     validate: yupResolver(schema),
     initialValues: {
