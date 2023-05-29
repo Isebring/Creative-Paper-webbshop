@@ -20,32 +20,12 @@ export async function getOrders(req: Request, res: Response) {
   // Retrieve user's orders from the database
   const orders = await OrderModel.find({ user: req.session.userId });
 
-  // Fetch the products for each order item
-  const populatedOrders = await Promise.all(
-    orders.map(async (order) => {
-      const populatedOrderItems = await Promise.all(
-        order.orderItems.map(async (orderItem) => {
-          const product = await ProductModel.findById(orderItem.product);
-          if (product) {
-            return {
-              ...orderItem.toObject(),
-              product: product.toObject(),
-            };
-          }
-          return orderItem.toObject();
-        }),
-      );
-
-      return {
-        ...order.toObject(),
-        orderItems: populatedOrderItems,
-      };
-    }),
-  );
+  // Convert orders to plain JavaScript objects to avoid Mongoose-related issues
+  const orderObjects = orders.map((order) => order.toObject());
 
   res.status(200).json({
     success: true,
-    data: populatedOrders,
+    data: orderObjects,
   });
 }
 
@@ -54,30 +34,13 @@ export async function getAllOrders(req: Request, res: Response) {
   // Retrieve all orders from the database
   const orders = await OrderModel.find({});
 
-  // Fetch the products for each order item in all orders
-  const populatedOrders = await Promise.all(
-    orders.map(async (order) => {
-      const populatedOrderItems = await Promise.all(
-        order.orderItems.map(async (orderItem) => {
-          const product = await ProductModel.findById(orderItem.product);
-          if (product) {
-            return {
-              ...orderItem.toObject(),
-              product: product.toObject(),
-            };
-          }
-          return orderItem.toObject();
-        }),
-      );
+  // Convert orders to plain JavaScript objects
+  const orderObjects = orders.map((order) => order.toObject());
 
-      return {
-        ...order.toObject(),
-        orderItems: populatedOrderItems,
-      };
-    }),
-  );
-
-  res.status(200).json(populatedOrders);
+  res.status(200).json({
+    success: true,
+    data: orderObjects,
+  });
 }
 
 // Create order
@@ -108,8 +71,7 @@ export async function createOrder(req: Request, res: Response) {
     if (!product) {
       throw new NotFoundError('Product not found');
     }
-    const price = product.price;
-    const totalItemPrice = price * item.quantity;
+    const totalItemPrice = product.price * item.quantity;
     orderItems.push({
       product: {
         _id: product._id,
@@ -133,14 +95,12 @@ export async function createOrder(req: Request, res: Response) {
   const order = new OrderModel(orderData);
   const savedOrder = await order.save();
 
-  // Fetch the full order details, populating product details
-  const populatedOrder = await OrderModel.findById(savedOrder._id).populate(
-    'orderItems.product',
-  );
+  // Fetch the full order details
+  const finalOrder = await OrderModel.findById(savedOrder._id);
 
   res.status(201).json({
     success: true,
-    data: populatedOrder,
+    data: finalOrder,
   });
 }
 
@@ -158,26 +118,7 @@ export async function getOrderById(req: Request, res: Response) {
     throw new NotFoundError(`Order with id ${orderId} not found.`);
   }
 
-  // Fetch the products for each order item
-  const populatedOrderItems = await Promise.all(
-    order.orderItems.map(async (orderItem) => {
-      const product = await ProductModel.findById(orderItem.product);
-      if (product) {
-        return {
-          ...orderItem.toObject(),
-          product: product.toObject(),
-        };
-      }
-      return orderItem.toObject();
-    }),
-  );
-
-  const populatedOrder = {
-    ...order.toObject(),
-    orderItems: populatedOrderItems,
-  };
-
-  res.status(200).json(populatedOrder);
+  res.status(200).json(order.toObject());
 }
 
 // Update order status
