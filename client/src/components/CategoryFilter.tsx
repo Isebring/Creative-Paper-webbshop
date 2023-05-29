@@ -3,8 +3,10 @@ import {
   CloseButton,
   Flex,
   MultiSelect,
-  MultiSelectValueProps, rem,
-  SelectItem, SelectItemProps
+  MultiSelectValueProps,
+  rem,
+  SelectItem,
+  SelectItemProps,
 } from '@mantine/core';
 import { forwardRef, useEffect, useState } from 'react';
 import { Product } from '../contexts/ProductContext';
@@ -59,8 +61,8 @@ const Item = forwardRef<HTMLDivElement, SelectItemProps>(
 );
 
 const customFilter = (value: string, selected: boolean, item: SelectItem) => {
-  return typeof item.label === 'string' 
-    ? item.label.toLowerCase().includes(value.toLowerCase()) 
+  return typeof item.label === 'string'
+    ? item.label.toLowerCase().includes(value.toLowerCase())
     : false;
 };
 
@@ -80,11 +82,14 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
     const fetchCategories = async () => {
       const response = await fetch('/api/categories');
       const categories = await response.json();
-      
+
       const formattedCategories = categories
-      .filter((category: any) => typeof category.name === 'string')
-      .map((category: any) => ({ value: category.name, label: category.name }));
-  
+        .filter((category: any) => typeof category.name === 'string')
+        .map((category: any) => ({
+          value: category.name,
+          label: category.name,
+        }));
+
       setCategoryData(formattedCategories);
     };
     fetchCategories();

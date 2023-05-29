@@ -5,7 +5,7 @@ import {
   Group,
   MultiSelect,
   SelectItem,
-  TextInput
+  TextInput,
 } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import { useEffect, useState } from 'react';
@@ -74,18 +74,16 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
 
       const formattedCategories = categories
         .filter((category: any) => typeof category.name === 'string')
-        .map((category: any) => ({ value: category.name, label: category.name }));
+        .map((category: any) => ({
+          value: category.name,
+          label: category.name,
+        }));
 
       setCategoryData(formattedCategories);
     };
 
     fetchCategories();
   }, []);
-  
-  
-  
-  
-  
 
   const handleSubmit = async (values: Product) => {
     try {
@@ -94,17 +92,15 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
         _id: product?._id || '',
         categories: values.categories || [],
       };
-    
+
       await onSubmit(editedProduct);
-    
+
       form.reset();
       navigate('/admin');
     } catch (error) {
       console.error('Form submission error:', error);
     }
   };
-  
-  
 
   const handleImageUpload = async (file: File) => {
     if (!file) return;

@@ -25,21 +25,21 @@ function Home() {
         }),
       });
       const newProducts = await response.json();
-      let sorted = [...newProducts];
-  
+      const sorted = [...newProducts];
+
       if (sortDirection === 'ascending') {
         sorted.sort((a, b) => a.price - b.price);
       } else if (sortDirection === 'descending') {
         sorted.sort((a, b) => b.price - a.price);
       }
-  
+
       setSortedProducts(sorted);
     };
-  
+
     if (selectedCategories.length > 0) {
       fetchProducts();
     } else {
-      let sorted = [...products];
+      const sorted = [...products];
       if (sortDirection === 'ascending') {
         sorted.sort((a, b) => a.price - b.price);
       } else if (sortDirection === 'descending') {

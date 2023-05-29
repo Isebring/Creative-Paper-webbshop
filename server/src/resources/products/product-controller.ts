@@ -85,17 +85,17 @@ export async function createProduct(
       savedProduct._id,
     ).populate('categories', 'name -_id');
 
-      if (populatedProduct) {
-        const responseObj = {
-          message: 'Product added',
-          ...savedProduct.toJSON(),
-        };
-    
-    res.set('content-type', 'application/json');
-    res.status(201).send(JSON.stringify(responseObj));
-      } else {
-        throw new Error('Product not found after creation');
-      }
+    if (populatedProduct) {
+      const responseObj = {
+        message: 'Product added',
+        ...savedProduct.toJSON(),
+      };
+
+      res.set('content-type', 'application/json');
+      res.status(201).send(JSON.stringify(responseObj));
+    } else {
+      throw new Error('Product not found after creation');
+    }
   } catch (error) {
     next(error);
   }
@@ -147,9 +147,13 @@ export async function updateProduct(
       }
     }
 
-    validatedProduct.categories = categoryIds.map(id => id.toString());
+    validatedProduct.categories = categoryIds.map((id) => id.toString());
 
-    const updatedProduct = await ProductModel.findByIdAndUpdate(productId, validatedProduct, { new: true }).populate('categories', 'name -_id');
+    const updatedProduct = await ProductModel.findByIdAndUpdate(
+      productId,
+      validatedProduct,
+      { new: true },
+    ).populate('categories', 'name -_id');
     res.status(200).json(updatedProduct);
   } catch (error) {
     next(error);

@@ -58,7 +58,9 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
     fetchProducts();
   }, []);
 
-  async function getProductsByCategory(category: string): Promise<Product[] | null> {
+  async function getProductsByCategory(
+    category: string,
+  ): Promise<Product[] | null> {
     try {
       const response = await fetch(`/api/products/category/${category}`);
       if (response.ok) {
