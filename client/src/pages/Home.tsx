@@ -4,7 +4,7 @@ import CategoryFilter from '../components/CategoryFilter';
 import HeroSlide from '../components/HeroSlide';
 import { PageHero } from '../components/PageHero';
 import ProductCard from '../components/ProductCard';
-import { ProductContext } from '../contexts/ProductContext';
+import { Product, ProductContext } from '../contexts/ProductContext';
 
 function Home() {
   const { products } = useContext(ProductContext);
@@ -12,7 +12,21 @@ function Home() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [sortedProducts, setSortedProducts] = useState(products);
   const [activeButton, setActiveButton] = useState('');
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
+  useEffect(() => {
+    if (selectedProduct) {
+      setSelectedCategories(selectedProduct.categories);
+    }
+  }, [selectedProduct]);
+  
+
+  useEffect(() => {
+    if (selectedProduct) {
+      setSelectedCategories(selectedProduct.categories);
+    }
+  }, [selectedProduct]);
+  
   useEffect(() => {
     const fetchProducts = async () => {
       const response = await fetch('/api/products/by-category', {
@@ -24,8 +38,16 @@ function Home() {
           categories: selectedCategories,
         }),
       });
+
       const newProducts = await response.json();
-      const sorted = [...newProducts];
+
+      const uniqueProducts: Product[] = Array.from(
+        new Set(newProducts.map((product: Product) => JSON.stringify(product))),
+        product => JSON.parse(product as string)  // annotate product as string
+      ) as Product[];  // annotate the whole Array.from() result as Product[]
+      
+      
+      const sorted = [...uniqueProducts];
 
       if (sortDirection === 'ascending') {
         sorted.sort((a, b) => a.price - b.price);
@@ -58,6 +80,8 @@ function Home() {
     setSortDirection('descending');
     setActiveButton('highest');
   }
+
+  
 
   return (
     <Container size="xl">

@@ -1,6 +1,5 @@
 import { Button, Container, Group, SimpleGrid } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import CategoryFilter from '../components/CategoryFilter';
 import { PageHero } from '../components/PageHero';
 import ProductCard from '../components/ProductCard';
 import { Product } from '../contexts/ProductContext';
@@ -8,7 +7,7 @@ import { useProductUpdate } from '../contexts/ProductUpdateContext';
 
 export function Calendars() {
   const [sortDirection, setSortDirection] = useState('');
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([
+  const [selectedCategories] = useState<string[]>([
     'calendars',
   ]);
   const [sortedProducts, setSortedProducts] = useState<Product[]>([]);
@@ -99,11 +98,6 @@ export function Calendars() {
         >
           Sort by highest price
         </Button>
-        <CategoryFilter
-          products={sortedProducts}
-          selectedCategories={selectedCategories}
-          setSelectedCategories={setSelectedCategories}
-        />
       </Group>
       <SimpleGrid
         cols={3}
