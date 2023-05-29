@@ -20,7 +20,7 @@ function AdminProductManagement() {
       <Flex justify="space-between" align="center" mt="xl" mb="sm">
         <Title>Product Management</Title>
         <Group position="center">
-          <Link to="/admin/product/new" data-cy="admin-add-product">
+          <Link to="/admin/products/new" data-cy="admin-add-product">
             <Button
               leftIcon={<IconShieldPlus size="1.2rem" />}
               sx={{ backgroundColor: 'black', color: 'white' }}
