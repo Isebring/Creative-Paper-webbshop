@@ -1,11 +1,23 @@
-import { Card, Container, Divider, List, Text, Title } from '@mantine/core';
-import { useContext } from 'react';
+import {
+  Card,
+  Container,
+  Divider,
+  Image,
+  List,
+  Text,
+  Title,
+} from '@mantine/core';
+import { useContext, useEffect } from 'react';
 import InitBackgroundAnimation from '../components/ConfirmationPageAnimation';
 import { ShoppingCartContext } from '../contexts/ShoppingCartContext';
 
 function Confirmation() {
   const { orders, currentOrderId } = useContext(ShoppingCartContext);
   const currentOrder = orders.find((order) => order._id === currentOrderId);
+
+  useEffect(() => {
+    console.log('Current Order ID in Confirmation component:', currentOrderId);
+  }, [currentOrderId]);
 
   function calculateCurrentOrderTotal() {
     if (!currentOrder) {
@@ -44,7 +56,13 @@ function Confirmation() {
             {currentOrder.orderItems.map((orderItem, index) => (
               <List.Item key={index}>
                 {orderItem.product.title} - ${orderItem.price} - Quantity:{' '}
-                {orderItem.quantity}
+                {orderItem.quantity}{' '}
+                <Image
+                  src={orderItem.product.image}
+                  height={150}
+                  width={220}
+                  fit="cover"
+                />
               </List.Item>
             ))}
           </List>
