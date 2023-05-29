@@ -2,18 +2,25 @@ import { NextFunction, Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
 import * as yup from 'yup';
 import { ProductModel } from './product-model';
+import { categoryModel } from '../categories/category-model';
 
 // const testSchema
 
 export async function getAllProducts(req: Request, res: Response) {
-  const products = await ProductModel.find();
+  const products = await ProductModel.find().populate(
+    'categories',
+    'name -_id',
+  );
   res.status(200).json(products);
 }
 
 export async function getProductById(req: Request, res: Response) {
   try {
     const productId = req.params.id;
-    const product = await ProductModel.findById(productId);
+    const product = await ProductModel.findById(productId).populate({
+      path: 'categories',
+      select: '-products',
+    });
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
@@ -36,7 +43,7 @@ export async function createProduct(
     title: yup.string().trim().min(2).required(),
     description: yup.string().trim().min(5).required(),
     summary: yup.string().trim(),
-    categories: yup.string().trim().min(2),
+    categories: yup.array().of(yup.string().min(2)).required(),
     price: yup.number().min(1).required(),
     quantity: yup.number(),
     stock: yup.number(),
@@ -54,17 +61,41 @@ export async function createProduct(
     const newProduct = new ProductModel({
       ...incomingProduct,
       _id: new ObjectId(),
+      categories: [],
     });
     newProduct.quantity = incomingProduct.stock;
     const savedProduct = await newProduct.save();
-    const responseObj = {
-      message: 'Product added',
-      ...savedProduct.toJSON(),
-    };
+
+    for (const categoryName of incomingProduct.categories) {
+      const category = await categoryModel.findOne({ name: categoryName });
+      if (category) {
+        category.products.push(savedProduct._id);
+        savedProduct.categories.push(category._id);
+        await category.save();
+      } else {
+        console.log(`Category ${categoryName} not found.`);
+      }
+    }
+
+    await savedProduct.save();
+
+    const populatedProduct = await ProductModel.findById(
+      savedProduct._id,
+    ).populate('categories', 'name -_id');
+
+      if (populatedProduct) {
+        const responseObj = {
+          message: 'Product added',
+          ...savedProduct.toJSON(),
+        };
+    
     res.set('content-type', 'application/json');
-    res.status(201).json(responseObj);
+    res.status(201).send(JSON.stringify(responseObj));
+      } else {
+        throw new Error('Product not found after creation');
+      }
   } catch (error) {
-    next(error); // är detta globala error handlern? Oklart
+    next(error);
   }
 }
 
@@ -84,7 +115,7 @@ export async function updateProduct(
     title: yup.string().trim().min(2).required(),
     description: yup.string().trim().min(5).required(), // Ska dessa verkligen vara required vid en edit?
     summary: yup.string().trim(),
-    categories: yup.string().trim().min(2),
+    categories: yup.array().of(yup.string().min(2)).required(),
     price: yup.number().min(1).required(),
     quantity: yup.number(),
     stock: yup.number(),
@@ -104,11 +135,19 @@ export async function updateProduct(
       validatedProduct.quantity = validatedProduct.stock;
     }
 
-    const updatedProduct = await ProductModel.findByIdAndUpdate(
-      productId,
-      validatedProduct,
-      { new: true },
-    );
+    let categoryIds = [];
+    for (const categoryName of validatedProduct.categories) {
+      const category = await categoryModel.findOne({ name: categoryName });
+      if (category) {
+        categoryIds.push(category._id);
+      } else {
+        console.log(`Category ${categoryName} not found.`);
+      }
+    }
+
+    validatedProduct.categories = categoryIds.map(id => id.toString());
+
+    const updatedProduct = await ProductModel.findByIdAndUpdate(productId, validatedProduct, { new: true }).populate('categories', 'name -_id');
     res.status(200).json(updatedProduct);
   } catch (error) {
     next(error);
@@ -123,6 +162,11 @@ export async function deleteProduct(req: Request, res: Response) {
     if (!deletedProduct) {
       return res.status(404).json('product not found');
     }
+
+    await categoryModel.updateMany(
+      { _id: { $in: deletedProduct.categories } },
+      { $pull: { products: productId } },
+    );
 
     await ProductModel.findByIdAndDelete(productId);
     res.status(204).end();
