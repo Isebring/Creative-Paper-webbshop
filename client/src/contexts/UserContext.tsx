@@ -4,7 +4,7 @@ import { useUserContext } from './UseUserContext';
 export interface User {
   email: string;
   _id: string;
-  isAdmin: boolean;
+  isAdmin?: boolean;
 }
 
 interface Props {
@@ -15,7 +15,10 @@ interface UserContextProps {
   user: User | null;
   users: User[] | null;
   setUsers: (users: User[] | null) => void;
-  login: (email: string, password: string, isAdmin: boolean) => Promise<User>;
+  login: (
+    email: string,
+    password: string,
+  ) => Promise<{ _id: string; email: string }>;
   logout: () => Promise<void>;
   register: (email: string, password: string) => Promise<string>;
   getAllUsers: () => Promise<void>;
@@ -59,7 +62,7 @@ export const UserProvider = ({ children }: Props) => {
           setUser({
             _id: userResponse._id,
             email: userResponse.email,
-            isAdmin: false,
+            isAdmin: userResponse.isAdmin || false,
           });
         } else if (response.status === 401) {
           setUser(null);
@@ -87,7 +90,7 @@ export const UserProvider = ({ children }: Props) => {
         return errorMessage;
       }
       const user = await response.json();
-      setUser({ _id: user._id, email: user.email, isAdmin: false });
+      setUser({ _id: user._id, email: user.email });
       return '';
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -183,7 +186,9 @@ export const UserProvider = ({ children }: Props) => {
           const updatedUsers = users.map((user) => {
             if (user._id === userId) {
               if (user._id === loggedInUser?._id) {
-                setUser({ ...user, isAdmin: newRole });
+                setUser((currentUser) =>
+                  currentUser ? { ...currentUser, isAdmin: newRole } : null,
+                );
               }
 
               return { ...user, isAdmin: newRole };
