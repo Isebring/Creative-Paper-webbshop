@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import * as Yup from 'yup';
 import { useShoppingCart } from '../contexts/UseShoppingCartContext';
+import { useUser } from '../contexts/UseUserContext';
 import OrderModal from './OrderModal';
 
 export interface FormValues {
@@ -43,18 +44,27 @@ const schema = Yup.object().shape({
 function CheckoutForm() {
   const navigate = useNavigate();
   const { createOrder, cartItems } = useShoppingCart();
-  const [isModalOpen, setModalOpen] = useState(false);
-  const handleModalOpen = () => {
-    setModalOpen(true);
-  };
-
-  const handleModalClose = () => {
-    setModalOpen(false);
-  };
+  const [showModal, setShowModal] = useState(false);
+  const user = useUser();
 
   const onSubmit = async (data: FormValues) => {
-    await createOrder(cartItems, data);
-    navigate('/confirmation');
+    if (user) {
+      try {
+        const order = await createOrder(cartItems, data);
+        if (order) {
+          navigate('/confirmation');
+        } else {
+          // Handle error case
+          console.log('Error occurred while placing the order');
+        }
+      } catch (error) {
+        // Handle error case
+        console.log(error);
+      }
+    } else {
+      // User is not logged in, show the login modal
+      setShowModal(true);
+    }
   };
 
   const form = useForm<FormValues>({
@@ -79,11 +89,7 @@ function CheckoutForm() {
         },
       }}
     >
-      <OrderModal
-        opened={isModalOpen}
-        onClose={handleModalClose}
-        onSubmit={form.onSubmit(onSubmit)}
-      />
+      <OrderModal opened={showModal} onClose={() => setShowModal(false)} />
       <Title mb="sm" order={3}>
         Your details
       </Title>
@@ -147,8 +153,8 @@ function CheckoutForm() {
         <Group position="right" mt="md">
           <Button
             sx={{ width: '100%' }}
-            // type="submit"
-            onClick={handleModalOpen}
+            type="submit"
+            // onClick={() => setShowModal(true)}
           >
             Place order
           </Button>
