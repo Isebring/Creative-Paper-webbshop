@@ -1,8 +1,10 @@
 import { Box, Button, Group, TextInput, Title } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import * as Yup from 'yup';
 import { useShoppingCart } from '../contexts/UseShoppingCartContext';
+import OrderModal from './OrderModal';
 
 export interface FormValues {
   fullName: string;
@@ -41,6 +43,15 @@ const schema = Yup.object().shape({
 function CheckoutForm() {
   const navigate = useNavigate();
   const { createOrder, cartItems } = useShoppingCart();
+  const [isModalOpen, setModalOpen] = useState(false);
+  const handleModalOpen = () => {
+    setModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
+
   const onSubmit = async (data: FormValues) => {
     await createOrder(cartItems, data);
     navigate('/confirmation');
@@ -68,6 +79,11 @@ function CheckoutForm() {
         },
       }}
     >
+      <OrderModal
+        opened={isModalOpen}
+        onClose={handleModalClose}
+        onSubmit={form.onSubmit(onSubmit)}
+      />
       <Title mb="sm" order={3}>
         Your details
       </Title>
@@ -129,7 +145,11 @@ function CheckoutForm() {
           errorProps={{ 'data-cy': 'customer-phone-error' }}
         />
         <Group position="right" mt="md">
-          <Button sx={{ width: '100%' }} type="submit">
+          <Button
+            sx={{ width: '100%' }}
+            // type="submit"
+            onClick={handleModalOpen}
+          >
             Place order
           </Button>
         </Group>
