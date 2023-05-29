@@ -1,4 +1,4 @@
-import { User } from '../../src';
+import { User } from '../..';
 import { clearUsersCollection, insertMockAdmin, insertMockUser } from './users';
 
 export type MockDB = {

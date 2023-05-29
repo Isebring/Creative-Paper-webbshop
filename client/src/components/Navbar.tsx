@@ -18,11 +18,10 @@ import {
   IconMoonStars,
   IconShoppingCart,
   IconSunHigh,
-  IconUserShield,
 } from '@tabler/icons-react';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useShoppingCart } from '../contexts/UseShoppingCart';
+import { useShoppingCart } from '../contexts/UseShoppingCartContext';
 import UserDropdownMenu from './UserDropdownMenu';
 
 const HEADER_HEIGHT = rem(70);
@@ -246,11 +245,6 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
           </MediaQuery>
           <Group spacing={1}>
             <ToggleDarkAndLightMode />
-            <Link to="/admin" data-cy="admin-link">
-              <Button size="xs" variant="subtle" radius="xl">
-                <IconUserShield size="1.8rem" stroke="1.3" />
-              </Button>
-            </Link>
             <UserDropdownMenu />
             <Link to="/checkout">
               <Button

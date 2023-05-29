@@ -6,8 +6,8 @@ POST http://localhost:3000/api/users/register
 Content-Type: application/json
 
 {
-    "email": "hej@hello.com",
-    "password": "hej12345"
+    "email": "hejsan@hello.com",
+    "password": "hejsan12345"
 }
 
 ### LOGIN USER
@@ -15,10 +15,45 @@ POST http://localhost:3000/api/users/login
 Content-Type: application/json
 
 {
-    "email": "hej@hello.com",
-    "password": "hej12345"
+    "email": "hejsan@hello.com",
+    "password": "hejsan12345"
 }
 
 ### LOGOUT USER
 POST  http://localhost:3000/api/users/logout
+
+### GET ORDERS
+GET http://localhost:3000/api/orders
+
+### GET ALL ORDERS
+GET http://localhost:3000/api/orders/all
+
+### GET ORDER BY ID
+GET http://localhost:3000/api/orders/646fd3d6b7f16035ef12c414
+
+### CREATE ORDER
+POST http://localhost:3000/api/orders
+Content-Type: application/json
+
+{
+  "orderItems": [
+    {
+      "product": "646c89ff625c6e08624dfe39",
+      "quantity": 2
+    },
+    {
+      "product": "646c89ff625c6e08624dfe38",
+      "quantity": 1
+    }
+  ],
+    "deliveryAddress": {
+    "fullName": "Lisa Marie Andersson",
+    "email": "lisamarie.andersson@example.com",
+    "phoneNumber": "1234567890",
+    "address": "1234 Main St",
+    "zipCode": "12345",
+    "city": "Cityville"
+  }
+}
+
 

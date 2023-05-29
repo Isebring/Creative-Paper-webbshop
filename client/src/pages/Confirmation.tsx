@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { FormValues } from '../components/CheckoutForm';
 import InitBackgroundAnimation from '../components/ConfirmationPageAnimation';
 import { ProductContext } from '../contexts/ProductContext';
-import { useShoppingCart } from '../contexts/UseShoppingCart';
+import { useShoppingCart } from '../contexts/UseShoppingCartContext';
 
 function Confirmation() {
   const { products } = useContext(ProductContext);
@@ -42,7 +42,7 @@ function Confirmation() {
           <Text>Email: {formData.email}</Text>
           <Text>Address: {formData.adress}</Text>
           <Text>Zip Code: {formData.zipCode}</Text>
-          <Text>Phone nr: {formData.mobileNr}</Text>
+          <Text>Phone nr: {formData.phoneNumber}</Text>
           <Text>City: {formData.city}</Text>
           <Divider mt="md" mb="sm" size="xs" />
           <Title mb="xs" order={2}>

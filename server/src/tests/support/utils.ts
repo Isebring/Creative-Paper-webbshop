@@ -7,11 +7,13 @@ export function toJSON<T extends Document>(document: T | null) {
   return JSON.parse(JSON.stringify(document.toJSON()));
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function sorted<T extends { _id: any }>(document: T[]): T[] {
   return document.sort((a, b) => (a._id > b._id ? 1 : -1));
 }
 
 export async function loginUser(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   agent: SuperAgentTest | SuperTest<any>,
   email = 'user@plugga.se',
   password = '123123',
@@ -22,6 +24,7 @@ export async function loginUser(
     .send({ email, password });
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function expectDocumentListsToBeTheSame<T extends { _id: any }>(
   list: T[],
   otherlist: T[],

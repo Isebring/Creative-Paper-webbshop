@@ -3,8 +3,13 @@ import express from 'express';
 import 'express-async-errors';
 import errorHandler from './middlewares/error-handler';
 import imageRouter from './resources/images/image-router';
+import orderRouter from './resources/orders/order-router';
 import productRouter from './resources/products/product-router';
 import userRouter from './resources/users/user-router';
+
+// const port = process.env.PORT || 3000;
+// console.log(process.env.NODE_ENV);
+// console.log(process.env.MONGODB_URI);
 
 export const app = express();
 
@@ -20,7 +25,7 @@ app.use(
 );
 
 // Routes
-// app.use(orderRouter);
+app.use(orderRouter);
 // app.use(categoryRouter);
 app.use(imageRouter);
 app.use(productRouter);

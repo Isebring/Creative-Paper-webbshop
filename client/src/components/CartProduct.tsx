@@ -2,7 +2,7 @@ import { Box, Button, Group, Image, Input, Text } from '@mantine/core';
 import { IconMinus, IconPlus } from '@tabler/icons-react';
 import { useContext } from 'react';
 import { Product, ProductContext } from '../contexts/ProductContext';
-import { useShoppingCart } from '../contexts/UseShoppingCart';
+import { useShoppingCart } from '../contexts/UseShoppingCartContext';
 
 interface Props {
   cartItem: CartItem;

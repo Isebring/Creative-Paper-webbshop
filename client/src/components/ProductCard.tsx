@@ -15,7 +15,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Product } from '../contexts/ProductContext';
 import { useProductContext } from '../contexts/UseProductContext';
-import { useShoppingCart } from '../contexts/UseShoppingCart';
+import { useShoppingCart } from '../contexts/UseShoppingCartContext';
 
 type ProductCardProps = {
   productId: string;

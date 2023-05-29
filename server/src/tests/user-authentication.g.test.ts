@@ -1,10 +1,11 @@
 import request from 'supertest';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { app } from '../src/app';
+import { app } from '../app';
 import { MockDB, mockDB } from './mock';
 import { loginUser } from './support/utils';
 
 describe('Authenticating a user (POST)', () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let db: MockDB;
 
   beforeEach(async () => {

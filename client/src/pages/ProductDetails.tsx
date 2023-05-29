@@ -23,7 +23,7 @@ import 'swiper/swiper-bundle.css';
 import 'swiper/swiper.min.css';
 import { Product } from '../contexts/ProductContext';
 import { useProductContext } from '../contexts/UseProductContext';
-import { useShoppingCart } from '../contexts/UseShoppingCart';
+import { useShoppingCart } from '../contexts/UseShoppingCartContext';
 
 function ProductDetails() {
   const { getProductById } = useProductContext();
