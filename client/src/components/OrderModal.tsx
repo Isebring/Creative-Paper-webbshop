@@ -1,4 +1,4 @@
-import { Button, Modal, Title } from '@mantine/core';
+import { Button, Group, Modal, Title } from '@mantine/core';
 import { useNavigate } from 'react-router';
 
 interface OrderModalProps {
@@ -19,11 +19,20 @@ function OrderModal({ opened, onClose }: OrderModalProps) {
   return (
     <>
       <Modal opened={opened} onClose={onClose} title="Authentication" centered>
-        <Title>
-          You have to create or log in to an account to make your order!
+        <Title order={3}>
+          To make your order you have to log in to your account or create a new
+          account.
         </Title>
-        <Button onClick={handleLogin}>Log in</Button>
-        <Button onClick={handleCreateAccount}>Create account</Button>
+        <Group
+          sx={{
+            gap: '0.8',
+            display: 'flex',
+            marginTop: '0.8rem',
+          }}
+        >
+          <Button onClick={handleLogin}>Log in</Button>
+          <Button onClick={handleCreateAccount}>Create account</Button>
+        </Group>
       </Modal>
     </>
   );
