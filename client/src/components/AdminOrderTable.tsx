@@ -46,15 +46,17 @@ function AdminOrders() {
         </td>
         <td>
           {order.orderItems.map((item, index) => (
-            <div key={`${item.product._id}-${index}`}>
-              <Text>Product #{item.product._id}</Text>
+            <Box key={`${item.product._id}-${index}`}>
+              <Text>
+                Product <Text fw={700}>{item.product._id}</Text>
+              </Text>
               <Text>Title: {item.product.title}</Text>
               <Text>Price per item: {item.product.price} SEK</Text>
               <Text>Quantity: {item.quantity}</Text>
               {/* <Image src={item.product.image} width={100} fit="cover" /> */}
               <Text>Total price: {item.price} SEK</Text>
               <Divider my="sm" variant="dotted" />
-            </div>
+            </Box>
           ))}
         </td>
         <td>{order.totalPrice} SEK</td>
@@ -79,7 +81,7 @@ function AdminOrders() {
     <Table>
       <thead>
         <tr>
-          <th>Order #</th>
+          <th>Order ID</th>
           <th>Shipping Details</th>
           <th>Total Items</th>
           <th>Order Items</th>
