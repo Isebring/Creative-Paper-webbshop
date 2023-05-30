@@ -115,25 +115,25 @@ export async function updateProduct(
   }
 
   const productUpdateSchema = yup.object({
-    title: yup.string().trim().min(2).required(),
-    description: yup.string().trim().min(5).required(), // Ska dessa verkligen vara required vid en edit?
+    title: yup.string().trim(),
+    description: yup.string().trim(),
     summary: yup.string().trim(),
     categories: yup.array().of(yup.string().min(2)).required(),
     price: yup.number().min(1).required(),
     quantity: yup.number(),
     stock: yup.number(),
-    imageId: yup.string().trim().min(2).required(),
-    imageURL: yup.string().trim().min(2),
-    secondImageId: yup.string().trim().min(2),
-    secondImageURL: yup.string().trim().min(2),
+    imageId: yup.string().trim(),
+    secondImageId: yup.string().trim(),
     rating: yup.number(),
     usersRated: yup.number(),
   });
 
   try {
+    // gå igenom valideringen
     console.log('Update product:', { params: req.params, body: req.body });
     const validatedProduct = await productUpdateSchema.validate(req.body);
 
+    // lagerstatus ska överföras till den uppdaterade produkten
     if (validatedProduct.stock !== product.stock) {
       validatedProduct.quantity = validatedProduct.stock;
     }
@@ -163,18 +163,25 @@ export async function updateProduct(
     ).populate('categories', 'name -_id');
     res.status(200).json(updatedProduct);
 
-    await ProductModel.findByIdAndUpdate(productId, { isArchived: true });
+    // Archive the old product
+    product.isArchived = true;
+    await product.save();
+    console.log(product);
 
     // Create a new product with validated data
-    const newProduct = new ProductModel(validatedProduct);
-    await newProduct.save();
+    const newProduct = new ProductModel({
+      ...validatedProduct,
+      _id: undefined,
+      previousId: productId,
+    });
+    const savedProduct = await newProduct.save();
 
-    res.status(200).json(newProduct);
+    // Send the new product as a response
+    res.status(200).json({ newProduct: savedProduct, oldProductId: productId });
   } catch (error) {
     next(error);
   }
 }
-
 export async function deleteProduct(req: Request, res: Response) {
   try {
     const productId = req.params.id;
@@ -198,23 +205,3 @@ export async function deleteProduct(req: Request, res: Response) {
     });
   }
 }
-
-// export async function productQuantity(
-//   productId: string,
-//   quantityToDecrease: number,
-// ) {
-//   try {
-//     const product = await ProductModel.findById(productId);
-
-//     if (!product) {
-//       throw new Error(`Product with ID ${productId} not found`);
-//     }
-
-//     // Decrease the quantity by the specified amount
-//     product.quantity -= quantityToDecrease;
-
-//     await product.save();
-//   } catch (error) {
-//     throw error;
-//   }
-// }

@@ -201,7 +201,7 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
         />
         <MultiSelect
           data={categoryData}
-          label="Category"
+          label="Categories"
           placeholder="Select categories"
           {...form.getInputProps('categories')}
           errorProps={{ 'data-cy': 'product-categories-error' }}
