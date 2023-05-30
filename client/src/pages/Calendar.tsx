@@ -69,8 +69,8 @@ export function Calendars() {
     <Container size="lg">
       <PageHero
         title="Calendars & Planners"
-        line1="Plan for your future or"
-        line2="let your future fuck you up."
+        line1="Stay organized, seize every moment,"
+        line2="and never miss a beat with our innovative calendars and planners."
       />
       <Group spacing={5} mb="md">
         <Button
