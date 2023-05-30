@@ -1,8 +1,13 @@
 import React, { createContext, useState } from 'react';
-import { Product } from './ProductContext';
+
+export interface OrderProduct {
+  _id: string;
+  title: string;
+  price: number;
+}
 
 export interface OrderItem {
-  product: Product;
+  product: OrderProduct;
   quantity: number;
   price: number;
 }
@@ -69,12 +74,14 @@ export const OrderProvider = ({ children }: Props) => {
 
   const getAllOrders = async () => {
     try {
-      const response = await fetch('/api/orders');
+      const response = await fetch('/api/orders/all');
       if (!response.ok) {
         throw new Error('Failed to fetch orders.');
       }
-      const orders = await response.json();
-      setOrders(orders);
+      const { data } = await response.json();
+      console.log(data);
+      setOrders(data);
+      console.log('Fetched orders:', data);
     } catch (error) {
       console.error(error);
     }

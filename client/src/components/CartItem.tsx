@@ -1,14 +1,15 @@
-import { Box, Button, Group, Image, Input, Text } from '@mantine/core';
+import { Box, Button, Group, Input, Text } from '@mantine/core';
 import { IconMinus, IconPlus } from '@tabler/icons-react';
 import { useContext } from 'react';
-import { Product, ProductContext } from '../contexts/ProductContext';
+import { OrderProduct } from '../contexts/OrderContext';
+import { ProductContext } from '../contexts/ProductContext';
 import { useShoppingCart } from '../contexts/UseShoppingCartContext';
 
 interface Props {
   cartItem: CartItem;
 }
 
-export interface CartItem extends Product {
+export interface CartItem extends OrderProduct {
   quantity: number;
 }
 
@@ -30,12 +31,12 @@ function CartItem({ cartItem }: Props) {
       }}
       data-cy="cart-item"
     >
-      <Image
+      {/* <Image
         src={'/api/image/' + cartItem.imageId}
         height={150}
         width={220}
         fit="cover"
-      />
+      /> */}
 
       <Group position="center" pl="xs" pr="xs" mt="sm" mb="sm">
         <Text

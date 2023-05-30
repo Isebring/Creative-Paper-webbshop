@@ -1,33 +1,21 @@
-import {
-  Card,
-  Container,
-  Divider,
-  Image,
-  List,
-  Text,
-  Title,
-} from '@mantine/core';
-import { useContext, useEffect } from 'react';
-import InitBackgroundAnimation from '../components/ConfirmationPageAnimation';
+import { Card, Container, Divider, List, Text, Title } from '@mantine/core';
+import { useContext } from 'react';
 import { ShoppingCartContext } from '../contexts/ShoppingCartContext';
 
 function Confirmation() {
   const { orders, currentOrderId } = useContext(ShoppingCartContext);
   const currentOrder = orders.find((order) => order._id === currentOrderId);
 
-  useEffect(() => {
-    console.log('Current Order ID in Confirmation component:', currentOrderId);
-  }, [currentOrderId]);
-
   function calculateCurrentOrderTotal() {
     if (!currentOrder) {
       return 0;
     }
     return currentOrder.orderItems.reduce((total, item) => {
-      return total + item.quantity * item.price;
+      return total + item.quantity * item.product.price;
     }, 0);
   }
-  InitBackgroundAnimation();
+
+  // InitBackgroundAnimation();
   return (
     <Container size="md" mt="xl" mb="xl">
       {currentOrder && (
@@ -55,14 +43,15 @@ function Confirmation() {
           <List listStyleType="none">
             {currentOrder.orderItems.map((orderItem, index) => (
               <List.Item key={index}>
-                {orderItem.product.title} - ${orderItem.price} - Quantity:{' '}
-                {orderItem.quantity}{' '}
-                <Image
-                  src={orderItem.product.image}
-                  height={150}
-                  width={220}
-                  fit="cover"
-                />
+                {orderItem.product.title} - ${orderItem.product.price} -
+                Quantity:
+                {orderItem.quantity}
+                {/* <Image
+      src={orderItem.product.image}
+      height={150}
+      width={220}
+      fit="cover"
+    /> */}
               </List.Item>
             ))}
           </List>
