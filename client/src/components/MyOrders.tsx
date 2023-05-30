@@ -34,7 +34,9 @@ function MyOrders() {
         <td>
           {order.orderItems.map((item, index) => (
             <div key={`${item.product._id}-${index}`}>
-              <Text>Product {item.product._id}</Text>
+              <Text>
+                Product <Text fw={700}>{item.product._id}</Text>
+              </Text>
               <Text>Title: {item.product.title}</Text>
               <Text>Price per item: ${item.product.price}</Text>
               <Text>Quantity: {item.quantity}</Text>
