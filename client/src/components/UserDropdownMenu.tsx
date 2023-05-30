@@ -1,10 +1,7 @@
 import { Button, Menu, Text } from '@mantine/core';
 import {
-  IconHelp,
   IconLogin,
   IconLogout,
-  IconSearch,
-  IconSettings,
   IconUser,
   IconUserCircle,
 } from '@tabler/icons-react';
@@ -53,19 +50,6 @@ function UserDropdownMenu() {
             >
               My account
             </Menu.Item>
-            <Menu.Item icon={<IconSettings size={14} />}>Settings</Menu.Item>
-            <Menu.Divider />
-            <Menu.Item
-              icon={<IconSearch size={14} />}
-              rightSection={
-                <Text size="xs" color="dimmed">
-                  ⌘K
-                </Text>
-              }
-            >
-              Search
-            </Menu.Item>
-            <Menu.Item icon={<IconHelp size={14} />}>Help</Menu.Item>
             <Menu.Divider />
             <Menu.Item icon={<IconLogout size={14} />} onClick={handleLogout}>
               Sign out
@@ -85,18 +69,6 @@ function UserDropdownMenu() {
             >
               Create an account
             </Menu.Item>
-            <Menu.Divider />
-            <Menu.Item
-              icon={<IconSearch size={14} />}
-              rightSection={
-                <Text size="xs" color="dimmed">
-                  ⌘K
-                </Text>
-              }
-            >
-              Search
-            </Menu.Item>
-            <Menu.Item icon={<IconHelp size={14} />}>Help</Menu.Item>
           </>
         )}
       </Menu.Dropdown>

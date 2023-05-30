@@ -4,14 +4,18 @@ import {
   FileInput,
   Group,
   MultiSelect,
+  SelectItem,
   TextInput,
 } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Product } from '../contexts/ProductContext';
-import { categoryData } from './CategoryData';
+
+interface Category {
+  name: string;
+}
 
 interface ProductFormProps {
   onSubmit: (product: Product) => void;
@@ -34,7 +38,7 @@ const schema = Yup.object().shape({
     .min(1, 'Nothing is this cheap...')
     .required('Price is required')
     .strict(),
-  category: Yup.array()
+  categories: Yup.array()
     .of(Yup.string().min(2))
     .required('At least one category is required'),
 });
@@ -42,6 +46,7 @@ const schema = Yup.object().shape({
 function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
   // const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const [categoryData, setCategoryData] = useState<(string | SelectItem)[]>([]);
   const form = useForm<Product>({
     validate: yupResolver(schema),
     initialValues: {
@@ -55,9 +60,10 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
       summary: '' as never,
       rating: 0,
       usersRated: 0,
-      category: [] as never,
+      categories: isEditing && product ? product.categories : [],
     },
   });
+
   useEffect(() => {
     if (isEditing && product) {
       form.setValues(product);
@@ -65,17 +71,39 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product, isEditing, form.setValues]);
 
-  const handleSubmit = async (values: Product) => {
-    const editedProduct = {
-      ...values,
-      _id: product?._id || '',
-      category: values.category || [],
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const response = await fetch('/api/categories');
+      const categories = await response.json();
+
+      const formattedCategories = categories
+        .filter((category: Category) => typeof category.name === 'string')
+        .map((category: Category) => ({
+          value: category.name,
+          label: category.name,
+        }));
+
+      setCategoryData(formattedCategories);
     };
 
-    onSubmit(editedProduct);
+    fetchCategories();
+  }, []);
 
-    form.reset();
-    navigate('/admin');
+  const handleSubmit = async (values: Product) => {
+    try {
+      const editedProduct = {
+        ...values,
+        _id: product?._id || '',
+        categories: values.categories || [],
+      };
+
+      await onSubmit(editedProduct);
+
+      form.reset();
+      navigate('/admin');
+    } catch (error) {
+      console.error('Form submission error:', error);
+    }
   };
 
   const handleImageUpload = async (file: File) => {
@@ -175,7 +203,7 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
           data={categoryData}
           label="Category"
           placeholder="Select categories"
-          {...form.getInputProps('category')}
+          {...form.getInputProps('categories')}
           errorProps={{ 'data-cy': 'product-categories-error' }}
         />
 
