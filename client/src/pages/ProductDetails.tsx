@@ -11,9 +11,11 @@ import {
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import {
+  IconCheck,
   IconShoppingCartPlus,
   IconStarFilled,
   IconUserStar,
+  IconX,
 } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
@@ -146,8 +148,25 @@ function ProductDetails() {
             {product.description}
           </Text>
 
-          <Group position="apart">
-            <Text fw={700}> Current Stock: {product.stock} </Text>
+          <Group
+            position="apart"
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              {product.stock > 0 ? (
+                <IconCheck color="green" />
+              ) : (
+                <IconX color="red" />
+              )}
+              <Text fw={700} ml="xs">
+                {' '}
+                Current Stock: {product.stock}
+              </Text>
+            </Box>
             <Title
               order={2}
               data-cy="product-price"
