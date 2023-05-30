@@ -133,8 +133,8 @@ export async function updateProduct(
     const validatedProduct = await productUpdateSchema.validate(req.body);
 
     // lagerstatus ska överföras till den uppdaterade produkten
-    if (validatedProduct.stock !== product.stock) {
-    }
+    // if (validatedProduct.stock !== product.stock) {
+    // }
     const categoryIds: mongoose.Types.ObjectId[] = [];
 
     for (const categoryName of validatedProduct.categories) {
