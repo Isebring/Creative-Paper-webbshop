@@ -13,16 +13,16 @@ function Admin() {
       size="xl"
       sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
     >
-      <Title>My Account</Title>
+      <Title>Admin</Title>
       <Box>
         <Button
           onClick={() => setSelectedComponent('component1')}
           sx={{
             backgroundColor:
               selectedComponent === 'component1'
-                ? theme.colors.violet[2]
+                ? theme.colors.violet[0]
                 : 'black',
-            color: 'white',
+            color: selectedComponent === 'component1' ? '#7950f2' : 'white',
             margin: '1rem',
           }}
         >
@@ -33,9 +33,9 @@ function Admin() {
           sx={{
             backgroundColor:
               selectedComponent === 'component2'
-                ? theme.colors.violet[2]
+                ? theme.colors.violet[0]
                 : 'black',
-            color: 'white',
+            color: selectedComponent === 'component2' ? '#7950f2' : 'white',
             margin: '1rem',
           }}
         >
@@ -46,9 +46,9 @@ function Admin() {
           sx={{
             backgroundColor:
               selectedComponent === 'component3'
-                ? theme.colors.violet[2]
+                ? theme.colors.violet[0]
                 : 'black',
-            color: 'white',
+            color: selectedComponent === 'component3' ? '#7950f2' : 'white',
             margin: '1rem',
           }}
         >
@@ -59,9 +59,9 @@ function Admin() {
           sx={{
             backgroundColor:
               selectedComponent === 'component4'
-                ? theme.colors.violet[2]
+                ? theme.colors.violet[0]
                 : 'black',
-            color: 'white',
+            color: selectedComponent === 'component4' ? '#7950f2' : 'white',
             margin: '1rem',
           }}
         >
