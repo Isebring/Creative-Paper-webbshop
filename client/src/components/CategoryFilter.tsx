@@ -4,12 +4,16 @@ import {
   Flex,
   MultiSelect,
   MultiSelectValueProps,
-  SelectItemProps,
   rem,
+  SelectItem,
+  SelectItemProps,
 } from '@mantine/core';
-import { forwardRef, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { Product } from '../contexts/ProductContext';
-import { categoryData } from './CategoryData';
+
+interface Category {
+  name: string;
+}
 
 function Value({
   label,
@@ -60,6 +64,12 @@ const Item = forwardRef<HTMLDivElement, SelectItemProps>(
   },
 );
 
+const customFilter = (value: string, selected: boolean, item: SelectItem) => {
+  return typeof item.label === 'string'
+    ? item.label.toLowerCase().includes(value.toLowerCase())
+    : false;
+};
+
 interface CategoryFilterProps {
   products: Product[];
   setSelectedCategories: React.Dispatch<React.SetStateAction<string[]>>;
@@ -70,6 +80,24 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
   setSelectedCategories,
 }) => {
   const [selectedCategories, _setSelectedCategories] = useState<string[]>([]);
+  const [categoryData, setCategoryData] = useState<(string | SelectItem)[]>([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const response = await fetch('/api/categories');
+      const categories = await response.json();
+
+      const formattedCategories = categories
+        .filter((category: Category) => typeof category.name === 'string')
+        .map((category: Category) => ({
+          value: category.name,
+          label: category.name,
+        }));
+
+      setCategoryData(formattedCategories);
+    };
+    fetchCategories();
+  }, []);
 
   const handleSelect = (values: string[]) => {
     _setSelectedCategories(values);
@@ -86,6 +114,7 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
         value={selectedCategories}
         onChange={handleSelect}
         placeholder="Filter by category"
+        filter={customFilter}
       />
     </div>
   );

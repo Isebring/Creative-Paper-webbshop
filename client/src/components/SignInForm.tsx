@@ -63,6 +63,7 @@ function SignInForm() {
       </Box>
       <form onSubmit={form.onSubmit(handleSubmit)} data-cy="signin-form">
         <TextInput
+          autoComplete="email"
           withAsterisk
           label="Email"
           placeholder="example@example.com"
