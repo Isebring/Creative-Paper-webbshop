@@ -41,7 +41,6 @@ function AdminProductCard({ product, onDelete }: Props) {
       <Card
         shadow="xl"
         padding="md"
-        radius="lg"
         withBorder
         sx={{
           display: 'flex',
@@ -53,7 +52,7 @@ function AdminProductCard({ product, onDelete }: Props) {
         <Card.Section>
           <Image
             src={'/api/image/' + product.imageId}
-            height={230}
+            height={300}
             fit="cover"
           />
           <Box pl="md" pr="md">
@@ -69,11 +68,19 @@ function AdminProductCard({ product, onDelete }: Props) {
             </Group>
             <Group position="left" mt="sm" mb="md">
               <Text color="dimmed">Product id:</Text>
-              <Text color="dimmed" data-cy="product-id">
+              <Text
+                color="dimmed"
+                data-cy="product-id"
+                style={{ fontFamily: 'Poppins, sans-serif' }}
+              >
                 {product._id}
               </Text>
             </Group>
-            <Text size="md" align="left">
+            <Text
+              size="md"
+              align="left"
+              style={{ fontFamily: 'Poppins, sans-serif' }}
+            >
               {product.description}
             </Text>
           </Box>
@@ -87,6 +94,7 @@ function AdminProductCard({ product, onDelete }: Props) {
               radius="md"
               onClick={handleDelete}
               data-cy="confirm-delete-button"
+              style={{ fontFamily: 'Poppins, sans-serif' }}
             >
               Are you sure?
             </Button>
@@ -98,6 +106,7 @@ function AdminProductCard({ product, onDelete }: Props) {
               radius="md"
               onClick={handleDelete}
               data-cy="admin-remove-product"
+              style={{ fontFamily: 'Poppins, sans-serif' }}
             >
               Delete Product
             </Button>
@@ -109,6 +118,7 @@ function AdminProductCard({ product, onDelete }: Props) {
               mt="md"
               radius="md"
               sx={{ border: '1px solid black', color: 'black' }}
+              style={{ fontFamily: 'Poppins, sans-serif' }}
             >
               Edit product
             </Button>
@@ -118,6 +128,7 @@ function AdminProductCard({ product, onDelete }: Props) {
             sx={{ marginLeft: '1rem', marginTop: '.5rem' }}
             align="right"
             data-cy="product-price"
+            style={{ fontFamily: 'Poppins, sans-serif' }}
           >
             {product.price}€
           </Title>

@@ -36,15 +36,15 @@ function MyOrders() {
             <div key={`${item.product._id}-${index}`}>
               <Text>Product {item.product._id}</Text>
               <Text>Title: {item.product.title}</Text>
-              <Text>Price per item: {item.product.price} SEK</Text>
+              <Text>Price per item: ${item.product.price}</Text>
               <Text>Quantity: {item.quantity}</Text>
               {/* <Image src={item.product.image} width={100} fit="cover" /> */}
-              <Text>Total price: {item.price} SEK</Text>
+              <Text>Total price: ${item.price}</Text>
               <Divider my="sm" variant="dotted" />
             </div>
           ))}
         </td>
-        <td>{order.totalPrice} SEK</td>
+        <td>${order.totalPrice}</td>
         <td>{new Date(order.createdAt).toLocaleDateString()}</td>
         <td>
           <Text>{order.status}</Text>

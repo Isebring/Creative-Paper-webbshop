@@ -20,6 +20,7 @@ import { Notebooks } from './pages/Notebooks';
 import { Pens } from './pages/Pens';
 import ProductDetails from './pages/ProductDetails';
 import SignIn from './pages/SignIn';
+import UserProfile from './pages/UserProfile';
 import Root from './root';
 
 export const router = createBrowserRouter(
@@ -40,6 +41,7 @@ export const router = createBrowserRouter(
       <Route path="/confirmation" element={<Confirmation />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/createaccount" element={<CreateAccount />} />
+      <Route path="/account" element={<UserProfile />} />
     </Route>,
   ),
 );

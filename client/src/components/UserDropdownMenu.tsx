@@ -4,6 +4,7 @@ import {
   IconLogout,
   IconUser,
   IconUserCircle,
+  IconUserShield,
 } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -12,15 +13,17 @@ import { useUserContext } from '../contexts/UseUserContext';
 function UserDropdownMenu() {
   const { logout, user } = useUserContext();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false); // Add state for admin
   const navigate = useNavigate();
 
   useEffect(() => {
     setIsLoggedIn(!!user);
+    setIsAdmin(user?.isAdmin === true); // Update the admin state based on user's role
   }, [user]);
 
   const handleLogout = async () => {
     try {
-      await logout(); // Call the logout function
+      await logout();
       navigate('/');
       console.log('User has been signed out :)');
     } catch (error) {
@@ -44,9 +47,19 @@ function UserDropdownMenu() {
               <Text fw={700}>{user?.email}</Text>
             </Menu.Item>
             <Menu.Divider />
+            {isAdmin ? ( // Render "Admin" menu item if isAdmin is true
+              <>
+                <Menu.Item
+                  icon={<IconUserShield size={14} />}
+                  onClick={() => navigate('/admin')}
+                >
+                  Admin
+                </Menu.Item>
+              </>
+            ) : null}
             <Menu.Item
               icon={<IconUser size={14} />}
-              onClick={() => navigate('/admin')}
+              onClick={() => navigate('/account')}
             >
               My account
             </Menu.Item>
