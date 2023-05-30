@@ -1,17 +1,13 @@
 import {
   ActionIcon,
   Box,
-  Burger,
-  Button,
-  Container,
-  createStyles, Flex, Group,
+  Burger, createStyles, Flex, Group,
   Header,
   Paper,
   rem, Transition, useMantineColorScheme
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import {
-  IconBox,
   IconMoonStars,
   IconShoppingCart,
   IconSunHigh
@@ -247,12 +243,14 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
 
           <Flex gap={7} justify="space-between" mr="0.5rem">
           <ToggleDarkAndLightMode />
+          <Box style={{ color: colorScheme === 'dark' ? '#ADB5BD' : '#845EF7' }}>
             <UserDropdownMenu />
+            </Box>
             <Link to="/checkout">
             <Box
                 onClick={handleLinkClick}
                 data-cy="cart-link"
-
+                style={{ color: colorScheme === 'dark' ? '#ADB5BD' : '#845EF7' }}
               
               >
                 <IconShoppingCart onClick={handleLinkClick} size="1.8rem" stroke="1.2" />
