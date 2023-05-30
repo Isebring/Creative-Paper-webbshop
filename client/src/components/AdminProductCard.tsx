@@ -41,7 +41,6 @@ function AdminProductCard({ product, onDelete }: Props) {
       <Card
         shadow="xl"
         padding="md"
-        radius="lg"
         withBorder
         sx={{
           display: 'flex',
@@ -63,7 +62,6 @@ function AdminProductCard({ product, onDelete }: Props) {
                 size={29}
                 transform="uppercase"
                 data-cy="product-title"
-                style={{ fontFamily: 'Poppins, sans-serif' }}
               >
                 {product.title}
               </Text>
