@@ -3,17 +3,10 @@ import { useState } from 'react';
 import AdminOrderTable from '../components/AdminOrderTable';
 import AdminProductManagement from '../components/AdminProductManagement';
 import { AdminUserControl } from '../components/AdminUserControl';
-import useRequireAdmin from '../hooks/useRequireAdmin';
 
 function Admin() {
-  const isLoading = useRequireAdmin();
   const theme = useMantineTheme();
   const [selectedComponent, setSelectedComponent] = useState('component1');
-
-  if (isLoading) {
-    // This could be a loading spinner or a blank page or something similar
-    return <div>Loading...</div>;
-  }
 
   return (
     <Container
