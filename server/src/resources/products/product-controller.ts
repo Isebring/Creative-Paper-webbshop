@@ -118,7 +118,7 @@ export async function updateProduct(
     title: yup.string().trim(),
     description: yup.string().trim(),
     summary: yup.string().trim(),
-    categories: yup.array().of(yup.string()),
+    categories: yup.array().of(yup.string().min(2)).required(),
     price: yup.number().min(1).required(),
     quantity: yup.number(),
     stock: yup.number(),
