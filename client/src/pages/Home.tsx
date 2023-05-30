@@ -4,7 +4,7 @@ import CategoryFilter from '../components/CategoryFilter';
 import HeroSlide from '../components/HeroSlide';
 import { PageHero } from '../components/PageHero';
 import ProductCard from '../components/ProductCard';
-import { ProductContext } from '../contexts/ProductContext';
+import { Product, ProductContext } from '../contexts/ProductContext';
 
 function Home() {
   const { products } = useContext(ProductContext);
@@ -12,26 +12,62 @@ function Home() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [sortedProducts, setSortedProducts] = useState(products);
   const [activeButton, setActiveButton] = useState('');
+  const [selectedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
-    let sorted = [...products];
-
-    if (sortDirection === 'ascending') {
-      sorted.sort((a, b) => a.price - b.price);
-    } else if (sortDirection === 'descending') {
-      sorted.sort((a, b) => b.price - a.price);
+    if (selectedProduct) {
+      setSelectedCategories(selectedProduct.categories);
     }
+  }, [selectedProduct]);
+
+  useEffect(() => {
+    if (selectedProduct) {
+      setSelectedCategories(selectedProduct.categories);
+    }
+  }, [selectedProduct]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const response = await fetch('/api/products/by-category', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          categories: selectedCategories,
+        }),
+      });
+
+      const newProducts = await response.json();
+
+      const uniqueProducts: Product[] = Array.from(
+        new Set(newProducts.map((product: Product) => JSON.stringify(product))),
+        (product) => JSON.parse(product as string), // annotate product as string
+      ) as Product[]; // annotate the whole Array.from() result as Product[]
+
+      const sorted = [...uniqueProducts];
+
+      if (sortDirection === 'ascending') {
+        sorted.sort((a, b) => a.price - b.price);
+      } else if (sortDirection === 'descending') {
+        sorted.sort((a, b) => b.price - a.price);
+      }
+
+      setSortedProducts(sorted);
+    };
 
     if (selectedCategories.length > 0) {
-      sorted = sorted.filter((product) =>
-        product.categories.some((category: string) =>
-          selectedCategories.includes(category),
-        ),
-      );
+      fetchProducts();
+    } else {
+      const sorted = [...products];
+      if (sortDirection === 'ascending') {
+        sorted.sort((a, b) => a.price - b.price);
+      } else if (sortDirection === 'descending') {
+        sorted.sort((a, b) => b.price - a.price);
+      }
+      setSortedProducts(sorted);
     }
-
-    setSortedProducts(sorted);
-  }, [products, sortDirection, selectedCategories]);
+  }, [selectedCategories, sortDirection, products]);
 
   function sortProductsByLowestPrice() {
     setSortDirection('ascending');

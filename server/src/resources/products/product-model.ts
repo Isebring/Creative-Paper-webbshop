@@ -1,10 +1,15 @@
-import { InferSchemaType, Schema, model } from 'mongoose';
+import mongoose, { InferSchemaType, model, Schema } from 'mongoose';
 
 const productSchema = new Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
   summary: { type: String },
-  categories: { type: [String] }, // fråga David?
+  categories: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Category',
+    },
+  ],
   price: { type: Number, required: true },
   quantity: { type: Number }, // Ta tillbaka required när det finns
   stock: { type: Number }, // Ta tillbaka required när det finns

@@ -1,22 +1,50 @@
 import { Button, Container, Group, SimpleGrid } from '@mantine/core';
-import { useContext, useEffect, useState } from 'react';
-import CategoryFilter from '../components/CategoryFilter';
+import { useEffect, useRef, useState } from 'react';
 import { PageHero } from '../components/PageHero';
 import ProductCard from '../components/ProductCard';
-import { Product, ProductContext } from '../contexts/ProductContext';
+import { Product } from '../contexts/ProductContext';
 
 export function Notebooks() {
-  const { products } = useContext(ProductContext);
   const [sortDirection, setSortDirection] = useState('');
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([
-    'notebooks',
-    'journals',
-  ]);
-  const [sortedProducts, setSortedProducts] = useState(products);
+  const [selectedCategories] = useState<string[]>(['notebooks']);
+  const [sortedProducts, setSortedProducts] = useState<Product[]>([]);
   const [activeButton, setActiveButton] = useState('');
+  const sortedProductsRef = useRef<Product[]>([]);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch('/api/products/by-category', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ categories: ['Notebooks', 'Journals'] }),
+      });
+
+      const data: Product[] = await response.json();
+
+      const uniqueProducts: Product[] = Array.from(
+        new Set(data.map((product) => JSON.stringify(product))),
+        (product) => JSON.parse(product),
+      );
+
+      setSortedProducts(uniqueProducts);
+    } catch (error) {
+      console.error('Failed to fetch products:', error);
+    }
+  };
 
   useEffect(() => {
-    let sorted = [...products];
+    fetchProducts();
+  }, []);
+
+  useEffect(() => {
+    sortedProductsRef.current = sortedProducts;
+  }, [sortedProducts]);
+
+  useEffect(() => {
+    if (sortedProductsRef.current.length === 0) return;
+    const sorted = [...sortedProductsRef.current];
 
     if (sortDirection === 'ascending') {
       sorted.sort((a, b) => a.price - b.price);
@@ -24,16 +52,8 @@ export function Notebooks() {
       sorted.sort((a, b) => b.price - a.price);
     }
 
-    if (selectedCategories.length > 0) {
-      sorted = sorted.filter((product: Product) =>
-        product.categories.some((category: string) =>
-          selectedCategories.includes(category),
-        ),
-      );
-    }
-
     setSortedProducts(sorted);
-  }, [products, sortDirection, selectedCategories]);
+  }, [sortDirection, selectedCategories]);
 
   function sortProductsByLowestPrice() {
     setSortDirection('ascending');
@@ -44,12 +64,13 @@ export function Notebooks() {
     setSortDirection('descending');
     setActiveButton('highest');
   }
+
   return (
     <Container size="lg">
       <PageHero
         title="Notebooks & Journals"
-        line1="Remember your life,"
-        line2="or burn after writing."
+        line1="Let our beautiful notebooks harbour"
+        line2="your best and worst ideas."
       />
       <Group spacing={5} mb="md">
         <Button
@@ -76,11 +97,6 @@ export function Notebooks() {
         >
           Sort by highest price
         </Button>
-        <CategoryFilter
-          products={products}
-          selectedCategories={selectedCategories}
-          setSelectedCategories={setSelectedCategories}
-        />
       </Group>
       <SimpleGrid
         cols={3}

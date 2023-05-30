@@ -17,6 +17,7 @@ export interface Product {
 
 interface ProductContextType {
   products: Product[];
+  getProductsByCategory: (category: string) => Promise<Product[] | null>;
   getProductById: (_id: string) => Promise<Product | null>;
   addProduct: (product: Product) => void;
   deleteProduct: (_id: string) => void;
@@ -25,6 +26,7 @@ interface ProductContextType {
 
 export const ProductContext = createContext<ProductContextType>({
   products: [],
+  getProductsByCategory: () => Promise.resolve(null),
   getProductById: () => Promise.resolve(null),
   addProduct: () => {},
   deleteProduct: () => {},
@@ -56,6 +58,23 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
     fetchProducts();
   }, []);
 
+  async function getProductsByCategory(
+    category: string,
+  ): Promise<Product[] | null> {
+    try {
+      const response = await fetch(`/api/products/category/${category}`);
+      if (response.ok) {
+        const data = await response.json();
+        return data;
+      } else {
+        throw new Error('Could not fetch products for the provided category');
+      }
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  }
+
   async function getProductById(_id: string): Promise<Product | null> {
     try {
       const response = await fetch(`/api/products/${_id}`);
@@ -84,6 +103,8 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
 
   async function addProduct(product: Product) {
     try {
+      console.log('Adding product:', product);
+
       const response = await fetch('/api/products', {
         method: 'POST',
         headers: {
@@ -138,6 +159,7 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
     <ProductContext.Provider
       value={{
         products,
+        getProductsByCategory,
         getProductById,
         deleteProduct,
         addProduct,
