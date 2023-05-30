@@ -1,16 +1,21 @@
 import {
   ActionIcon,
   Box,
-  Burger, createStyles, Flex, Group,
+  Burger,
+  createStyles,
+  Flex,
+  Group,
   Header,
   Paper,
-  rem, Transition, useMantineColorScheme
+  rem,
+  Transition,
+  useMantineColorScheme,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import {
   IconMoonStars,
   IconShoppingCart,
-  IconSunHigh
+  IconSunHigh,
 } from '@tabler/icons-react';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -105,7 +110,6 @@ const useStyles = createStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
   },
-  
 }));
 export interface HeaderResponsiveProps {
   links: { link: string; label: string }[];
@@ -226,34 +230,43 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
       >
         <Flex justify="space-between" className={classes.header}>
           <Group spacing={1}>
-          <Box w="6.5rem">
-          <Burger
-            opened={opened}
-            onClick={toggle}
-            className={classes.burger}
-            size="md"
-            ml="1rem"
-          />
-          </Box>
+            <Box w="6.5rem">
+              <Burger
+                opened={opened}
+                onClick={toggle}
+                className={classes.burger}
+                size="md"
+                ml="1rem"
+              />
+            </Box>
           </Group>
 
           <Link to="./" onClick={handleLinkClick}>
-            <Flex justify="center" align="center">{logo}</Flex>
+            <Flex justify="center" align="center">
+              {logo}
+            </Flex>
           </Link>
 
           <Flex gap={7} justify="space-between" mr="0.5rem">
-          <ToggleDarkAndLightMode />
-          <Box style={{ color: colorScheme === 'dark' ? '#ADB5BD' : '#845EF7' }}>
-            <UserDropdownMenu />
+            <ToggleDarkAndLightMode />
+            <Box
+              style={{ color: colorScheme === 'dark' ? '#ADB5BD' : '#845EF7' }}
+            >
+              <UserDropdownMenu />
             </Box>
             <Link to="/checkout">
-            <Box
+              <Box
                 onClick={handleLinkClick}
                 data-cy="cart-link"
-                style={{ color: colorScheme === 'dark' ? '#ADB5BD' : '#845EF7' }}
-              
+                style={{
+                  color: colorScheme === 'dark' ? '#ADB5BD' : '#845EF7',
+                }}
               >
-                <IconShoppingCart onClick={handleLinkClick} size="1.8rem" stroke="1.2" />
+                <IconShoppingCart
+                  onClick={handleLinkClick}
+                  size="1.8rem"
+                  stroke="1.2"
+                />
                 {cartQuantity > 0 && (
                   <Box
                     sx={{
@@ -275,13 +288,10 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
                     {cartQuantity}
                   </Box>
                 )}
-                </Box>
+              </Box>
             </Link>
           </Flex>
-
-          
         </Flex>
-
 
         <Transition transition="pop-top-right" duration={200} mounted={opened}>
           {(styles) => (
