@@ -135,6 +135,11 @@ export async function updateOrderStatus(req: Request, res: Response) {
     throw new BadRequestError('Invalid order status.');
   }
 
+  // Check if the user is logged in and is an admin
+  if (!req.session?.userId || !req.session.isAdmin) {
+    throw new UnauthorizedError('Only admins can update the order status.');
+  }
+
   const order = await OrderModel.findById(orderId);
 
   if (!order) {
