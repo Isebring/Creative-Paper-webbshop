@@ -1,23 +1,15 @@
 import { Button, Container, Group, SimpleGrid } from '@mantine/core';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { PageHero } from '../components/PageHero';
 import ProductCard from '../components/ProductCard';
 import { Product } from '../contexts/ProductContext';
-import { useProductUpdate } from '../contexts/ProductUpdateContext';
 
 export function Notebooks() {
   const [sortDirection, setSortDirection] = useState('');
-  const [selectedCategories] = useState<string[]>([
-    'notebooks',
-  ]);
+  const [selectedCategories] = useState<string[]>(['notebooks']);
   const [sortedProducts, setSortedProducts] = useState<Product[]>([]);
   const [activeButton, setActiveButton] = useState('');
-  const { update, setUpdate } = useProductUpdate();
-
-  useEffect(() => {
-    fetchProducts();
-    setUpdate(false);
-  }, [update]);
+  const sortedProductsRef = useRef<Product[]>([]);
 
   const fetchProducts = async () => {
     try {
@@ -28,25 +20,31 @@ export function Notebooks() {
         },
         body: JSON.stringify({ categories: ['Notebooks', 'Journals'] }),
       });
-        
+
       const data: Product[] = await response.json();
-  
+
       const uniqueProducts: Product[] = Array.from(
-        new Set(data.map(product => JSON.stringify(product))), 
-        product => JSON.parse(product)
+        new Set(data.map((product) => JSON.stringify(product))),
+        (product) => JSON.parse(product),
       );
-      
+
       setSortedProducts(uniqueProducts);
-  
     } catch (error) {
       console.error('Failed to fetch products:', error);
     }
   };
-  
 
   useEffect(() => {
-    if (sortedProducts.length === 0) return;
-    let sorted = [...sortedProducts];
+    fetchProducts();
+  }, []);
+
+  useEffect(() => {
+    sortedProductsRef.current = sortedProducts;
+  }, [sortedProducts]);
+
+  useEffect(() => {
+    if (sortedProductsRef.current.length === 0) return;
+    const sorted = [...sortedProductsRef.current];
 
     if (sortDirection === 'ascending') {
       sorted.sort((a, b) => a.price - b.price);

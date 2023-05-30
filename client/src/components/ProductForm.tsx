@@ -13,6 +13,10 @@ import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Product } from '../contexts/ProductContext';
 
+interface Category {
+  name: string;
+}
+
 interface ProductFormProps {
   onSubmit: (product: Product) => void;
   isEditing: boolean;
@@ -73,8 +77,8 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
       const categories = await response.json();
 
       const formattedCategories = categories
-        .filter((category: any) => typeof category.name === 'string')
-        .map((category: any) => ({
+        .filter((category: Category) => typeof category.name === 'string')
+        .map((category: Category) => ({
           value: category.name,
           label: category.name,
         }));

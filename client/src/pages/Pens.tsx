@@ -1,23 +1,15 @@
 import { Button, Container, Group, SimpleGrid } from '@mantine/core';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { PageHero } from '../components/PageHero';
 import ProductCard from '../components/ProductCard';
 import { Product } from '../contexts/ProductContext';
-import { useProductUpdate } from '../contexts/ProductUpdateContext';
 
 export function Pens() {
   const [sortDirection, setSortDirection] = useState('');
-  const [selectedCategories] = useState<string[]>([
-    'pens',
-  ]);
+  const [selectedCategories] = useState<string[]>(['pens']);
   const [sortedProducts, setSortedProducts] = useState<Product[]>([]);
   const [activeButton, setActiveButton] = useState('');
-  const { update, setUpdate } = useProductUpdate();
-
-  useEffect(() => {
-    fetchProducts();
-    setUpdate(false);
-  }, [update]);
+  const sortedProductsRef = useRef<Product[]>([]);
 
   const fetchProducts = async () => {
     try {
@@ -28,7 +20,7 @@ export function Pens() {
         },
         body: JSON.stringify({ categories: ['Pens'] }),
       });
-      
+
       const data = await response.json();
       console.log(data);
       setSortedProducts(data);
@@ -38,8 +30,16 @@ export function Pens() {
   };
 
   useEffect(() => {
-    if (sortedProducts.length === 0) return;
-    let sorted = [...sortedProducts];
+    fetchProducts();
+  }, []);
+
+  useEffect(() => {
+    sortedProductsRef.current = sortedProducts;
+  }, [sortedProducts]);
+
+  useEffect(() => {
+    if (sortedProductsRef.current.length === 0) return;
+    const sorted = [...sortedProductsRef.current];
 
     if (sortDirection === 'ascending') {
       sorted.sort((a, b) => a.price - b.price);

@@ -6,10 +6,14 @@ import {
   MultiSelectValueProps,
   rem,
   SelectItem,
-  SelectItemProps
+  SelectItemProps,
 } from '@mantine/core';
 import { forwardRef, useEffect, useState } from 'react';
 import { Product } from '../contexts/ProductContext';
+
+interface Category {
+  name: string;
+}
 
 function Value({
   label,
@@ -84,8 +88,8 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
       const categories = await response.json();
 
       const formattedCategories = categories
-        .filter((category: any) => typeof category.name === 'string')
-        .map((category: any) => ({
+        .filter((category: Category) => typeof category.name === 'string')
+        .map((category: Category) => ({
           value: category.name,
           label: category.name,
         }));

@@ -31,7 +31,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
 
   if (!product && productId) {
     const foundProduct = products?.find((p) => p._id === productId);
-    
+
     if (foundProduct) {
       product = foundProduct;
     } else {

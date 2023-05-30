@@ -12,21 +12,20 @@ function Home() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [sortedProducts, setSortedProducts] = useState(products);
   const [activeButton, setActiveButton] = useState('');
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [selectedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     if (selectedProduct) {
       setSelectedCategories(selectedProduct.categories);
     }
   }, [selectedProduct]);
-  
 
   useEffect(() => {
     if (selectedProduct) {
       setSelectedCategories(selectedProduct.categories);
     }
   }, [selectedProduct]);
-  
+
   useEffect(() => {
     const fetchProducts = async () => {
       const response = await fetch('/api/products/by-category', {
@@ -43,10 +42,9 @@ function Home() {
 
       const uniqueProducts: Product[] = Array.from(
         new Set(newProducts.map((product: Product) => JSON.stringify(product))),
-        product => JSON.parse(product as string)  // annotate product as string
-      ) as Product[];  // annotate the whole Array.from() result as Product[]
-      
-      
+        (product) => JSON.parse(product as string), // annotate product as string
+      ) as Product[]; // annotate the whole Array.from() result as Product[]
+
       const sorted = [...uniqueProducts];
 
       if (sortDirection === 'ascending') {
@@ -80,8 +78,6 @@ function Home() {
     setSortDirection('descending');
     setActiveButton('highest');
   }
-
-  
 
   return (
     <Container size="xl">
