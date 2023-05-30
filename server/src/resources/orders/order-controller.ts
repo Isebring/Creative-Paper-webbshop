@@ -121,8 +121,29 @@ export async function getOrderById(req: Request, res: Response) {
   res.status(200).json(order.toObject());
 }
 
-// Update order status
-// export async function updateOrderStatus(req: Request, res: Response) {
-//   // const products = await ProductModel.find();
-//   // res.status(200).json(products);
-// }
+export async function updateOrderStatus(req: Request, res: Response) {
+  const orderId = req.params.id;
+  const newStatus = req.body.status;
+
+  // Check if the provided orderId is a valid ObjectId
+  if (!MongooseTypes.ObjectId.isValid(orderId)) {
+    throw new BadRequestError('Invalid order ID.');
+  }
+
+  // Check if the provided status is valid
+  if (!['in progress', 'shipped'].includes(newStatus)) {
+    throw new BadRequestError('Invalid order status.');
+  }
+
+  const order = await OrderModel.findById(orderId);
+
+  if (!order) {
+    throw new NotFoundError(`Order with id ${orderId} not found.`);
+  }
+
+  // Update the order status
+  order.status = newStatus;
+  await order.save();
+
+  res.status(200).json(order.toObject());
+}
