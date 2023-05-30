@@ -1,4 +1,4 @@
-import { Box, Checkbox, Divider, Table, Text } from '@mantine/core';
+import { Box, Divider, Table, Text } from '@mantine/core';
 import { useEffect } from 'react';
 import { useOrderContext } from '../contexts/UseOrderContext';
 
@@ -47,11 +47,11 @@ function AdminOrders() {
         <td>{order.totalPrice} SEK</td>
         <td>{new Date(order.createdAt).toLocaleDateString()}</td>
         <td>
-          <Checkbox
+          {/* <Checkbox
             checked={order.status === 'shipped'}
             onChange={() => {}}
             color="green"
-          />
+          /> */}
         </td>
       </tr>
     ));
