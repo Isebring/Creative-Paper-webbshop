@@ -6,8 +6,8 @@ POST http://localhost:3000/api/users/register
 Content-Type: application/json
 
 {
-    "email": "lisa@hello.com",
-    "password": "lisa12345"
+    "email": "lisamarie@hello.com",
+    "password": "lisamarie12345"
 }
 
 ### LOGIN USER
@@ -29,7 +29,7 @@ GET http://localhost:3000/api/orders/user
 GET http://localhost:3000/api/orders/all
 
 ### GET ORDER BY ID
-GET http://localhost:3000/api/orders/64739b79d671de583bdf3565
+GET http://localhost:3000/api/orders/6474d47edb32e0c845ef18f1
 
 ### CREATE ORDER
 POST http://localhost:3000/api/orders
