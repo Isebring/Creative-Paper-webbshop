@@ -25,7 +25,6 @@ function UserDropdownMenu() {
     try {
       await logout();
       navigate('/');
-      console.log('User has been signed out :)');
     } catch (error) {
       console.error(error);
     }
