@@ -34,7 +34,7 @@ function MyOrders() {
         <td>
           {order.orderItems.map((item, index) => (
             <div key={`${item.product._id}-${index}`}>
-              <Text>Product #{item.product._id}</Text>
+              <Text>Product {item.product._id}</Text>
               <Text>Title: {item.product.title}</Text>
               <Text>Price per item: {item.product.price} SEK</Text>
               <Text>Quantity: {item.quantity}</Text>
@@ -56,7 +56,7 @@ function MyOrders() {
     <Table>
       <thead>
         <tr>
-          <th>Order #</th>
+          <th>Order ID</th>
           <th>Shipping Details</th>
           <th>Total Items</th>
           <th>Order Items</th>
