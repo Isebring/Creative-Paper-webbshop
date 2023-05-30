@@ -17,7 +17,6 @@ import EditProduct from './pages/EditProduct';
 import Home from './pages/Home';
 import NewProduct from './pages/NewProduct';
 import { Notebooks } from './pages/Notebooks';
-import OrdersByUser from './pages/OrdersByUser';
 import { Pens } from './pages/Pens';
 import ProductDetails from './pages/ProductDetails';
 import SignIn from './pages/SignIn';
@@ -41,7 +40,6 @@ export const router = createBrowserRouter(
       <Route path="/confirmation" element={<Confirmation />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/createaccount" element={<CreateAccount />} />
-      <Route path="/test" element={<OrdersByUser />} />
     </Route>,
   ),
 );
