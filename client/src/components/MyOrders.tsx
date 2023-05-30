@@ -32,9 +32,9 @@ function MyOrders() {
           {order.orderItems.reduce((sum, item) => sum + item.quantity, 0)}
         </td>
         <td>
-          {order.orderItems.map((item) => (
-            <div key={item.product._id}>
-              <Text>Product #{item.product._id}</Text>
+          {order.orderItems.map((item, index) => (
+            <div key={`${item.product._id}-${index}`}>
+              <Text>Product {item.product._id}</Text>
               <Text>Title: {item.product.title}</Text>
               <Text>Price per item: ${item.product.price}</Text>
               <Text>Quantity: {item.quantity}</Text>
@@ -56,7 +56,7 @@ function MyOrders() {
     <Table>
       <thead>
         <tr>
-          <th>Order #</th>
+          <th>Order ID</th>
           <th>Shipping Details</th>
           <th>Total Items</th>
           <th>Order Items</th>
