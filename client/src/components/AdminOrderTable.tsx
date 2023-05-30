@@ -1,9 +1,22 @@
-import { Box, Divider, Table, Text } from '@mantine/core';
-import { useEffect } from 'react';
+import { Box, Divider, Select, Table, Text } from '@mantine/core';
+import { useEffect, useState } from 'react';
 import { useOrderContext } from '../contexts/UseOrderContext';
 
 function AdminOrders() {
-  const { getAllOrders, orders } = useOrderContext();
+  const { getAllOrders, orders, updateOrderStatus } = useOrderContext();
+  const [localStatuses, setLocalStatuses] = useState<{
+    [key: string]: 'in progress' | 'shipped';
+  }>({});
+
+  const updateLocalStatus = (
+    _id: string,
+    status: 'in progress' | 'shipped',
+  ) => {
+    setLocalStatuses((prevStatuses) => ({
+      ...prevStatuses,
+      [_id]: status,
+    }));
+  };
 
   useEffect(() => {
     getAllOrders();
@@ -32,26 +45,34 @@ function AdminOrders() {
           {order.orderItems.reduce((sum, item) => sum + item.quantity, 0)}
         </td>
         <td>
-          {order.orderItems.map((item) => (
-            <div key={item.product._id}>
-              <Text>Product #{item.product._id}</Text>
+          {order.orderItems.map((item, index) => (
+            <Box key={`${item.product._id}-${index}`}>
+              <Text>
+                Product <Text fw={700}>{item.product._id}</Text>
+              </Text>
               <Text>Title: {item.product.title}</Text>
               <Text>Price per item: {item.product.price} SEK</Text>
               <Text>Quantity: {item.quantity}</Text>
               {/* <Image src={item.product.image} width={100} fit="cover" /> */}
               <Text>Total price: {item.price} SEK</Text>
               <Divider my="sm" variant="dotted" />
-            </div>
+            </Box>
           ))}
         </td>
         <td>{order.totalPrice} SEK</td>
         <td>{new Date(order.createdAt).toLocaleDateString()}</td>
         <td>
-          {/* <Checkbox
-            checked={order.status === 'shipped'}
-            onChange={() => {}}
-            color="green"
-          /> */}
+          <Select
+            value={localStatuses[order._id] || order.status}
+            onChange={(value) => {
+              updateLocalStatus(order._id, value as 'in progress' | 'shipped');
+              updateOrderStatus(order._id, value as 'in progress' | 'shipped');
+            }}
+            data={[
+              { value: 'in progress', label: 'In Progress' },
+              { value: 'shipped', label: 'Shipped' },
+            ]}
+          />
         </td>
       </tr>
     ));
@@ -60,7 +81,7 @@ function AdminOrders() {
     <Table>
       <thead>
         <tr>
-          <th>Order #</th>
+          <th>Order ID</th>
           <th>Shipping Details</th>
           <th>Total Items</th>
           <th>Order Items</th>

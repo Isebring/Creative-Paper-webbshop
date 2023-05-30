@@ -6,7 +6,6 @@ const orderItemSchema = new Schema(
       _id: { type: Schema.Types.ObjectId, required: true },
       title: { type: String, required: true },
       price: { type: Number, required: true },
-      // include any other product fields you want to snapshot
     },
     quantity: {
       type: Number,
