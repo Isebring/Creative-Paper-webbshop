@@ -2,7 +2,7 @@
 GET http://localhost:3000/api/image/64709b8e30a73dcbfe6b013e
 
 ### Delete file
-DELETE http://localhost:3000/api/image/646e0419af3a9037ca973140
+DELETE http://localhost:3000/api/image/64709b8e30a73dcbfe6b013e
 ### Upload image
 POST http://localhost:3000/api/image
 Content-Type: multipart/form-data; boundary=FormDataRow
