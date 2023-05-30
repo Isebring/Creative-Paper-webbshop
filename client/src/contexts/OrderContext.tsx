@@ -82,9 +82,7 @@ export const OrderProvider = ({ children }: Props) => {
         throw new Error('Failed to fetch orders.');
       }
       const { data } = await response.json();
-      console.log(data);
       setOrders(data);
-      console.log('Fetched orders:', data);
     } catch (error) {
       console.error(error);
     }
