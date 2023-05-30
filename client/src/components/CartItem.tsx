@@ -12,7 +12,7 @@ export interface CartItem extends Product {
   quantity: number;
 }
 
-function CartProduct({ cartItem }: Props) {
+function CartItem({ cartItem }: Props) {
   const { products } = useContext(ProductContext);
   const { increaseCartQuantity, decreaseCartQuantity } = useShoppingCart();
   products?.find((product) => product._id === cartItem._id);
@@ -91,4 +91,4 @@ function CartProduct({ cartItem }: Props) {
   );
 }
 
-export default CartProduct;
+export default CartItem;

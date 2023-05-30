@@ -6,6 +6,7 @@ import {
 import { Notifications } from '@mantine/notifications';
 import React, { useState } from 'react';
 import { RouterProvider } from 'react-router-dom';
+import OrderProvider from './contexts/OrderContext';
 import ProductProvider from './contexts/ProductContext';
 import ShoppingCartProvider from './contexts/ShoppingCartContext';
 import { UserProvider } from './contexts/UserContext';
@@ -31,14 +32,16 @@ function Root() {
           withGlobalStyles
           withNormalizeCSS
         >
-          <Notifications data-cy="added-to-cart-toast" />
-          <ProductProvider>
-            <UserProvider>
-              <ShoppingCartProvider>
-                <RouterProvider router={router} />
-              </ShoppingCartProvider>
-            </UserProvider>
-          </ProductProvider>
+          <OrderProvider>
+            <Notifications data-cy="added-to-cart-toast" />
+            <ProductProvider>
+              <UserProvider>
+                <ShoppingCartProvider>
+                  <RouterProvider router={router} />
+                </ShoppingCartProvider>
+              </UserProvider>
+            </ProductProvider>
+          </OrderProvider>
         </MantineProvider>
       </ColorSchemeProvider>
     </React.StrictMode>

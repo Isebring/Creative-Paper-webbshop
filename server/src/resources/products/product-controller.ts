@@ -137,7 +137,6 @@ export async function updateProduct(
     if (validatedProduct.stock !== product.stock) {
       validatedProduct.quantity = validatedProduct.stock;
     }
-
     const categoryIds: mongoose.Types.ObjectId[] = [];
 
     for (const categoryName of validatedProduct.categories) {
@@ -163,6 +162,13 @@ export async function updateProduct(
       { new: true },
     ).populate('categories', 'name -_id');
     res.status(200).json(updatedProduct);
+    await ProductModel.findByIdAndUpdate(productId, { isArchived: true });
+
+    // Create a new product with validated data
+    const newProduct = new ProductModel(validatedProduct);
+    await newProduct.save();
+
+    res.status(200).json(newProduct);
   } catch (error) {
     next(error);
   }
