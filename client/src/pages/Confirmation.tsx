@@ -1,6 +1,5 @@
 import { Card, Container, Divider, List, Text, Title } from '@mantine/core';
 import { useContext } from 'react';
-import InitBackgroundAnimation from '../components/ConfirmationPageAnimation';
 import { ShoppingCartContext } from '../contexts/ShoppingCartContext';
 
 function Confirmation() {
@@ -16,7 +15,7 @@ function Confirmation() {
     }, 0);
   }
 
-  InitBackgroundAnimation();
+  // InitBackgroundAnimation();
   return (
     <Container size="md" mt="xl" mb="xl">
       {currentOrder && (
