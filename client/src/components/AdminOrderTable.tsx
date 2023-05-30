@@ -1,4 +1,4 @@
-import { Box, Divider, Table, Text } from '@mantine/core';
+import { Box, Container, Divider, Table, Text } from '@mantine/core';
 import { useEffect } from 'react';
 import { useOrderContext } from '../contexts/UseOrderContext';
 
@@ -57,20 +57,22 @@ function AdminOrders() {
     ));
 
   return (
-    <Table>
-      <thead>
-        <tr>
-          <th>Order #</th>
-          <th>Shipping Details</th>
-          <th>Total Items</th>
-          <th>Order Items</th>
-          <th>Order Total</th>
-          <th>Order Date</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
-    </Table>
+    <Container size={'xl'} style={{ overflowX: 'auto' }}>
+      <Table highlightOnHover>
+        <thead>
+          <tr>
+            <th>Order #</th>
+            <th>Shipping Details</th>
+            <th>Total Items</th>
+            <th>Order Items</th>
+            <th>Order Total</th>
+            <th>Order Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </Table>
+    </Container>
   );
 }
 
