@@ -66,7 +66,6 @@ export async function createProduct(
       _id: new ObjectId(),
       categories: [],
     });
-    newProduct.quantity = incomingProduct.stock;
     const savedProduct = await newProduct.save();
 
     for (const categoryName of incomingProduct.categories) {
@@ -135,7 +134,6 @@ export async function updateProduct(
 
     // lagerstatus ska överföras till den uppdaterade produkten
     if (validatedProduct.stock !== product.stock) {
-      validatedProduct.quantity = validatedProduct.stock;
     }
     const categoryIds: mongoose.Types.ObjectId[] = [];
 
