@@ -145,7 +145,9 @@ function ProductDetails() {
           <Text size="md" align="left" mt="md" data-cy="product-description">
             {product.description}
           </Text>
-          <Group position="right">
+
+          <Group position="apart">
+            <Text fw={700}> Current Stock: {product.stock} </Text>
             <Title
               order={2}
               data-cy="product-price"
@@ -154,6 +156,7 @@ function ProductDetails() {
               ${product.price}
             </Title>
           </Group>
+
           <Button
             fullWidth
             variant="light"
@@ -171,6 +174,7 @@ function ProductDetails() {
           >
             Add to cart
           </Button>
+
           <Link to="/checkout" style={{ textDecoration: 'none' }}>
             <Button
               fullWidth
