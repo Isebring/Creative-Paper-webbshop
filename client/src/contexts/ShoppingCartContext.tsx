@@ -1,10 +1,4 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { createContext, ReactNode, useContext, useState } from 'react';
 import { CartItem } from '../components/CartItem';
 import { FormValues } from '../components/CheckoutForm';
 import useLocalStorage from '../hooks/useLocalStorage';
@@ -44,10 +38,6 @@ function ShoppingCartProvider({ children }: Props) {
     (quantity, product) => product.quantity + quantity,
     0,
   );
-
-  useEffect(() => {
-    console.log('Current Order ID (after setting):', currentOrderId);
-  }, [currentOrderId]);
 
   function getProductQuantity(id: string) {
     return cartItems.find((product) => product._id === id)?.quantity || 0;
