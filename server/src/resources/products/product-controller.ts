@@ -116,8 +116,8 @@ export async function updateProduct(
 
   const productUpdateSchema = yup.object({
     title: yup.string().trim().min(2).required(),
-    description: yup.string().trim().min(5).required(), // Ska dessa verkligen vara required vid en edit?
-    summary: yup.string().trim(),
+    description: yup.string().trim().min(5).required(),
+    summary: yup.string().trim().min(3).required(),
     categories: yup.array().of(yup.string().min(2)).required(),
     price: yup.number().min(1).required(),
     quantity: yup.number(),
@@ -163,6 +163,14 @@ export async function updateProduct(
       { new: true },
     ).populate('categories', 'name -_id');
     res.status(200).json(updatedProduct);
+
+    await ProductModel.findByIdAndUpdate(productId, { isArchived: true });
+
+    // Create a new product with validated data
+    const newProduct = new ProductModel(validatedProduct);
+    await newProduct.save();
+
+    res.status(200).json(newProduct);
   } catch (error) {
     next(error);
   }

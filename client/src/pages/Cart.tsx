@@ -9,13 +9,13 @@ import {
 } from '@mantine/core';
 import { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import CartProduct from '../components/CartProduct';
+import CartItem from '../components/CartItem';
 import CheckoutForm from '../components/CheckoutForm';
 import { ProductContext } from '../contexts/ProductContext';
 import { useShoppingCart } from '../contexts/UseShoppingCartContext';
 
 function Cart() {
-  const { cartProducts, cartQuantity } = useShoppingCart();
+  const { cartItems, cartQuantity } = useShoppingCart();
   const { products } = useContext(ProductContext);
 
   if (!products) {
@@ -24,9 +24,9 @@ function Cart() {
 
   <Text weight={500} size={29}>
     total: $
-    {cartProducts.reduce((total, cartProduct) => {
-      const product = products.find((i) => i._id === cartProduct._id);
-      return total + (product?.price || 0) * cartProduct.quantity;
+    {cartItems.reduce((total, cartItem) => {
+      const product = products.find((i) => i._id === cartItem._id);
+      return total + (product?.price || 0) * cartItem.quantity;
     }, 0)}
   </Text>;
 
@@ -75,9 +75,9 @@ function Cart() {
           align="center"
         >
           <Box>
-            {cartProducts.map((product) => (
+            {cartItems.map((product) => (
               <Fragment key={product._id}>
-                <CartProduct cartItem={product} />
+                <CartItem cartItem={product} />
                 <Divider mt="md" mb="sm" size="xs" />
               </Fragment>
             ))}
@@ -124,13 +124,13 @@ function Cart() {
                   Summary:
                 </Text>
                 <Text weight={500} size={18}>
-                  {cartProducts.map((cartproduct) => {
+                  {cartItems.map((cartItem) => {
                     const product = products.find(
-                      (i) => i._id === cartproduct._id,
+                      (i) => i._id === cartItem._id,
                     );
                     return (
                       <Box
-                        key={cartproduct._id}
+                        key={cartItem._id}
                         sx={{
                           display: 'flex',
                           flexDirection: 'row',
@@ -140,7 +140,7 @@ function Cart() {
                       >
                         <Text>{product?.title}</Text>
                         <Text weight={400}>
-                          {cartproduct.quantity}x ${product?.price}
+                          {cartItem.quantity}x ${product?.price}
                         </Text>
                       </Box>
                     );
@@ -153,11 +153,11 @@ function Cart() {
                   style={{ fontFamily: 'Poppins, sans-serif' }}
                 >
                   Total: $
-                  {cartProducts.reduce((total, cartProduct) => {
+                  {cartItems.reduce((total, cartItem) => {
                     const product = products.find(
-                      (i) => i._id === cartProduct._id,
+                      (i) => i._id === cartItem._id,
                     );
-                    return total + (product?.price || 0) * cartProduct.quantity;
+                    return total + (product?.price || 0) * cartItem.quantity;
                   }, 0)}
                 </Text>
               </Card>
