@@ -3,11 +3,10 @@ import { useState } from 'react';
 import AdminOrderTable from '../components/AdminOrderTable';
 import AdminProductManagement from '../components/AdminProductManagement';
 import { AdminUserControl } from '../components/AdminUserControl';
-import MyOrders from '../components/MyOrders';
 
 function Admin() {
   const theme = useMantineTheme();
-  const [selectedComponent, setSelectedComponent] = useState('');
+  const [selectedComponent, setSelectedComponent] = useState('component1');
   return (
     <Container
       size="xl"
@@ -54,25 +53,11 @@ function Admin() {
         >
           User Management
         </Button>
-        <Button
-          onClick={() => setSelectedComponent('component4')}
-          sx={{
-            backgroundColor:
-              selectedComponent === 'component4'
-                ? theme.colors.violet[0]
-                : 'black',
-            color: selectedComponent === 'component4' ? '#7950f2' : 'white',
-            margin: '1rem',
-          }}
-        >
-          My Orders
-        </Button>
       </Box>
 
       {selectedComponent === 'component1' && <AdminProductManagement />}
       {selectedComponent === 'component2' && <AdminOrderTable />}
       {selectedComponent === 'component3' && <AdminUserControl />}
-      {selectedComponent === 'component4' && <MyOrders />}
     </Container>
   );
 }
