@@ -11,14 +11,12 @@ const productSchema = new Schema({
     },
   ],
   price: { type: Number, required: true },
-  quantity: { type: Number, required: true },
-  stock: { type: Number, required: true },
+  quantity: { type: Number }, // Ta tillbaka required när det finns
+  stock: { type: Number }, // Ta tillbaka required när det finns
   imageId: { type: String, required: true }, // Schematypes? Path?
-  imageURL: { type: String, required: true },
   secondImageId: { type: String, required: true }, // Schematypes? Path?
-  secondImageURL: { type: String, required: true },
-  rating: { type: Number, required: true },
-  usersRated: { type: Number, required: true },
+  rating: { type: Number },
+  usersRated: { type: Number },
   isArchived: { type: Boolean, default: false },
 });
 

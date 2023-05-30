@@ -136,11 +136,18 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
       });
 
       if (response.ok) {
-        const updatedProduct = await response.json();
-        const updatedProducts = products.map((p) =>
-          p._id === updatedProduct._id ? updatedProduct : p,
-        );
-        setProducts(updatedProducts);
+        const { newProduct, oldProductId } = await response.json();
+        setProducts((prevProducts) => {
+          const productIndex = prevProducts.findIndex(
+            (p) => p._id === oldProductId,
+          );
+          if (productIndex !== -1) {
+            const updatedProducts = [...prevProducts];
+            updatedProducts.splice(productIndex, 1, newProduct);
+            return updatedProducts;
+          }
+          return prevProducts;
+        });
       } else {
         console.error('Failed to update product');
       }
