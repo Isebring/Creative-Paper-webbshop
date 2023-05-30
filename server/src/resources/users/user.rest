@@ -15,8 +15,8 @@ POST http://localhost:3000/api/users/login
 Content-Type: application/json
 
 {
-    "email": "lisa@hello.com",
-    "password": "lisa12345"
+    "email": "lisamarie.andersson@gmail.com",
+    "password": "lisamarie123"
 }
 
 ### LOGOUT USER
@@ -29,7 +29,7 @@ GET http://localhost:3000/api/orders/user
 GET http://localhost:3000/api/orders/all
 
 ### GET ORDER BY ID
-GET http://localhost:3000/api/orders/6474d47edb32e0c845ef18f1
+GET http://localhost:3000/api/orders/6475c6824a69464b86a75a2f
 
 ### CREATE ORDER
 POST http://localhost:3000/api/orders
@@ -38,11 +38,11 @@ Content-Type: application/json
 {
   "orderItems": [
     {
-      "product": "646f280e23e61bd9b6b6ece0",
+      "product": "6475be567e1d3b74c8d13ebd",
       "quantity": 2
     },
     {
-      "product": "646f280e23e61bd9b6b6ecdf",
+      "product": "6475bdd37e1d3b74c8d13eae",
       "quantity": 1
     }
   ],
@@ -55,5 +55,14 @@ Content-Type: application/json
     "city": "Cityville"
   }
 }
+
+### UPDATE ORDER STATUS
+PUT http://localhost:3000/api/orders/status/6475c6824a69464b86a75a2f
+Content-Type: application/json
+
+{
+    "status": "shipped"
+}
+
 
 
