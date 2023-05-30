@@ -13,7 +13,7 @@ import {
 
 const userRouter = express
   .Router()
-  .get('/api/users', getAllUsers)
+  .get('/api/users', isAdmin, getAllUsers)
   .post('/api/users/register', registerUser)
   .post('/api/users/login', loginUser)
   .post('/api/users/logout', logoutUser)
