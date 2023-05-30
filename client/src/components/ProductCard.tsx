@@ -82,7 +82,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
                   product.summary
                     .split(',')
                     .map((item) => item.trim())
-                    .map((item) => <List.Item key={item}>{item}</List.Item>)}
+                    .map((item, index) => (
+                      <List.Item key={`${item.trim()}-${index}`}>
+                        {item.trim()}
+                      </List.Item>
+                    ))}
               </List>
             </Box>
           </Link>

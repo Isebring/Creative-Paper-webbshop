@@ -1,59 +1,67 @@
-import { Checkbox, Table } from '@mantine/core';
-import { useState } from 'react';
+import { Box, Divider, Table, Text } from '@mantine/core';
+import { useEffect } from 'react';
+import { useOrderContext } from '../contexts/UseOrderContext';
 
 function MyOrders() {
-  const [data] = useState([
-    {
-      id: 1,
-      date: '2023-01-01',
-      orderId: '0001',
-      name: 'Jane Smith',
-      amount: 5,
-      price: '$100',
-      status: false,
-    },
-    {
-      id: 2,
-      date: '2023-02-01',
-      orderId: '0002',
-      name: 'Jane Smith',
-      amount: 3,
-      price: '$60',
-      status: false,
-    },
-    {
-      id: 3,
-      date: '2023-03-01',
-      orderId: '0003',
-      name: 'Jane Smith',
-      amount: 4,
-      price: '$80',
-      status: false,
-    },
-  ]);
+  const { getOrdersByUser, orders } = useOrderContext();
 
-  const rows = data.map((row) => (
-    <tr key={row.id}>
-      <td>{row.date}</td>
-      <td>{row.orderId}</td>
-      <td>{row.name}</td>
-      <td>{row.amount}</td>
-      <td>{row.price}</td>
-      <td>
-        <Checkbox checked={row.status} disabled={true} color="green" />
-      </td>
-    </tr>
-  ));
+  useEffect(() => {
+    getOrdersByUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const rows =
+    Array.isArray(orders) &&
+    orders.map((order) => (
+      <tr key={order._id}>
+        <td>
+          <Text fw={700}>{order._id}</Text>
+        </td>
+        <td>
+          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <Text>{order.deliveryAddress.email}</Text>
+            <Text>{order.deliveryAddress.phoneNumber}</Text>
+            <Text>{order.deliveryAddress.fullName}</Text>
+            <Text>{order.deliveryAddress.address}</Text>
+            <Text>
+              {order.deliveryAddress.zipCode} {order.deliveryAddress.city}
+            </Text>
+          </Box>
+        </td>
+        <td>
+          {order.orderItems.reduce((sum, item) => sum + item.quantity, 0)}
+        </td>
+        <td>
+          {order.orderItems.map((item) => (
+            <div key={item.product._id}>
+              <Text>Product #{item.product._id}</Text>
+              <Text>Title: {item.product.title}</Text>
+              <Text>Price per item: {item.product.price} SEK</Text>
+              <Text>Quantity: {item.quantity}</Text>
+              {/* <Image src={item.product.image} width={100} fit="cover" /> */}
+              <Text>Total price: {item.price} SEK</Text>
+              <Divider my="sm" variant="dotted" />
+            </div>
+          ))}
+        </td>
+        <td>{order.totalPrice} SEK</td>
+        <td>{new Date(order.createdAt).toLocaleDateString()}</td>
+        <td>
+          <Text>{order.status}</Text>
+        </td>
+      </tr>
+    ));
 
   return (
     <Table>
       <thead>
         <tr>
-          <th>Date</th>
-          <th>Order Id</th>
-          <th>Name</th>
-          <th>Amount</th>
-          <th>Price</th>
+          <th>Order #</th>
+          <th>Shipping Details</th>
+          <th>Total Items</th>
+          <th>Order Items</th>
+          <th>Order Total</th>
+          <th>Order Date</th>
           <th>Status</th>
         </tr>
       </thead>

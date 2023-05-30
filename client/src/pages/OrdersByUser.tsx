@@ -1,4 +1,4 @@
-import { Image, Text } from '@mantine/core';
+import { Text } from '@mantine/core';
 import { useEffect } from 'react';
 import { useOrderContext } from '../contexts/UseOrderContext';
 
@@ -23,12 +23,12 @@ export function OrdersByUser() {
               orderItem.product ? (
                 <div key={order._id + index}>
                   <p>Product ID: {orderItem.product._id}</p>
-                  <Image
+                  {/* <Image
                     src={orderItem.product.image}
                     height={150}
                     width={220}
                     fit="cover"
-                  />
+                  /> */}
                   <Text fw={700}>Product Title: {orderItem.product.title}</Text>
                   <p>Quantity: {orderItem.quantity}</p>
                   <p>Price: {orderItem.price}</p>

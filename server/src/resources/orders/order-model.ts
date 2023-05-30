@@ -3,9 +3,10 @@ import { InferSchemaType, Schema, model } from 'mongoose';
 const orderItemSchema = new Schema(
   {
     product: {
-      type: Schema.Types.ObjectId,
-      ref: 'Product',
-      required: true,
+      _id: { type: Schema.Types.ObjectId, required: true },
+      title: { type: String, required: true },
+      price: { type: Number, required: true },
+      // include any other product fields you want to snapshot
     },
     quantity: {
       type: Number,
