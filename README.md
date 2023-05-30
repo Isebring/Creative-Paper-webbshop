@@ -4,7 +4,7 @@
 
 ## A webshop
 
-This is a webshop where we have created both the frontend and backend application. The webshop sells stationery, such as notebooks and journals.
+This is a webshop where we have created both the frontend and backend application. The webshop sells stationery, such as notebooks, pens, journals and desktop accessories.
 
 ## About the code
 
@@ -12,6 +12,7 @@ This is a webshop where we have created both the frontend and backend applicatio
 - **Backend stack:** MongoDB, Express
 
 <br>
+
 ### Contributors:
 
 - [Jesper Lindström](https://github.com/Jesper-Lindstrom)
