@@ -16,7 +16,7 @@ Content-Type: application/json
 
 {
     "email": "lisamarie.andersson@gmail.com",
-    "password": "lisamarie123"
+    "password": ""
 }
 
 
@@ -58,7 +58,7 @@ Content-Type: application/json
 }
 
 ### UPDATE ORDER STATUS
-PUT http://localhost:3000/api/orders/status/6475c6824a69464b86a75a2f
+PUT http://localhost:3000/api/orders/status/6475e907167e19ee9bbb0257
 Content-Type: application/json
 
 {
