@@ -21,6 +21,7 @@ import OrdersByUser from './pages/OrdersByUser';
 import { Pens } from './pages/Pens';
 import ProductDetails from './pages/ProductDetails';
 import SignIn from './pages/SignIn';
+import UserProfile from './pages/UserProfile';
 import Root from './root';
 
 export const router = createBrowserRouter(
@@ -42,6 +43,7 @@ export const router = createBrowserRouter(
       <Route path="/signin" element={<SignIn />} />
       <Route path="/createaccount" element={<CreateAccount />} />
       <Route path="/test" element={<OrdersByUser />} />
+      <Route path="/account" element={<UserProfile />} />
     </Route>,
   ),
 );
