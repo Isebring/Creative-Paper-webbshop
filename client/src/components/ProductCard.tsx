@@ -73,7 +73,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
                   New!
                 </Badge>
               </Group>
-              <List style={{ fontFamily: 'Poppins, sans-serif' }}>
+              <List
+                style={{ fontFamily: 'Poppins, sans-serif', padding: '0.2rem' }}
+              >
                 {product.summary &&
                   product.summary
                     .split(',')
