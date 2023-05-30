@@ -116,8 +116,8 @@ export async function updateProduct(
 
   const productUpdateSchema = yup.object({
     title: yup.string().trim().min(2).required(),
-    description: yup.string().trim().min(5).required(),
-    summary: yup.string().trim().min(3).required(),
+    description: yup.string().trim().min(5).required(), // Ska dessa verkligen vara required vid en edit?
+    summary: yup.string().trim(),
     categories: yup.array().of(yup.string().min(2)).required(),
     price: yup.number().min(1).required(),
     quantity: yup.number(),
@@ -137,7 +137,6 @@ export async function updateProduct(
     if (validatedProduct.stock !== product.stock) {
       validatedProduct.quantity = validatedProduct.stock;
     }
-
     const categoryIds: mongoose.Types.ObjectId[] = [];
 
     for (const categoryName of validatedProduct.categories) {
