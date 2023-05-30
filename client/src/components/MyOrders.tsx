@@ -47,7 +47,9 @@ function MyOrders() {
         <td>${order.totalPrice}</td>
         <td>{new Date(order.createdAt).toLocaleDateString()}</td>
         <td>
-          <Text>{order.status}</Text>
+          <Text>
+            {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+          </Text>
         </td>
       </tr>
     ));
