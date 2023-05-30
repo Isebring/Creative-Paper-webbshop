@@ -44,6 +44,7 @@ interface OrderContextProps {
   getOrdersByUser: () => void;
   getAllOrders: () => void;
   getOrderById: (_id: string) => Promise<Order | null>;
+  updateOrderStatus: (_id: string, status: 'in progress' | 'shipped') => void;
 }
 
 export const OrderContext = createContext<OrderContextProps>({
@@ -53,6 +54,8 @@ export const OrderContext = createContext<OrderContextProps>({
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   getAllOrders: () => {},
   getOrderById: () => Promise.resolve(null),
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  updateOrderStatus: () => {},
 });
 
 export const OrderProvider = ({ children }: Props) => {
@@ -101,6 +104,28 @@ export const OrderProvider = ({ children }: Props) => {
     }
   };
 
+  const updateOrderStatus = async (
+    _id: string,
+    status: 'in progress' | 'shipped',
+  ) => {
+    try {
+      const res = await fetch(`/api/orders/status/${_id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status }),
+      });
+      if (!res.ok) {
+        throw new Error('Failed to update order status.');
+      }
+      await res.json();
+      getAllOrders(); // refresh all orders
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <OrderContext.Provider
       value={{
@@ -108,6 +133,7 @@ export const OrderProvider = ({ children }: Props) => {
         getOrdersByUser,
         getAllOrders,
         getOrderById,
+        updateOrderStatus,
       }}
     >
       {children}
