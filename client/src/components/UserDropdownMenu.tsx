@@ -51,7 +51,10 @@ function UserDropdownMenu() {
               <>
                 <Menu.Item
                   icon={<IconUserShield size={14} />}
-                  onClick={() => navigate('/admin')}
+                  onClick={() => {
+                    window.scrollTo(0, 0);
+                    navigate('/admin');
+                  }}
                 >
                   Admin
                 </Menu.Item>
