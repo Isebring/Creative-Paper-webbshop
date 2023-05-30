@@ -1,22 +1,45 @@
 import { Button, Container, Group, SimpleGrid } from '@mantine/core';
-import { useContext, useEffect, useState } from 'react';
-import CategoryFilter from '../components/CategoryFilter';
+import { useEffect, useRef, useState } from 'react';
 import { PageHero } from '../components/PageHero';
 import ProductCard from '../components/ProductCard';
-import { Product, ProductContext } from '../contexts/ProductContext';
+import { Product } from '../contexts/ProductContext';
 
 export function Pens() {
-  const { products } = useContext(ProductContext);
   const [sortDirection, setSortDirection] = useState('');
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([
-    'pens',
-  ]); // Set 'pens' as a default selection
-  const [sortedProducts, setSortedProducts] = useState(products);
+  const [selectedCategories] = useState<string[]>(['pens']);
+  const [sortedProducts, setSortedProducts] = useState<Product[]>([]);
   const [activeButton, setActiveButton] = useState('');
+  const sortedProductsRef = useRef<Product[]>([]);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch('/api/products/by-category', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ categories: ['Pens'] }),
+      });
+
+      const data = await response.json();
+      console.log(data);
+      setSortedProducts(data);
+    } catch (error) {
+      console.error('Failed to fetch products:', error);
+    }
+  };
 
   useEffect(() => {
-    if (products === null) return;
-    let sorted = [...products];
+    fetchProducts();
+  }, []);
+
+  useEffect(() => {
+    sortedProductsRef.current = sortedProducts;
+  }, [sortedProducts]);
+
+  useEffect(() => {
+    if (sortedProductsRef.current.length === 0) return;
+    const sorted = [...sortedProductsRef.current];
 
     if (sortDirection === 'ascending') {
       sorted.sort((a, b) => a.price - b.price);
@@ -24,16 +47,8 @@ export function Pens() {
       sorted.sort((a, b) => b.price - a.price);
     }
 
-    if (selectedCategories.length > 0) {
-      sorted = sorted.filter((product: Product) =>
-        product.category.some((category: string) =>
-          selectedCategories.includes(category),
-        ),
-      );
-    }
-
     setSortedProducts(sorted);
-  }, [products, sortDirection, selectedCategories]);
+  }, [sortDirection, selectedCategories]);
 
   function sortProductsByLowestPrice() {
     setSortDirection('ascending');
@@ -49,8 +64,8 @@ export function Pens() {
     <Container size="lg">
       <PageHero
         title="Pens"
-        line1="Let our beautiful notebooks harbour"
-        line2="your best and worst ideas."
+        line1="Your handwriting is like a snowflake;"
+        line2="unique."
       />
       <Group spacing={5} mb="md">
         <Button
@@ -77,11 +92,6 @@ export function Pens() {
         >
           Sort by highest price
         </Button>
-        <CategoryFilter
-          products={products}
-          selectedCategories={selectedCategories}
-          setSelectedCategories={setSelectedCategories}
-        />
       </Group>
       <SimpleGrid
         cols={3}
