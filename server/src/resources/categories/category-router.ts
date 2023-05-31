@@ -7,6 +7,6 @@ import {
 const categoryRouter = express
   .Router()
   .get('/api/categories', getAllCategories)
-  .post('/api/products/by-category', getProductsByCategories);
+  .get('/api/products/by-category/:id', getProductsByCategories);
 
 export default categoryRouter;

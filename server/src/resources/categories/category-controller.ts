@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
+import { ProductModel } from '../products/product-model';
 import { categoryModel } from './category-model';
 
 type ObjectId = mongoose.Types.ObjectId;
@@ -21,33 +22,12 @@ export { getAllCategories };
 export { getProductsByCategories };
 
 const getProductsByCategories = async (req: Request, res: Response) => {
-  const categories = req.body.categories;
-
-  if (!Array.isArray(categories)) {
-    return res
-      .status(400)
-      .json({ error: 'Categories is not an array or is not provided.' });
-  }
+  const categoryId = req.params.id;
 
   try {
-    const categoryInstances = await Promise.all(
-      categories.map((category: string) => {
-        return categoryModel.findOne({ name: category }).populate('products');
-      }),
-    );
-
-    const allProducts = categoryInstances.reduce(
-      (products: ObjectId[], categoryInstance) => {
-        if (categoryInstance && categoryInstance.products) {
-          return products.concat([...categoryInstance.products]);
-        } else {
-          return products;
-        }
-      },
-      [],
-    );
-
-    res.status(200).json(allProducts);
+    const products = await ProductModel.find({ categories: categoryId });
+  
+    res.status(200).json(products);
   } catch (error) {
     if (error instanceof Error) {
       res.status(500).json({ error: error.message });

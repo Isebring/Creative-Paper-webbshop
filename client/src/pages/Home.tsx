@@ -42,8 +42,8 @@ function Home() {
 
       const uniqueProducts: Product[] = Array.from(
         new Set(newProducts.map((product: Product) => JSON.stringify(product))),
-        (product) => JSON.parse(product as string), // annotate product as string
-      ) as Product[]; // annotate the whole Array.from() result as Product[]
+        (product) => JSON.parse(product as string),
+      ) as Product[];
 
       const sorted = [...uniqueProducts];
 
