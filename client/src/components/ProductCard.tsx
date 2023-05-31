@@ -76,14 +76,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
                 >
                   {product.title}
                 </Text>
-                <Badge
-                  color="violet"
-                  variant="light"
-                  size="lg"
-                  style={{ fontFamily: 'Poppins, sans-serif' }}
-                >
-                  New!
-                </Badge>
+                {product.stock === 0 ? (
+                  <Badge sx={{ backgroundColor: '#ffdeeb', color: 'black' }}>
+                    {product.stock === 0
+                      ? 'Out of stock'
+                      : `${product.stock} in stock`}
+                  </Badge>
+                ) : (
+                  <Badge>{product.stock} in stock</Badge>
+                )}
               </Group>
               <List
                 style={{ fontFamily: 'Poppins, sans-serif', padding: '0.2rem' }}
@@ -103,6 +104,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
         </Card.Section>
         <Group position="left" mt="md" mb="xs">
           <Button
+            disabled={product.stock === 0}
             variant="light"
             mt="md"
             radius="md"
@@ -110,18 +112,22 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
               fontFamily: 'Poppins, sans-serif',
               backgroundColor: 'black',
               color: 'white',
+              opacity: product.stock === 0 ? 0.5 : 1, // Decrease opacity when disabled
+              cursor: product.stock === 0 ? 'not-allowed' : 'pointer', // Change cursor when disabled
             }}
             onClick={() => {
-              increaseCartQuantity(product._id);
-              notifications.show({
-                icon: <IconShoppingCartPlus />,
-                title: `${product.title}`,
-                message: 'has been added',
-              });
+              if (product.stock > 0) {
+                increaseCartQuantity(product._id);
+                notifications.show({
+                  icon: <IconShoppingCartPlus />,
+                  title: `${product.title}`,
+                  message: 'has been added',
+                });
+              }
             }}
             data-cy="product-buy-button"
           >
-            ADD TO CART
+            {product.stock === 0 ? 'OUT OF STOCK' : 'ADD TO CART'}
           </Button>
           <Link to={link}>
             <Button

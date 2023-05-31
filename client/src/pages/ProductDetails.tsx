@@ -177,6 +177,7 @@ function ProductDetails() {
           </Group>
 
           <Button
+            disabled={product.stock === 0}
             fullWidth
             variant="light"
             mt="md"
@@ -196,6 +197,7 @@ function ProductDetails() {
 
           <Link to="/checkout" style={{ textDecoration: 'none' }}>
             <Button
+              disabled={product.stock === 0}
               fullWidth
               variant="outline"
               mt="md"
