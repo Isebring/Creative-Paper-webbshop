@@ -18,7 +18,7 @@ function AdminProductManagement() {
   return (
     <Container size="xl">
       <Flex direction="column" align="center" mt="xl" mb="sm">
-        <Title align='center'>Product Management</Title>
+        <Title align="center">Product Management</Title>
         <Group position="center">
           <Link to="/admin/products/new" data-cy="admin-add-product">
             <Button

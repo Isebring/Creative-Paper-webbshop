@@ -69,7 +69,10 @@ function MyOrders() {
         <Box mt="lg" style={{ width: '100%' }}>
           <Text fw={700}>Order ID: {order._id}</Text>
           <Text>Shipping Details: {order.deliveryAddress.email}</Text>
-          <Text>Total Items: {order.orderItems.reduce((sum, item) => sum + item.quantity, 0)}</Text>
+          <Text>
+            Total Items:{' '}
+            {order.orderItems.reduce((sum, item) => sum + item.quantity, 0)}
+          </Text>
           <Text>Order Items:</Text>
           {order.orderItems.map((item, index) => (
             <Box key={`${item.product._id}-${index}`}>
@@ -89,38 +92,48 @@ function MyOrders() {
             </Box>
           ))}
           <Text>Order Total: ${order.totalPrice}</Text>
-          <Text>Order Date: {new Date(order.createdAt).toLocaleDateString()}</Text>
+          <Text>
+            Order Date: {new Date(order.createdAt).toLocaleDateString()}
+          </Text>
           <Text>Status:</Text>
           <Text>
             {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
           </Text>
           <Box style={{ width: '350px' }}>
-          <Divider size="lg" mt="lg" mb="lg" />
+            <Divider size="lg" mt="lg" mb="lg" />
           </Box>
-          
         </Box>
       </List.Item>
     ));
 
-  return (
-    isDesktop ? (
-      <Table>
-        <thead>
-          <tr>
-            <th>Order ID</th>
-            <th>Shipping Details</th>
-            <th>Total Items</th>
-            <th>Order Items</th>
-            <th>Order Total</th>
-            <th>Order Date</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>{tableRows}</tbody>
-      </Table>
-    ) : (
-      <List style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%' }}>{listRows}</List>
-    )
+  return isDesktop ? (
+    <Table>
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Shipping Details</th>
+          <th>Total Items</th>
+          <th>Order Items</th>
+          <th>Order Total</th>
+          <th>Order Date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>{tableRows}</tbody>
+    </Table>
+  ) : (
+    <List
+      style={{
+        listStyle: 'none',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+      }}
+    >
+      {listRows}
+    </List>
   );
 }
 
