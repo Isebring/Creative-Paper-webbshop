@@ -136,7 +136,6 @@ export const UserProvider = ({ children }: Props) => {
     try {
       await sendLogoutRequest();
       setUser(null);
-      console.log('User has been signed out');
     } catch (error) {
       console.error('Failed to log out user:', error);
     }
@@ -166,7 +165,6 @@ export const UserProvider = ({ children }: Props) => {
     const response = await fetch('/api/users');
     if (response.ok) {
       const data = await response.json();
-      console.log('fetched users:', data);
       setUsers(data);
     } else {
       throw new Error('Error fetching users');

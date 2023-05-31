@@ -27,7 +27,6 @@ app.use(
 
 // Routes
 app.use(orderRouter);
-// app.use(categoryRouter);
 app.use(imageRouter);
 app.use(productRouter);
 app.use(userRouter);

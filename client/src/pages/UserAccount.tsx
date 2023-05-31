@@ -1,7 +1,7 @@
 import { Container, Title } from '@mantine/core';
 import MyOrders from '../components/MyOrders';
 
-function UserProfile() {
+function UserAccount() {
   return (
     <Container>
       <Title>My Account</Title>
@@ -10,4 +10,4 @@ function UserProfile() {
   );
 }
 
-export default UserProfile;
+export default UserAccount;
