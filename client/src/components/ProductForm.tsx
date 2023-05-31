@@ -28,6 +28,7 @@ const schema = Yup.object().shape({
     .min(2, 'Summary should have at least 2 letters')
     .required('Summary is required'),
   imageId: Yup.string().required('Image is required'),
+  secondImageId: Yup.string().required('Image is required'),
   title: Yup.string()
     .min(2, 'Title should have at least 2 letters')
     .required('Title is required'),
@@ -40,14 +41,14 @@ const schema = Yup.object().shape({
     .strict(),
   stock: Yup.number()
     .min(1, 'You need atleast one in stock...')
-    .required('A product is required'),
+    .required('Stock is required'),
   categories: Yup.array()
-    .of(Yup.string().min(2))
-    .required('At least one category is required'),
+    .of(Yup.string().required().min(1))
+    .required('At least one category is required')
+    .strict(),
 });
 
 function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
-  // const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [categoryData, setCategoryData] = useState<(string | SelectItem)[]>([]);
   const form = useForm<Product>({
@@ -101,7 +102,7 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
         categories: values.categories || [],
       };
 
-      await onSubmit(editedProduct);
+      onSubmit(editedProduct);
 
       form.reset();
       navigate('/admin');
@@ -111,7 +112,10 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
   };
 
   const handleImageUpload = async (file: File) => {
-    if (!file) return;
+    if (!file) {
+      form.setFieldValue('imageId', '');
+      return;
+    }
     const imageData = new FormData();
     imageData.append('file', file);
     const response = await fetch('/api/image', {
@@ -169,6 +173,7 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
           placeholder="https://www.image.com/image1.png"
           // {...form.getInputProps('imageId')}
           onChange={handleImageUpload}
+          error={form.errors.imageId}
           data-cy="product-image"
           errorProps={{ 'data-cy': 'product-image-error' }}
         />
@@ -176,6 +181,7 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
           label="Second Image URL"
           placeholder="https://www.image.com/image2.png"
           onChange={handleSecondImageUpload}
+          error={form.errors.secondImageId}
           // {...form.getInputProps('secondImage')}
           errorProps={{ 'data-cy': 'product-image-error' }}
         />
@@ -214,6 +220,7 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
           label="Categories"
           placeholder="Select categories"
           {...form.getInputProps('categories')}
+          error={form.errors.categories}
           errorProps={{ 'data-cy': 'product-categories-error' }}
         />
 
