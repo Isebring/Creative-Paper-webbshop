@@ -25,6 +25,14 @@ export class NotFoundError extends Error {
   }
 }
 
+export class ConflictError extends Error {
+  statusCode = 409;
+  constructor(message = 'Conflict') {
+    super(message);
+    this.name = 'ConflictError';
+  }
+}
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   console.error(err);
@@ -34,7 +42,8 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   } else if (
     err instanceof BadRequestError ||
     err instanceof UnauthorizedError ||
-    err instanceof NotFoundError
+    err instanceof NotFoundError ||
+    err instanceof ConflictError
   ) {
     res.status(err.statusCode).json(err.message);
   } else if (err instanceof Error) {
