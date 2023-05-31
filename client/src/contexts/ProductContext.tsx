@@ -9,6 +9,7 @@ export interface Product {
   title: string;
   description: string;
   summary: string;
+  stock: number;
   price: number;
   categories: string[];
   rating: number;
