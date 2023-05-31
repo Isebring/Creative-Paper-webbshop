@@ -13,6 +13,7 @@ interface Props {
 
 interface UserContextProps {
   user: User | null;
+  isLoading: boolean;
   users: User[] | null;
   setUsers: (users: User[] | null) => void;
   login: (
@@ -27,6 +28,7 @@ interface UserContextProps {
 
 export const UserContext = createContext<UserContextProps>({
   user: null,
+  isLoading: true,
   users: null,
   setUsers: () => {
     throw new Error('setUsers function not implemented');
@@ -51,11 +53,13 @@ export const UserContext = createContext<UserContextProps>({
 export const UserProvider = ({ children }: Props) => {
   const [user, setUser] = useState<User | null>(null);
   const [users, setUsers] = useState<User[] | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const { user: loggedInUser } = useUserContext();
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        setIsLoading(true);
         const response = await fetch(`/api/users/auth`);
         if (response.ok) {
           const userResponse = await response.json();
@@ -72,6 +76,8 @@ export const UserProvider = ({ children }: Props) => {
       } catch (error) {
         console.error(error);
         setUser(null);
+      } finally {
+        setIsLoading(false); // Set loading state to false once data is loaded
       }
     };
 
@@ -113,6 +119,7 @@ export const UserProvider = ({ children }: Props) => {
         throw new Error('Failed to log in user');
       }
       const user = await response.json();
+      console.log(user);
       setUser({
         _id: user._id,
         email: user.email,
@@ -207,6 +214,7 @@ export const UserProvider = ({ children }: Props) => {
     <UserContext.Provider
       value={{
         user,
+        isLoading,
         users,
         register: RegisterUser,
         login: LogInUser,
