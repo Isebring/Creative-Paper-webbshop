@@ -52,7 +52,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
         shadow="xl"
         withBorder
         data-cy="product"
-        sx={{ backgroundColor: '#F4EEE0' }}
+        sx={{
+          backgroundColor: '#F4EEE0',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+        }}
       >
         <Card.Section>
           <Link to={link} style={{ textDecoration: 'none', color: 'inherit' }}>
@@ -76,14 +81,25 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
                 >
                   {product.title}
                 </Text>
-                <Badge
-                  color="violet"
-                  variant="light"
-                  size="lg"
-                  style={{ fontFamily: 'Poppins, sans-serif' }}
-                >
-                  New!
-                </Badge>
+                {product.stock > 0 ? (
+                  <Badge
+                    color="violet"
+                    variant="light"
+                    size="lg"
+                    style={{ fontFamily: 'Poppins, sans-serif' }}
+                  >
+                    {product.stock} in stock
+                  </Badge>
+                ) : (
+                  <Badge
+                    color="red"
+                    variant="light"
+                    size="lg"
+                    style={{ fontFamily: 'Poppins, sans-serif' }}
+                  >
+                    Out of Stock
+                  </Badge>
+                )}
               </Group>
               <List
                 style={{ fontFamily: 'Poppins, sans-serif', padding: '0.2rem' }}
