@@ -216,7 +216,7 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
           label="Categories"
           placeholder="Select categories"
           {...form.getInputProps('categories')}
-          error={form.errors.categories}
+          error={form.errors.categories} // funkar inte
           errorProps={{ 'data-cy': 'product-categories-error' }}
         />
 
