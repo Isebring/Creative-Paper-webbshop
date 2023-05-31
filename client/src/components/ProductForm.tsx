@@ -179,6 +179,7 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
           label="Second Image"
           placeholder="https://www.image.com/image2.png"
           onChange={handleSecondImageUpload}
+          error={form.errors.secondImageId}
           errorProps={{ 'data-cy': 'product-image-error' }}
         />
         <TextInput
