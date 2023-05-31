@@ -8,6 +8,7 @@ import {
   rem,
   TextInput,
   Title,
+  useMantineColorScheme,
 } from '@mantine/core';
 import {
   IconBrandInstagram,
@@ -92,6 +93,7 @@ interface FooterCenteredProps {
 }
 
 export function FooterCentered({ links }: FooterCenteredProps) {
+  const { colorScheme } = useMantineColorScheme();
   const { classes } = useStyles();
   const items = links.map((link) => (
     <Anchor<'a'>
@@ -120,8 +122,11 @@ export function FooterCentered({ links }: FooterCenteredProps) {
               placeholder="Enter your email"
             />
             <Button
+              sx={{
+                borderColor: colorScheme === 'dark' ? '#ADB5BD' : '#000',
+                color: colorScheme === 'dark' ? '#ADB5BD' : '#000',
+              }}
               variant="outline"
-              sx={{ border: '1px solid black', color: 'black' }}
             >
               Sign up
             </Button>
