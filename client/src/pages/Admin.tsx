@@ -7,6 +7,7 @@ import { AdminUserControl } from '../components/AdminUserControl';
 function Admin() {
   const theme = useMantineTheme();
   const [selectedComponent, setSelectedComponent] = useState('component1');
+
   return (
     <Container
       size="xl"

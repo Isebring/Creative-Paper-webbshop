@@ -5,6 +5,7 @@ import {
   Route,
 } from 'react-router-dom';
 import App from './App';
+import Protected from './components/Protected';
 import './index.css';
 import { Accessories } from './pages/Accessories';
 import Admin from './pages/Admin';
@@ -20,7 +21,7 @@ import { Notebooks } from './pages/Notebooks';
 import { Pens } from './pages/Pens';
 import ProductDetails from './pages/ProductDetails';
 import SignIn from './pages/SignIn';
-import UserProfile from './pages/UserProfile';
+import UserAccount from './pages/UserAccount';
 import Root from './root';
 
 export const router = createBrowserRouter(
@@ -34,14 +35,21 @@ export const router = createBrowserRouter(
       <Route path="/accessories" element={<Accessories />} />
       <Route path="/products/:_id" element={<ProductDetails />} />
       <Route path="/checkout" element={<Cart />} />
-      <Route path="/admin" element={<Admin />} />
+      <Route
+        path="/admin"
+        element={
+          <Protected>
+            <Admin />
+          </Protected>
+        }
+      />
       <Route path="/admin/products/:id" element={<EditProduct />} />
       {/* <Route path="/admin/products/:_id/edit" element={<EditProduct />} /> */}
       <Route path="/admin/products/new" element={<NewProduct />} />
       <Route path="/confirmation" element={<Confirmation />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/createaccount" element={<CreateAccount />} />
-      <Route path="/account" element={<UserProfile />} />
+      <Route path="/my-account" element={<UserAccount />} />
     </Route>,
   ),
 );
