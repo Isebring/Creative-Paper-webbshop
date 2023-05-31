@@ -279,7 +279,7 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
                       bottom: 0,
                       right: 0,
                       display: 'flex',
-                      transform: 'translate(-40%, -230%)',
+                      transform: 'translate(-20%, -290%)',
                       justifyContent: 'center',
                       alignItems: 'center',
                     }}
