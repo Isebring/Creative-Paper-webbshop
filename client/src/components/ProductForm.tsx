@@ -157,7 +157,7 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
         <TextInput
           withAsterisk
           label="Title"
-          placeholder="ComputerBook 2000"
+          placeholder="The Title of the product"
           {...form.getInputProps('title')}
           data-cy="product-title"
           errorProps={{ 'data-cy': 'product-title-error' }}
