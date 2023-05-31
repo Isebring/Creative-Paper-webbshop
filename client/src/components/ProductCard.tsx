@@ -6,6 +6,7 @@ import {
   Group,
   Image,
   List,
+  Text,
   Title,
   useMantineTheme,
 } from '@mantine/core';
@@ -47,13 +48,19 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
 
   return (
     <>
-      <Card shadow="xl" withBorder data-cy="product">
+      <Card
+        shadow="xl"
+        withBorder
+        data-cy="product"
+        sx={{ backgroundColor: '#F4EEE0' }}
+      >
         <Card.Section>
           <Link to={link} style={{ textDecoration: 'none', color: 'inherit' }}>
             <Image
               src={'/api/image/' + product.imageId}
               height={300}
               fit="cover"
+              sx={{ backgroundColor: 'white' }}
             />
             <Box pl="md" pr="md">
               <Group
@@ -61,9 +68,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
                 mb="xl"
                 style={{ display: 'flex', justifyContent: 'space-between' }}
               >
-                <Title order={2} data-cy="product-title">
+                <Text
+                  weight={500}
+                  size={29}
+                  // transform="uppercase"
+                  data-cy="product-title"
+                >
                   {product.title}
-                </Title>
+                </Text>
                 <Badge
                   color="violet"
                   variant="light"
@@ -73,7 +85,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
                   New!
                 </Badge>
               </Group>
-              <List style={{ fontFamily: 'Poppins, sans-serif' }}>
+              <List
+                style={{ fontFamily: 'Poppins, sans-serif', padding: '0.2rem' }}
+              >
                 {product.summary &&
                   product.summary
                     .split(',')
@@ -131,11 +145,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
             style={{
               marginLeft: 'auto',
               marginTop: '.5rem',
-              fontFamily: 'Poppins, sans-serif',
+              // fontFamily: 'Poppins, sans-serif',
             }}
             order={2}
             align="left"
             data-cy="product-price"
+            weight={500}
           >
             ${product?.price}
           </Title>

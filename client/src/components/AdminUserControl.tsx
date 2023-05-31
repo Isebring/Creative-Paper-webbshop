@@ -18,12 +18,7 @@ export function AdminUserControl() {
     await updateUserRole(userId, isAdmin);
   };
 
-  // const sortedUsers = users?.sort((a, b) => {
-  //   return a.email.localeCompare(b.email);
-  // });
-
   useEffect(() => {
-    console.log('Calling getAllUsers...');
     getAllUsers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

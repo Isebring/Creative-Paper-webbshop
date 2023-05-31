@@ -38,6 +38,9 @@ const schema = Yup.object().shape({
     .min(1, 'Nothing is this cheap...')
     .required('Price is required')
     .strict(),
+  stock: Yup.number()
+    .min(1, 'You need atleast one in stock...')
+    .required('A product is required'),
   categories: Yup.array()
     .of(Yup.string().min(2))
     .required('At least one category is required'),
@@ -58,6 +61,7 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
       price: '' as never,
       secondImageId: '',
       summary: '' as never,
+      stock: '' as never,
       rating: 0,
       usersRated: 0,
       categories: isEditing && product ? product.categories : [],
@@ -161,7 +165,7 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
         />
         <FileInput
           withAsterisk
-          label="Image URL"
+          label="Image"
           placeholder="https://www.image.com/image1.png"
           // {...form.getInputProps('imageId')}
           onChange={handleImageUpload}
@@ -169,7 +173,7 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
           errorProps={{ 'data-cy': 'product-image-error' }}
         />
         <FileInput
-          label="Second Image URL"
+          label="Second Image"
           placeholder="https://www.image.com/image2.png"
           onChange={handleSecondImageUpload}
           // {...form.getInputProps('secondImage')}
@@ -188,6 +192,12 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
           placeholder="Separate summaries with a comma"
           {...form.getInputProps('summary')}
           errorProps={{ 'data-cy': 'product-summary-error' }}
+        />
+        <TextInput
+          label="Stock"
+          placeholder="Amount of products in stock"
+          {...form.getInputProps('stock')}
+          errorProps={{ 'data-cy': 'product-stock-error' }}
         />
         <TextInput
           withAsterisk

@@ -1,4 +1,12 @@
-import { Card, Container, Divider, List, Text, Title } from '@mantine/core';
+import {
+  Card,
+  Container,
+  Divider,
+  Image,
+  List,
+  Text,
+  Title,
+} from '@mantine/core';
 import { useContext } from 'react';
 import { ShoppingCartContext } from '../contexts/ShoppingCartContext';
 
@@ -46,12 +54,12 @@ function Confirmation() {
                 {orderItem.product.title} - ${orderItem.product.price} -
                 Quantity:
                 {orderItem.quantity}
-                {/* <Image
-      src={orderItem.product.image}
-      height={150}
-      width={220}
-      fit="cover"
-    /> */}
+                <Image
+                  src={'/api/image/' + orderItem.product.imageId}
+                  height={150}
+                  width={220}
+                  fit="cover"
+                />
               </List.Item>
             ))}
           </List>

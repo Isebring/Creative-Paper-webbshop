@@ -71,15 +71,29 @@ export async function createOrder(req: Request, res: Response) {
     if (!product) {
       throw new NotFoundError('Product not found');
     }
+
+    // Update the product stock
+    if (product.stock >= item.quantity) {
+      await ProductModel.updateOne(
+        { _id: product._id },
+        { $inc: { stock: -item.quantity } },
+      );
+      product.stock -= item.quantity;
+    } else {
+      throw new BadRequestError(
+        `Not enough stock for product: ${product.title}`,
+      );
+    }
     const totalItemPrice = product.price * item.quantity;
     orderItems.push({
       product: {
         _id: product._id,
         title: product.title,
+        imageId: product.imageId,
         price: product.price,
       },
       quantity: item.quantity,
-      price: totalItemPrice, // price here is total price for this item
+      price: totalItemPrice,
     });
     totalPrice += totalItemPrice;
   }

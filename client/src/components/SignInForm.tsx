@@ -25,7 +25,6 @@ function SignInForm() {
   });
 
   const handleSubmit = async (values: { email: string; password: string }) => {
-    console.log(form.values.email, 'Signed in! :)');
     try {
       await login(values.email, values.password);
       form.reset();

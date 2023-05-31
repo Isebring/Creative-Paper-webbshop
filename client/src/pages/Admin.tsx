@@ -9,6 +9,7 @@ function Admin() {
   const theme = useMantineTheme();
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [selectedComponent, setSelectedComponent] = useState('component1');
+
   return (
     <Container
       size="xl"

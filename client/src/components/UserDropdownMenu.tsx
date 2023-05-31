@@ -13,7 +13,7 @@ import { useUserContext } from '../contexts/UseUserContext';
 function UserDropdownMenu() {
   const { logout, user } = useUserContext();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false); // Add state for admin
+  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,7 +25,6 @@ function UserDropdownMenu() {
     try {
       await logout();
       navigate('/');
-      console.log('User has been signed out :)');
     } catch (error) {
       console.error(error);
     }
@@ -49,7 +48,10 @@ function UserDropdownMenu() {
               <>
                 <Menu.Item
                   icon={<IconUserShield size={14} />}
-                  onClick={() => navigate('/admin')}
+                  onClick={() => {
+                    window.scrollTo(0, 0);
+                    navigate('/admin');
+                  }}
                 >
                   Admin
                 </Menu.Item>
@@ -57,7 +59,7 @@ function UserDropdownMenu() {
             ) : null}
             <Menu.Item
               icon={<IconUser size={14} />}
-              onClick={() => navigate('/account')}
+              onClick={() => navigate('/my-account')}
             >
               My account
             </Menu.Item>
