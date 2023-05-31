@@ -145,11 +145,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
             style={{
               marginLeft: 'auto',
               marginTop: '.5rem',
-              fontFamily: 'Poppins, sans-serif',
+              // fontFamily: 'Poppins, sans-serif',
             }}
             order={2}
             align="left"
             data-cy="product-price"
+            weight={500}
           >
             ${product?.price}
           </Title>
