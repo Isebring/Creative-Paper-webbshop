@@ -294,7 +294,7 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
                       transform: 'translate(-20%, -290%)',
                       justifyContent: 'center',
                       alignItems: 'center',
-                      marginBottom: '0.5rem',
+                      marginBottom: '0.4rem',
                       marginRight: '0.7rem',
                     }}
                     data-cy="cart-items-count-badge"
