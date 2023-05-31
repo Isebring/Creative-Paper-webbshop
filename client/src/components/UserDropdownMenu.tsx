@@ -1,4 +1,4 @@
-import { Button, Menu, Text } from '@mantine/core';
+import { Menu, Text } from '@mantine/core';
 import {
   IconLogin,
   IconLogout,
@@ -34,9 +34,7 @@ function UserDropdownMenu() {
   return (
     <Menu shadow="md" width={200}>
       <Menu.Target>
-        <Button size="xs" variant="subtle" radius="xl">
-          <IconUserCircle size="1.8rem" stroke="1.3" />
-        </Button>
+        <IconUserCircle size="1.8rem" stroke="1.3" cursor="pointer" />
       </Menu.Target>
 
       <Menu.Dropdown>
