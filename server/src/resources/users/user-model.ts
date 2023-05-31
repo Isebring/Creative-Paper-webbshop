@@ -27,11 +27,13 @@ const userSchema = new Schema(
 );
 
 userSchema.pre('save', async function (next) {
-  // kryptera lösenordet
-  this.password = await argon2.hash(this.password, {
-    memoryCost: 1024,
-    timeCost: 2,
-  });
+  if (this.isModified('password')) {
+    // Hash the password
+    this.password = await argon2.hash(this.password, {
+      memoryCost: 1024,
+      timeCost: 2,
+    });
+  }
   next();
 });
 
