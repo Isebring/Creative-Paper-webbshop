@@ -76,6 +76,7 @@ export async function createOrder(req: Request, res: Response) {
       product: {
         _id: product._id,
         title: product.title,
+        imageId: product.imageId,
         price: product.price,
       },
       quantity: item.quantity,
