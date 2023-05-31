@@ -2,12 +2,10 @@ import {
   ActionIcon,
   Box,
   Burger,
-  Button,
-  Container,
   createStyles,
+  Flex,
   Group,
   Header,
-  MediaQuery,
   Paper,
   rem,
   Transition,
@@ -107,6 +105,11 @@ const useStyles = createStyles((theme) => ({
         .color,
     },
   },
+
+  iconsStyle: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
 }));
 export interface HeaderResponsiveProps {
   links: { link: string; label: string }[];
@@ -199,12 +202,11 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
         color={dark ? 'gray' : 'violet'}
         onClick={handleToggle}
         title="Toggle color scheme"
-        sx={{ marginRight: '1rem' }}
       >
         {dark ? (
-          <IconSunHigh size="1.3rem" stroke="1.6" />
+          <IconSunHigh size="1.3rem" stroke="1.3" />
         ) : (
-          <IconMoonStars size="1.3rem" stroke="1.6" />
+          <IconMoonStars size="1.3rem" stroke="1.3" />
         )}
       </ActionIcon>
     );
@@ -226,32 +228,45 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
         ref={headerRef}
         className={classes.root}
       >
-        <Container sx={{ maxWidth: 'none' }} className={classes.header}>
-          <MediaQuery
-            query="(max-width: 460px)"
-            styles={{
-              img: {
-                width: '6rem',
-                height: '6rem',
-              },
-            }}
-          >
-            <Link to="./" onClick={handleLinkClick}>
-              <Group spacing={1}>{logo}</Group>
-            </Link>
-          </MediaQuery>
-          <Group spacing={1} sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Flex justify="space-between" className={classes.header}>
+          <Group spacing={1}>
+            <Box w="6.5rem">
+              <Burger
+                opened={opened}
+                onClick={toggle}
+                className={classes.burger}
+                size="md"
+                ml="1rem"
+              />
+            </Box>
+          </Group>
+
+          <Link to="./" onClick={handleLinkClick}>
+            <Flex justify="center" align="center">
+              {logo}
+            </Flex>
+          </Link>
+
+          <Flex gap={7} justify="space-between" mr="0.5rem">
             <ToggleDarkAndLightMode />
-            <UserDropdownMenu />
+            <Box
+              style={{ color: colorScheme === 'dark' ? '#ADB5BD' : '#845EF7' }}
+            >
+              <UserDropdownMenu />
+            </Box>
             <Link to="/checkout">
-              <Button
+              <Box
                 onClick={handleLinkClick}
-                size="xs"
-                variant="subtle"
                 data-cy="cart-link"
-                radius="xl"
+                style={{
+                  color: colorScheme === 'dark' ? '#ADB5BD' : '#845EF7',
+                }}
               >
-                <IconShoppingCart size="1.8rem" stroke="1.2" />
+                <IconShoppingCart
+                  onClick={handleLinkClick}
+                  size="1.8rem"
+                  stroke="1.2"
+                />
                 {cartQuantity > 0 && (
                   <Box
                     sx={{
@@ -264,7 +279,7 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
                       bottom: 0,
                       right: 0,
                       display: 'flex',
-                      transform: 'translate(-30%, -95%)',
+                      transform: 'translate(-40%, -230%)',
                       justifyContent: 'center',
                       alignItems: 'center',
                     }}
@@ -273,27 +288,18 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
                     {cartQuantity}
                   </Box>
                 )}
-              </Button>
+              </Box>
             </Link>
-          </Group>
-          <Burger
-            opened={opened}
-            onClick={toggle}
-            className={classes.burger}
-            size="sm"
-          />
-          <Transition
-            transition="pop-top-right"
-            duration={200}
-            mounted={opened}
-          >
-            {(styles) => (
-              <Paper className={classes.dropdown} withBorder style={styles}>
-                {items}
-              </Paper>
-            )}
-          </Transition>
-        </Container>
+          </Flex>
+        </Flex>
+
+        <Transition transition="pop-top-right" duration={200} mounted={opened}>
+          {(styles) => (
+            <Paper className={classes.dropdown} withBorder style={styles}>
+              {items}
+            </Paper>
+          )}
+        </Transition>
       </Header>
 
       {isDesktop && (
