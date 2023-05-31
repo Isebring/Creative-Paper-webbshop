@@ -145,7 +145,7 @@ function AdminOrders() {
 
   return isDesktop ? (
     <Container size="xl">
-      <Title mt="1.5rem" align="center">
+      <Title mt="1.5rem" align="center" sx={{ marginBottom: '1rem' }}>
         Order Management
       </Title>
       <Table>
