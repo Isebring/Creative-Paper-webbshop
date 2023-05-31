@@ -8,12 +8,14 @@ import {
   Table,
   Text,
   Title,
+  useMantineTheme,
 } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { useEffect, useState } from 'react';
 import { useOrderContext } from '../contexts/UseOrderContext';
 
 function AdminOrders() {
+  const theme = useMantineTheme();
   const { getAllOrders, orders, updateOrderStatus } = useOrderContext();
   const isDesktop = useMediaQuery('(min-width: 1024px)');
   const [localStatuses, setLocalStatuses] = useState<{
@@ -175,7 +177,7 @@ function AdminOrders() {
       </Title>
       <Table>
         <thead>
-          <tr>
+          <tr style={{ backgroundColor: theme.colors.violet[0] }}>
             <th>Order ID</th>
             <th>Shipping Details</th>
             <th>Total Items</th>
