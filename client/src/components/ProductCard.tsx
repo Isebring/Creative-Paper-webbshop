@@ -6,6 +6,7 @@ import {
   Group,
   Image,
   List,
+  Text,
   Title,
   useMantineTheme,
 } from '@mantine/core';
@@ -67,9 +68,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
                 mb="xl"
                 style={{ display: 'flex', justifyContent: 'space-between' }}
               >
-                <Title order={2} data-cy="product-title">
+                <Text
+                  weight={500}
+                  size={29}
+                  // transform="uppercase"
+                  data-cy="product-title"
+                >
                   {product.title}
-                </Title>
+                </Text>
                 <Badge
                   color="violet"
                   variant="light"
