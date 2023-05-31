@@ -22,7 +22,7 @@ import { Link } from 'react-router-dom';
 import { useShoppingCart } from '../contexts/UseShoppingCartContext';
 import UserDropdownMenu from './UserDropdownMenu';
 
-const HEADER_HEIGHT = rem(70);
+const HEADER_HEIGHT = rem(90);
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -134,14 +134,14 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
   const logo =
     logoType === 'dark' ? (
       <img
-        style={{ width: '80%' }}
-        src="/assets/logoCreative.svg"
+        style={{ width: '50%', marginTop: '0.5rem', marginBottom: '0.5rem' }}
+        src="/assets/logo.svg"
         alt="Creative Paper logo"
       />
     ) : (
       <img
-        style={{ width: '80%' }}
-        src="/assets/logoCreativeLight.svg"
+        style={{ width: '50%', marginTop: '0.5rem', marginBottom: '0.5rem' }}
+        src="/assets/logolight.svg"
         alt="Creative Paper logo"
       />
     );
@@ -279,7 +279,7 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
                       bottom: 0,
                       right: 0,
                       display: 'flex',
-                      transform: 'translate(-40%, -230%)',
+                      transform: 'translate(-20%, -290%)',
                       justifyContent: 'center',
                       alignItems: 'center',
                     }}

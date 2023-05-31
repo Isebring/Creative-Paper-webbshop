@@ -165,7 +165,7 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
         />
         <FileInput
           withAsterisk
-          label="Image URL"
+          label="Image"
           placeholder="https://www.image.com/image1.png"
           // {...form.getInputProps('imageId')}
           onChange={handleImageUpload}
@@ -173,7 +173,7 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
           errorProps={{ 'data-cy': 'product-image-error' }}
         />
         <FileInput
-          label="Second Image URL"
+          label="Second Image"
           placeholder="https://www.image.com/image2.png"
           onChange={handleSecondImageUpload}
           // {...form.getInputProps('secondImage')}
