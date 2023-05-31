@@ -1,45 +1,50 @@
 # <img src="./client/public/assets/logoCreative.svg" width="100rem"/>
 
 # Creative Paper
-
+Creative Paper has a wide selection of notebooks, writing instruments, professionally bound journals, and sophisticated desktop accessories.
 ## A webshop
 
-This is a webshop where we have created both the frontend and backend application. The webshop sells stationery, such as notebooks, pens, journals and desktop accessories.
+This is a webshop where we have created both the frontend and backend application and connected the application to a database.
 
 ## About the code
 
-- **Frontend stack:** React, Typescript, Mantine
+- **Frontend stack:** React, Typescript, Mantine UI
 - **Backend stack:** MongoDB, Express
 
 <br>
 
 ### Contributors:
 
-- [Jesper Lindström](https://github.com/Jesper-Lindstrom)
 - [Lisa Marie Andersson](https://github.com/lisamarieandersson)
-- [Hampus Isebring](https://github.com/Isebring)
-- [Caisa Köhlin](https://github.com/caisak)
 - [Moa Hedendahl](https://github.com/moamoa07)
+- [Hampus Isebring](https://github.com/Isebring)
+- [Jesper Lindström](https://github.com/Jesper-Lindstrom)
+- [Caisa Köhlin](https://github.com/caisak)
+
 
 <br>
 
 ### How to build the project:
+To start this project you need two terminals, one server and one client. Start the server terminal first, otherwise you may get a proxy error.
 
-Run these commands in the terminal:
 
-**For client**
+**For server**
+Open a terminal and run these commands:
 
-- `cd client`
-- `npm install`
-- `npm run dev`
+* `cd server`
+* `npm install`
+* `npm run dev`
 
   <br>
 
-**For server**
+**For client**
+Open a second terminal and run these commands:
+* `cd client`
+* `npm install`
+* `npm run dev`
 
-- `cd server`
-- `npm install`
-- `npm run dev`
+
+
 
 ## G-Krav
 
