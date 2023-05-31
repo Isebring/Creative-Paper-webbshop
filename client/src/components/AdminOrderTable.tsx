@@ -103,9 +103,6 @@ function AdminOrders() {
     Array.isArray(orders) &&
     orders.map((order) => (
       <List.Item key={order._id}>
-        <Title mt="1.5rem" mb="1rem" align="center">
-          Order Management
-        </Title>
         <Box style={{ width: '100%' }}>
           <Text fw={700}>Order ID:</Text>
           <Text>{order._id}</Text>
@@ -191,7 +188,16 @@ function AdminOrders() {
       </Table>
     </Container>
   ) : (
-    <List style={{ listStyle: 'none' }}>{listRows}</List>
+    <Container size="xl">
+      <List style={{ listStyle: 'none' }}>
+        <List.Item>
+          <Title align="center" sx={{ marginBottom: '1rem' }}>
+            Order Management
+          </Title>
+        </List.Item>
+        {listRows}
+      </List>
+    </Container>
   );
 }
 
