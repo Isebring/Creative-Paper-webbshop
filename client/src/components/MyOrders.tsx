@@ -1,4 +1,4 @@
-import { Box, Divider, List, Table, Text } from '@mantine/core';
+import { Box, Divider, List, Table, Text, Image } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { useEffect } from 'react';
 import { useOrderContext } from '../contexts/UseOrderContext';
@@ -79,6 +79,11 @@ function MyOrders() {
               <Text>Title: {item.product.title}</Text>
               <Text>Price per item: ${item.product.price}</Text>
               <Text>Quantity: {item.quantity}</Text>
+              <Image
+                src={'/api/image/' + item.product.imageId}
+                width={100}
+                fit="cover"
+              />
               <Text>Total price: ${item.price}</Text>
               <Divider my="sm" variant="dotted" />
             </Box>
