@@ -47,13 +47,19 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
 
   return (
     <>
-      <Card shadow="xl" withBorder data-cy="product">
+      <Card
+        shadow="xl"
+        withBorder
+        data-cy="product"
+        sx={{ backgroundColor: '#F4EEE0' }}
+      >
         <Card.Section>
           <Link to={link} style={{ textDecoration: 'none', color: 'inherit' }}>
             <Image
               src={'/api/image/' + product.imageId}
               height={300}
               fit="cover"
+              sx={{ backgroundColor: 'white' }}
             />
             <Box pl="md" pr="md">
               <Group
