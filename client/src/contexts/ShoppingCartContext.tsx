@@ -93,7 +93,6 @@ function ShoppingCartProvider({ children }: Props) {
     cartItems: CartItem[],
     formData: FormValues,
   ): Promise<Order | null> => {
-    console.log('Current Order ID (before setting):', currentOrderId);
     const orderItems = cartItems.map((item) => ({
       product: item._id,
       quantity: item.quantity,
@@ -118,7 +117,6 @@ function ShoppingCartProvider({ children }: Props) {
       }
 
       const responseData = await response.json();
-      console.log('Order created!!!!!: ');
       const order: Order = responseData.data; // Assuming the order ID is present in the "data" field of the response
       const orderId = order._id; // Extract the order ID from the response
       setCurrentOrderId(orderId);
