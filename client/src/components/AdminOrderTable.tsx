@@ -139,7 +139,7 @@ function AdminOrders() {
           </Text>
           <Divider my="sm" variant="dotted" />
           <Text>Status:</Text>
-          <Box style={{ width: '350px' }}>
+          <Box style={{ width: '100%' }}>
             <Select
               value={localStatuses[order._id] || order.status}
               onChange={(value) => {
