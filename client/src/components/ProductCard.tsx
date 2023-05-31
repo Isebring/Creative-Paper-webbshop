@@ -9,7 +9,6 @@ import {
   Text,
   Title,
   useMantineColorScheme,
-  useMantineTheme,
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IconShoppingCartPlus } from '@tabler/icons-react';
@@ -27,7 +26,6 @@ type ProductCardProps = {
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
-  const theme = useMantineTheme();
   const { increaseCartQuantity } = useShoppingCart();
   const { products } = useProductContext();
   const { colorScheme } = useMantineColorScheme();

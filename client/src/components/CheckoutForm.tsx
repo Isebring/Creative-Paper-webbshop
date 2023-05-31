@@ -1,8 +1,17 @@
-import { Box, Button, Group, TextInput, Title } from '@mantine/core';
+import {
+  Box,
+  Button,
+  Group,
+  Notification,
+  TextInput,
+  Title,
+} from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
-import { useState } from 'react';
+import { IconX } from '@tabler/icons-react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router';
 import * as Yup from 'yup';
+import { ProductContext } from '../contexts/ProductContext';
 import { useShoppingCart } from '../contexts/UseShoppingCartContext';
 import { useUser } from '../contexts/UseUserContext';
 import OrderModal from './OrderModal';
@@ -46,8 +55,30 @@ function CheckoutForm() {
   const { createOrder, cartItems } = useShoppingCart();
   const [showModal, setShowModal] = useState(false);
   const user = useUser();
+  const { getProductById } = useContext(ProductContext);
+  const [showNotification, setShowNotification] = useState(false);
+  const [invalidItems, setInvalidItems] = useState<unknown[]>([]);
+
+  function closeNotification() {
+    setShowNotification(false);
+  }
 
   const onSubmit = async (data: FormValues) => {
+    const newInvalidItems = [];
+
+    for (const item of cartItems) {
+      const product = await getProductById(item._id);
+      if (product && item.quantity > product.stock) {
+        newInvalidItems.push(item);
+      }
+    }
+
+    setInvalidItems(newInvalidItems);
+
+    if (newInvalidItems.length > 0) {
+      setShowNotification(true);
+      return;
+    }
     if (user) {
       try {
         const order = await createOrder(cartItems, data);
@@ -93,6 +124,15 @@ function CheckoutForm() {
       <Title mb="sm" order={3}>
         Your details
       </Title>
+      {showNotification && (
+        <Notification
+          onClose={closeNotification}
+          icon={<IconX size="1.1rem" />}
+          color="red"
+        >
+          {`Sorry, you have added more products than the current stock for ${invalidItems.length} item(s).`}
+        </Notification>
+      )}
       <form onSubmit={form.onSubmit(onSubmit)} data-cy="customer-form">
         <TextInput
           autoComplete="name"
