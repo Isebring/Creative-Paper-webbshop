@@ -4,7 +4,7 @@ import MyOrders from '../components/MyOrders';
 function UserProfile() {
   return (
     <Container>
-      <Title>My Account</Title>
+      <Title align='center'>My Account</Title>
       <MyOrders />
     </Container>
   );

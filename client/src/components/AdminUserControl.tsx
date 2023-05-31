@@ -37,7 +37,7 @@ export function AdminUserControl() {
           alignItems: 'center',
         }}
       >
-        <Title>User management</Title>
+        <Title mt="1.5rem">User management</Title>
         {users &&
           users.map((user: User) => (
             <MediaQuery

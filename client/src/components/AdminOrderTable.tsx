@@ -1,4 +1,4 @@
-import { Box, Divider, List, Select, Table, Text, useMantineColorScheme } from '@mantine/core';
+import { Box, Container, Divider, List, Select, Table, Text, Title } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { useEffect, useState } from 'react';
 import { useOrderContext } from '../contexts/UseOrderContext';
@@ -84,6 +84,7 @@ function AdminOrders() {
     Array.isArray(orders) &&
     orders.map((order) => (
       <List.Item key={order._id}>
+        <Title mt="1.5rem" mb="1rem">Order Management</Title>
         <Box style={{ width: '100%' }}>
           <Text fw={700}>Order ID: {order._id}</Text>
           <Text>Shipping Details: {order.deliveryAddress.email}</Text>
@@ -125,6 +126,8 @@ function AdminOrders() {
 
   return (
     isDesktop ? (
+      <Container size="xl">
+        <Title mt="1.5rem" align='center'>Order Management</Title>
       <Table>
         <thead>
           <tr>
@@ -139,6 +142,7 @@ function AdminOrders() {
         </thead>
         <tbody>{tableRows}</tbody>
       </Table>
+      </Container>
     ) : (
       <List style={{ listStyle: 'none', }}>{listRows}</List>
     )
