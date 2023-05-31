@@ -3,6 +3,7 @@ import {
   Container,
   Divider,
   List,
+  Loader,
   Select,
   Table,
   Text,
@@ -18,6 +19,7 @@ function AdminOrders() {
   const [localStatuses, setLocalStatuses] = useState<{
     [key: string]: 'in progress' | 'shipped';
   }>({});
+  const [isLoading, setIsLoading] = useState(true);
 
   const updateLocalStatus = (
     _id: string,
@@ -30,7 +32,15 @@ function AdminOrders() {
   };
 
   useEffect(() => {
-    getAllOrders();
+    const fetchData = async () => {
+      try {
+        await getAllOrders();
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -142,6 +152,10 @@ function AdminOrders() {
         </Box>
       </List.Item>
     ));
+
+  if (isLoading) {
+    return <Loader color="violet" />;
+  }
 
   return isDesktop ? (
     <Container size="xl">
