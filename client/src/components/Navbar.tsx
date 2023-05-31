@@ -148,7 +148,12 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
 
   const items = links.map((link, index) => (
     <ul
-      style={{ marginLeft: '1rem', marginRight: '1rem', paddingLeft: '0' }}
+      style={{
+        marginLeft: '1rem',
+        marginRight: '1rem',
+        paddingLeft: '0',
+        textAlign: 'center',
+      }}
       key={index}
     >
       <Link
@@ -306,7 +311,15 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
       </Header>
 
       {isDesktop && (
-        <Box style={{ display: 'flex', justifyContent: 'center' }}>{items}</Box>
+        <Box
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          {items}
+        </Box>
       )}
     </>
   );
