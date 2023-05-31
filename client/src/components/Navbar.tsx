@@ -295,7 +295,6 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
                       justifyContent: 'center',
                       alignItems: 'center',
                       marginBottom: '0.5rem',
-                      marginRight: '0.7rem',
                     }}
                     data-cy="cart-items-count-badge"
                   >
