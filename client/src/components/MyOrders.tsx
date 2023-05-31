@@ -1,16 +1,18 @@
-import { Box, Divider, Image, Table, Text } from '@mantine/core';
+import { Box, Divider, List, Table, Text, Image } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 import { useEffect } from 'react';
 import { useOrderContext } from '../contexts/UseOrderContext';
 
 function MyOrders() {
   const { getOrdersByUser, orders } = useOrderContext();
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
 
   useEffect(() => {
     getOrdersByUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const rows =
+  const tableRows =
     Array.isArray(orders) &&
     orders.map((order) => (
       <tr key={order._id}>
@@ -60,7 +62,51 @@ function MyOrders() {
       </tr>
     ));
 
-  return (
+  const listRows =
+    Array.isArray(orders) &&
+    orders.map((order) => (
+      <List.Item key={order._id}>
+        <Box mt="lg" style={{ width: '100%' }}>
+          <Text fw={700}>Order ID: {order._id}</Text>
+          <Text>Shipping Details: {order.deliveryAddress.email}</Text>
+          <Text>
+            Total Items:{' '}
+            {order.orderItems.reduce((sum, item) => sum + item.quantity, 0)}
+          </Text>
+          <Text>Order Items:</Text>
+          {order.orderItems.map((item, index) => (
+            <Box key={`${item.product._id}-${index}`}>
+              <Text>
+                Product <Text fw={700}>{item.product._id}</Text>
+              </Text>
+              <Text>Title: {item.product.title}</Text>
+              <Text>Price per item: ${item.product.price}</Text>
+              <Text>Quantity: {item.quantity}</Text>
+              <Image
+                src={'/api/image/' + item.product.imageId}
+                width={100}
+                fit="cover"
+              />
+              <Text>Total price: ${item.price}</Text>
+              <Divider my="sm" variant="dotted" />
+            </Box>
+          ))}
+          <Text>Order Total: ${order.totalPrice}</Text>
+          <Text>
+            Order Date: {new Date(order.createdAt).toLocaleDateString()}
+          </Text>
+          <Text>Status:</Text>
+          <Text>
+            {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+          </Text>
+          <Box style={{ width: '350px' }}>
+            <Divider size="lg" mt="lg" mb="lg" />
+          </Box>
+        </Box>
+      </List.Item>
+    ));
+
+  return isDesktop ? (
     <Table>
       <thead>
         <tr>
@@ -73,8 +119,21 @@ function MyOrders() {
           <th>Status</th>
         </tr>
       </thead>
-      <tbody>{rows}</tbody>
+      <tbody>{tableRows}</tbody>
     </Table>
+  ) : (
+    <List
+      style={{
+        listStyle: 'none',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+      }}
+    >
+      {listRows}
+    </List>
   );
 }
 
