@@ -4,7 +4,7 @@ export const productValidationSchema = yup.object({
   title: yup.string().trim().min(2).required(),
   description: yup.string().trim().min(5).required(),
   summary: yup.string().trim(),
-  categories: yup.array().of(yup.string().min(2)).required(),
+  categories: yup.array().of(yup.string().min(1)).required(),
   price: yup.number().min(1).required(),
   stock: yup.number(),
   imageId: yup.string().trim().min(2).required(),

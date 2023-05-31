@@ -42,12 +42,11 @@ const schema = Yup.object().shape({
     .min(1, 'You need atleast one in stock...')
     .required('A product is required'),
   categories: Yup.array()
-    .of(Yup.string().min(2))
+    .of(Yup.string().required().min(1))
     .required('At least one category is required'),
 });
 
 function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
-  // const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [categoryData, setCategoryData] = useState<(string | SelectItem)[]>([]);
   const form = useForm<Product>({
@@ -167,7 +166,6 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
           withAsterisk
           label="Image URL"
           placeholder="https://www.image.com/image1.png"
-          // {...form.getInputProps('imageId')}
           onChange={handleImageUpload}
           data-cy="product-image"
           errorProps={{ 'data-cy': 'product-image-error' }}
@@ -176,7 +174,6 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
           label="Second Image URL"
           placeholder="https://www.image.com/image2.png"
           onChange={handleSecondImageUpload}
-          // {...form.getInputProps('secondImage')}
           errorProps={{ 'data-cy': 'product-image-error' }}
         />
         <TextInput
