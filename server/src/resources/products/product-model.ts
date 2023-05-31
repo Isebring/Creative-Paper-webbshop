@@ -11,7 +11,6 @@ const productSchema = new Schema({
     },
   ],
   price: { type: Number, required: true },
-  quantity: { type: Number }, // Ta tillbaka required när det finns
   stock: { type: Number, required: true }, // Ta tillbaka required när det finns
   imageId: { type: String, required: true }, // Schematypes? Path?
   secondImageId: { type: String, required: true }, // Schematypes? Path?
