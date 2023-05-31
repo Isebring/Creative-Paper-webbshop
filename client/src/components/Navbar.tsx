@@ -147,7 +147,10 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
     );
 
   const items = links.map((link, index) => (
-    <ul key={index}>
+    <ul
+      style={{ marginLeft: '1rem', marginRight: '1rem', paddingLeft: '0' }}
+      key={index}
+    >
       <Link
         key={link.label}
         to={link.link}
