@@ -258,7 +258,10 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
           <Flex gap={7} justify="space-between" mr="0.5rem">
             <ToggleDarkAndLightMode />
             <Box
-              style={{ color: colorScheme === 'dark' ? '#ADB5BD' : '#845EF7' }}
+              sx={{
+                marginLeft: '0.4rem',
+                color: colorScheme === 'dark' ? '#ADB5BD' : '#845EF7',
+              }}
             >
               <UserDropdownMenu />
             </Box>
@@ -266,8 +269,9 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
               <Box
                 onClick={handleLinkClick}
                 data-cy="cart-link"
-                style={{
+                sx={{
                   color: colorScheme === 'dark' ? '#ADB5BD' : '#845EF7',
+                  marginRight: '0.7rem',
                 }}
               >
                 <IconShoppingCart
@@ -290,6 +294,8 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
                       transform: 'translate(-20%, -290%)',
                       justifyContent: 'center',
                       alignItems: 'center',
+                      marginBottom: '0.5rem',
+                      marginRight: '0.7rem',
                     }}
                     data-cy="cart-items-count-badge"
                   >
