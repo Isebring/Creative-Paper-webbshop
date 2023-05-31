@@ -8,6 +8,7 @@ import {
   List,
   Text,
   Title,
+  useMantineColorScheme,
   useMantineTheme,
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
@@ -29,6 +30,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
   const theme = useMantineTheme();
   const { increaseCartQuantity } = useShoppingCart();
   const { products } = useProductContext();
+  const { colorScheme } = useMantineColorScheme();
 
   if (!product && productId) {
     const foundProduct = products?.find((p) => p._id === productId);
@@ -74,6 +76,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
                 style={{ display: 'flex', justifyContent: 'space-between' }}
               >
                 <Text
+                  sx={{
+                    color: colorScheme === 'dark' ? '#000' : 'initial',
+                  }}
                   weight={500}
                   size={29}
                   // transform="uppercase"
@@ -83,6 +88,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
                 </Text>
                 {product.stock > 0 ? (
                   <Badge
+                    sx={{
+                      color: colorScheme === 'dark' ? '#000' : '',
+                    }}
                     color="violet"
                     variant="light"
                     size="lg"
@@ -92,6 +100,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
                   </Badge>
                 ) : (
                   <Badge
+                    sx={{
+                      color: colorScheme === 'dark' ? '#000' : 'red',
+                    }}
                     color="red"
                     variant="light"
                     size="lg"
@@ -102,6 +113,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
                 )}
               </Group>
               <List
+                sx={{
+                  color: colorScheme === 'dark' ? '#000' : 'initial',
+                }}
                 style={{ fontFamily: 'Poppins, sans-serif', padding: '0.2rem' }}
               >
                 {product.summary &&
@@ -141,16 +155,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
           </Button>
           <Link to={link}>
             <Button
+              sx={{
+                color: colorScheme === 'dark' ? '#000' : 'initial',
+                borderColor: colorScheme === 'dark' ? '#000' : 'initial',
+              }}
               variant="outline"
               mt="md"
               radius="md"
               style={{
                 fontFamily: 'Poppins, sans-serif',
-                border:
-                  theme.colorScheme === 'dark'
-                    ? '1px solid white'
-                    : '1px solid black',
-                color: theme.colorScheme === 'dark' ? 'white' : 'black',
               }}
             >
               MORE INFO
@@ -158,6 +171,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
           </Link>
 
           <Title
+            sx={{
+              color: colorScheme === 'dark' ? '#000' : 'initial',
+            }}
             style={{
               marginLeft: 'auto',
               marginTop: '.5rem',

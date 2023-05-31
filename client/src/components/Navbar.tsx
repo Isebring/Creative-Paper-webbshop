@@ -247,7 +247,7 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
             </Flex>
           </Link>
 
-          <Flex gap={7} justify="space-between" mr="0.5rem">
+          <Flex gap={15} justify="space-between" mr="0.5rem">
             <ToggleDarkAndLightMode />
             <Box
               style={{ color: colorScheme === 'dark' ? '#ADB5BD' : '#845EF7' }}
