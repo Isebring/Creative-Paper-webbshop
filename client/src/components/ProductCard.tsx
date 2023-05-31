@@ -47,9 +47,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
 
   return (
     <>
-      <Card shadow="xl" radius="lg" withBorder data-cy="product">
+      <Card shadow="xl" withBorder data-cy="product">
         <Card.Section>
-          <Link to={link} style={{ textDecoration: 'none', color: 'inhFerit' }}>
+          <Link to={link} style={{ textDecoration: 'none', color: 'inherit' }}>
             <Image
               src={'/api/image/' + product.imageId}
               height={300}
@@ -61,11 +61,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
                 mb="xl"
                 style={{ display: 'flex', justifyContent: 'space-between' }}
               >
-                <Title
-                  order={2}
-                  data-cy="product-title"
-                  style={{ fontFamily: 'Poppins, sans-serif' }}
-                >
+                <Title order={2} data-cy="product-title">
                   {product.title}
                 </Title>
                 <Badge

@@ -227,9 +227,6 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
         className={classes.root}
       >
         <Container sx={{ maxWidth: 'none' }} className={classes.header}>
-          <Group spacing={5}></Group>
-          <Group spacing={5}></Group>
-
           <MediaQuery
             query="(max-width: 460px)"
             styles={{
@@ -243,7 +240,7 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
               <Group spacing={1}>{logo}</Group>
             </Link>
           </MediaQuery>
-          <Group spacing={1}>
+          <Group spacing={1} sx={{ display: 'flex', justifyContent: 'center' }}>
             <ToggleDarkAndLightMode />
             <UserDropdownMenu />
             <Link to="/checkout">
