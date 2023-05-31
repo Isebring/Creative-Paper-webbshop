@@ -3,11 +3,13 @@ import React, { createContext, useState } from 'react';
 export interface OrderProduct {
   _id: string;
   title: string;
+  imageId: string;
   price: number;
 }
 
 export interface OrderItem {
   product: OrderProduct;
+  imageId: string;
   quantity: number;
   price: number;
 }

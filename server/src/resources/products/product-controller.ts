@@ -1,11 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
 import mongoose from 'mongoose';
-import * as yup from 'yup';
 import { categoryModel } from '../categories/category-model';
 import { ProductModel } from './product-model';
-
-// const testSchema
+import {
+  productUpdateSchema,
+  productValidationSchema,
+} from './product-validation';
 
 export async function getAllProducts(req: Request, res: Response) {
   const products = await ProductModel.find().populate(
@@ -41,22 +42,6 @@ export async function createProduct(
   console.log('Incoming product:', req.body);
 
   const incomingProduct = req.body;
-
-  const productValidationSchema = yup.object({
-    title: yup.string().trim().min(2).required(),
-    description: yup.string().trim().min(5).required(),
-    summary: yup.string().trim(),
-    categories: yup.array().of(yup.string().min(2)).required(),
-    price: yup.number().min(1).required(),
-    quantity: yup.number(),
-    stock: yup.number(),
-    imageId: yup.string().trim().min(2).required(),
-    imageURL: yup.string().trim().min(2),
-    secondImageId: yup.string().trim().min(2),
-    secondImageURL: yup.string().trim().min(2),
-    rating: yup.number(),
-    usersRated: yup.number(),
-  });
 
   try {
     await productValidationSchema.validate(incomingProduct);
@@ -112,20 +97,6 @@ export async function updateProduct(
   if (!product) {
     return res.status(404).json(`Product with ID ${productId} not found`);
   }
-
-  const productUpdateSchema = yup.object({
-    title: yup.string().trim(),
-    description: yup.string().trim(),
-    summary: yup.string().trim(),
-    categories: yup.array().of(yup.string().min(2)).required(),
-    price: yup.number().min(1).required(),
-    quantity: yup.number(),
-    stock: yup.number(),
-    imageId: yup.string().trim(),
-    secondImageId: yup.string().trim(),
-    rating: yup.number(),
-    usersRated: yup.number(),
-  });
 
   try {
     // gå igenom valideringen

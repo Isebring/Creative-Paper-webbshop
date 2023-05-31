@@ -44,8 +44,7 @@ const schema = Yup.object().shape({
     .required('Stock is required'),
   categories: Yup.array()
     .of(Yup.string().required().min(1))
-    .required('At least one category is required')
-    .strict(),
+    .required('At least one category is required'),
 });
 
 function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
@@ -162,27 +161,24 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
         <TextInput
           withAsterisk
           label="Title"
-          placeholder="ComputerBook 2000"
+          placeholder="The Title of the product"
           {...form.getInputProps('title')}
           data-cy="product-title"
           errorProps={{ 'data-cy': 'product-title-error' }}
         />
         <FileInput
           withAsterisk
-          label="Image URL"
+          label="Image"
           placeholder="https://www.image.com/image1.png"
-          // {...form.getInputProps('imageId')}
           onChange={handleImageUpload}
           error={form.errors.imageId}
           data-cy="product-image"
           errorProps={{ 'data-cy': 'product-image-error' }}
         />
         <FileInput
-          label="Second Image URL"
+          label="Second Image"
           placeholder="https://www.image.com/image2.png"
           onChange={handleSecondImageUpload}
-          error={form.errors.secondImageId}
-          // {...form.getInputProps('secondImage')}
           errorProps={{ 'data-cy': 'product-image-error' }}
         />
         <TextInput
