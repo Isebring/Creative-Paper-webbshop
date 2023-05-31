@@ -69,9 +69,7 @@ function AdminOrders() {
         <td>
           {order.orderItems.map((item, index) => (
             <Box key={`${item.product._id}-${index}`}>
-              <Text>
-                Product <Text fw={700}>{item.product._id}</Text>
-              </Text>
+              <Text>Product: {item.product._id}</Text>
               <Text>Title: {item.product.title}</Text>
               <Text>Price per item: ${item.product.price}</Text>
               <Text>Quantity: {item.quantity}</Text>
