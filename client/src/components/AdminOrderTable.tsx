@@ -44,6 +44,7 @@ function AdminOrders() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // For bigger screens
   const tableRows =
     Array.isArray(orders) &&
     orders.map((order) => (
@@ -97,6 +98,7 @@ function AdminOrders() {
       </tr>
     ));
 
+  // For smaller screens
   const listRows =
     Array.isArray(orders) &&
     orders.map((order) => (
@@ -105,29 +107,40 @@ function AdminOrders() {
           Order Management
         </Title>
         <Box style={{ width: '100%' }}>
-          <Text fw={700}>Order ID: {order._id}</Text>
-          <Text>Shipping Details: {order.deliveryAddress.email}</Text>
+          <Text fw={700}>Order ID:</Text>
+          <Text>{order._id}</Text>
+          <Divider my="sm" variant="dotted" />
+          <Text fw={700}>Shipping Details:</Text>
+          <Text>{order.deliveryAddress.email}</Text>
+          <Text>{order.deliveryAddress.phoneNumber}</Text>
+          <Text>{order.deliveryAddress.fullName}</Text>
+          <Text>{order.deliveryAddress.address}</Text>
           <Text>
-            Total Items:{' '}
-            {order.orderItems.reduce((sum, item) => sum + item.quantity, 0)}
+            {order.deliveryAddress.zipCode} {order.deliveryAddress.city}
           </Text>
-          <Text>Order Items:</Text>
+          <Divider my="sm" variant="dotted" />
+          <Text fw={700}>Order Items:</Text>
           {order.orderItems.map((item, index) => (
             <Box key={`${item.product._id}-${index}`}>
-              <Text>
-                Product <Text fw={700}>{item.product._id}</Text>
-              </Text>
+              <Divider my="sm" variant="dotted" />
+              <Text>Product: {item.product._id}</Text>
               <Text>Title: {item.product.title}</Text>
               <Text>Price per item: ${item.product.price}</Text>
               <Text>Quantity: {item.quantity}</Text>
               <Text>Total price: ${item.price}</Text>
-              <Divider my="sm" variant="dotted" />
             </Box>
           ))}
+          <Divider my="sm" variant="dotted" />
+          <Text>
+            Total Items:{' '}
+            {order.orderItems.reduce((sum, item) => sum + item.quantity, 0)}
+          </Text>
           <Text>Order Total: ${order.totalPrice}</Text>
+          <Divider my="sm" variant="dotted" />
           <Text>
             Order Date: {new Date(order.createdAt).toLocaleDateString()}
           </Text>
+          <Divider my="sm" variant="dotted" />
           <Text>Status:</Text>
           <Box style={{ width: '350px' }}>
             <Select
