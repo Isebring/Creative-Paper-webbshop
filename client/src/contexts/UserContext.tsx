@@ -119,7 +119,6 @@ export const UserProvider = ({ children }: Props) => {
         throw new Error('Failed to log in user');
       }
       const user = await response.json();
-      console.log(user);
       setUser({
         _id: user._id,
         email: user.email,
