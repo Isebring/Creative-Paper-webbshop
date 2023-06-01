@@ -1,12 +1,18 @@
 import argon2 from 'argon2';
 import { Request, Response } from 'express';
+import {
+  BadRequestError,
+  ConflictError,
+  NotFoundError,
+  UnauthorizedError,
+} from '../../middlewares/error-handler';
 import { UserModel } from './user-model';
 import userRegistrationSchema from './user-validation';
 
 // Check if a user is logged in, in order to be able to place an order etc.
 export function getLoggedInUserInfo(req: Request, res: Response) {
   if (!req.session?.email) {
-    return res.status(401).json('You must login!');
+    throw new UnauthorizedError('You must login!');
   }
   res.status(200).json(req.session);
 }
@@ -24,7 +30,7 @@ export async function registerUser(req: Request, res: Response) {
   const existingUser = await UserModel.findOne({ email });
 
   if (existingUser) {
-    return res.status(409).json('email already exists');
+    throw new ConflictError('Email already exists');
   }
 
   // Validate request body with Yup
@@ -48,11 +54,11 @@ export async function loginUser(req: Request, res: Response) {
 
   const user = await UserModel.findOne({ email });
   if (!user) {
-    return res.status(401).json('Incorrect email');
+    throw new UnauthorizedError('Incorrect email');
   }
   const isAuth = await argon2.verify(user.password, password);
   if (!isAuth) {
-    return res.status(401).json('Incorrect password');
+    throw new UnauthorizedError('Incorrect password');
   }
   // Check session/cookie
   if (req.session) {
@@ -82,6 +88,10 @@ export async function getLoggedInUser(req: Request, res: Response) {
     isAdmin: req.session?.isAdmin,
   };
 
+  if (!req.session?.email) {
+    throw new UnauthorizedError('You must login!');
+  }
+
   // Send response
   res.status(200).json(userResponse);
 }
@@ -99,14 +109,20 @@ export function logoutUser(req: Request, res: Response) {
 export async function updateUserRole(req: Request, res: Response) {
   const userId = req.params.id;
   const { isAdmin } = req.body;
-  const user = await UserModel.findByIdAndUpdate(userId);
 
-  if (!user) {
-    return res.status(404).json('User not found');
+  if (isAdmin === undefined) {
+    throw new BadRequestError('isAdmin must be provided');
   }
 
-  user.isAdmin = isAdmin;
-  await user.save();
+  const user = await UserModel.findOneAndUpdate(
+    { _id: userId },
+    { isAdmin },
+    { new: true },
+  );
+
+  if (!user) {
+    throw new NotFoundError('User not found');
+  }
 
   return res.status(200).json({
     _id: user._id,
