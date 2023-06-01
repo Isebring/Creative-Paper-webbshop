@@ -35,6 +35,14 @@ export class ConflictError extends Error {
   }
 }
 
+export class InternalServerError extends Error {
+  statusCode = 500;
+  constructor(message = 'Internal Server Error') {
+    super(message);
+    this.name = 'InternalServerError';
+  }
+}
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   console.error(err);
@@ -45,7 +53,8 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
     err instanceof BadRequestError ||
     err instanceof UnauthorizedError ||
     err instanceof NotFoundError ||
-    err instanceof ConflictError
+    err instanceof ConflictError ||
+    err instanceof InternalServerError
   ) {
     res.status(err.statusCode).json(err.message);
   } else if (err instanceof Error) {
