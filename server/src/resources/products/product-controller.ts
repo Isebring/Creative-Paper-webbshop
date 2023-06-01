@@ -96,29 +96,16 @@ export async function updateProduct(
   }
 
   try {
-    // gå igenom valideringen
     console.log('Update product:', { params: req.params, body: req.body });
     const validatedProduct = await productUpdateSchema.validate(req.body);
 
-    // lagerstatus ska överföras till den uppdaterade produkten
-    // if (validatedProduct.stock !== product.stock) {
-    // }
     const categoryIds: mongoose.Types.ObjectId[] = [];
-
-    // for (const categoryName of validatedProduct.categories) {
-    //   const category = await categoryModel.findOne({ name: categoryName });
-    //   if (!category) {
-    //     console.log(`Category ${categoryName} not found.`);
-    //     return res.status(400).json(`Category ${categoryName} not found.`);
-    //   }
-    // }
 
     const updatedProduct = await ProductModel.findByIdAndUpdate(
       productId,
       validatedProduct,
       { new: true },
     ).populate('categories');
-    res.status(200).json(updatedProduct);
 
     // Archive the old product
     product.isArchived = true;
@@ -134,11 +121,16 @@ export async function updateProduct(
     const savedProduct = await newProduct.save();
 
     // Send the new product as a response
-    res.status(200).json({ newProduct: savedProduct, oldProductId: productId });
+    res.status(200).json({ 
+      updatedProduct, 
+      newProduct: savedProduct, 
+      oldProductId: productId 
+    });
   } catch (error) {
     next(error);
   }
 }
+
 export async function deleteProduct(req: Request, res: Response) {
   try {
     const productId = req.params.id;
