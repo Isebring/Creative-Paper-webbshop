@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
-import mongoose from 'mongoose';
 import { categoryModel } from '../categories/category-model';
 import { ProductModel } from './product-model';
 import {
@@ -9,10 +8,7 @@ import {
 } from './product-validation';
 
 export async function getAllProducts(req: Request, res: Response) {
-  const products = await ProductModel.find().populate(
-    'categories',
-    'name -_id',
-  );
+  const products = await ProductModel.find().populate('categories');
   res.status(200).json(products);
 }
 
@@ -99,38 +95,14 @@ export async function updateProduct(
   }
 
   try {
-    // gå igenom valideringen
     console.log('Update product:', { params: req.params, body: req.body });
     const validatedProduct = await productUpdateSchema.validate(req.body);
-
-    // lagerstatus ska överföras till den uppdaterade produkten
-    // if (validatedProduct.stock !== product.stock) {
-    // }
-    const categoryIds: mongoose.Types.ObjectId[] = [];
-
-    for (const categoryName of validatedProduct.categories) {
-      const category = await categoryModel.findOne({ name: categoryName });
-      if (category) {
-        const productIdObj = new mongoose.Types.ObjectId(productId);
-        if (!category.products.includes(productIdObj)) {
-          category.products.push(productIdObj);
-          await category.save();
-        }
-        categoryIds.push(category._id);
-        validatedProduct.categories = categoryIds.map(
-          (id: mongoose.Types.ObjectId) => id.toHexString(),
-        );
-      } else {
-        console.log(`Category ${categoryName} not found.`);
-      }
-    }
 
     const updatedProduct = await ProductModel.findByIdAndUpdate(
       productId,
       validatedProduct,
       { new: true },
-    ).populate('categories', 'name -_id');
-    res.status(200).json(updatedProduct);
+    ).populate('categories');
 
     // Archive the old product
     product.isArchived = true;
@@ -146,11 +118,16 @@ export async function updateProduct(
     const savedProduct = await newProduct.save();
 
     // Send the new product as a response
-    res.status(200).json({ newProduct: savedProduct, oldProductId: productId });
+    res.status(200).json({
+      updatedProduct,
+      newProduct: savedProduct,
+      oldProductId: productId,
+    });
   } catch (error) {
     next(error);
   }
 }
+
 export async function deleteProduct(req: Request, res: Response) {
   try {
     const productId = req.params.id;

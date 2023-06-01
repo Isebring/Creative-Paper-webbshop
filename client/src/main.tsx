@@ -7,18 +7,14 @@ import {
 import App from './App';
 import Protected from './components/Protected';
 import './index.css';
-import { Accessories } from './pages/Accessories';
 import Admin from './pages/Admin';
-import { Calendars } from './pages/Calendar';
-import { Cards } from './pages/Cards';
 import Cart from './pages/Cart';
+import { CategoryPage } from './pages/CategoryPage';
 import Confirmation from './pages/Confirmation';
 import CreateAccount from './pages/CreateAccount';
 import EditProduct from './pages/EditProduct';
 import Home from './pages/Home';
 import NewProduct from './pages/NewProduct';
-import { Notebooks } from './pages/Notebooks';
-import { Pens } from './pages/Pens';
 import ProductDetails from './pages/ProductDetails';
 import SignIn from './pages/SignIn';
 import UserAccount from './pages/UserAccount';
@@ -28,11 +24,7 @@ export const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index element={<Home />} />
-      <Route path="/pens" element={<Pens />} />
-      <Route path="/notebooks" element={<Notebooks />} />
-      <Route path="/cards" element={<Cards />} />
-      <Route path="/calendars" element={<Calendars />} />
-      <Route path="/accessories" element={<Accessories />} />
+      <Route path="/category/:_id" element={<CategoryPage />} />
       <Route path="/products/:_id" element={<ProductDetails />} />
       <Route path="/checkout" element={<Cart />} />
       <Route path="/confirmation" element={<Confirmation />} />

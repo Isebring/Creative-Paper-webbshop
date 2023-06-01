@@ -4,7 +4,7 @@ import { PageHero } from '../components/PageHero';
 import ProductCard from '../components/ProductCard';
 import { Product } from '../contexts/ProductContext';
 
-export function Pens() {
+export function CategoryPage() {
   const [sortDirection, setSortDirection] = useState('');
   const [selectedCategories] = useState<string[]>(['pens']);
   const [sortedProducts, setSortedProducts] = useState<Product[]>([]);
@@ -13,13 +13,9 @@ export function Pens() {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch('/api/products/by-category', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ categories: ['Pens'] }),
-      });
+      const response = await fetch(
+        `/api/categories/6472b1d46b886637ceb1daca/products`,
+      );
 
       const data = await response.json();
       console.log(data);
@@ -28,6 +24,11 @@ export function Pens() {
       console.error('Failed to fetch products:', error);
     }
   };
+
+  //header: get all categories, map as links
+
+  //fetch category
+  //save
 
   useEffect(() => {
     fetchProducts();
@@ -61,6 +62,7 @@ export function Pens() {
   }
 
   return (
+    /* get category information and change line 1 line 2 in database */
     <Container size="lg">
       <PageHero
         title="Pens"
