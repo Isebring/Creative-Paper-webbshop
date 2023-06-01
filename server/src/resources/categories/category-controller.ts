@@ -1,34 +1,32 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
+import { InternalServerError } from '../../middlewares/error-handler';
 import { ProductModel } from '../products/product-model';
 import { categoryModel } from './category-model';
 
-// type ObjectId = mongoose.Types.ObjectId;
-
-export const getAllCategories = async (_: Request, res: Response) => {
+export const getAllCategories = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const categories = await categoryModel.find();
     res.status(200).json(categories);
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).json({ error: error.message });
-    } else {
-      res.status(500).json({ error: 'An unexpected error occurred.' });
-    }
+    next(new InternalServerError((error as Error).message));
   }
 };
 
-export const getProductsByCategories = async (req: Request, res: Response) => {
+export const getProductsByCategories = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const categoryId = req.params.id;
 
   try {
     const products = await ProductModel.find({ categories: categoryId });
-
     res.status(200).json(products);
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).json({ error: error.message });
-    } else {
-      res.status(500).json({ error: 'An unexpected error occurred.' });
-    }
+    next(new InternalServerError((error as Error).message));
   }
 };
