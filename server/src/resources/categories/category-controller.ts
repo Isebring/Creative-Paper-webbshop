@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import mongoose from 'mongoose';
 import { ProductModel } from '../products/product-model';
 import { categoryModel } from './category-model';
 
@@ -23,7 +22,7 @@ export const getProductsByCategories = async (req: Request, res: Response) => {
 
   try {
     const products = await ProductModel.find({ categories: categoryId });
-  
+
     res.status(200).json(products);
   } catch (error) {
     if (error instanceof Error) {

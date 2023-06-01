@@ -1,67 +1,17 @@
 import { Button, Container, Group, SimpleGrid, Title } from '@mantine/core';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import CategoryFilter from '../components/CategoryFilter';
 import HeroSlide from '../components/HeroSlide';
 import { PageHero } from '../components/PageHero';
 import ProductCard from '../components/ProductCard';
-import { Product, ProductContext } from '../contexts/ProductContext';
+import { ProductContext } from '../contexts/ProductContext';
 
 function Home() {
   const { products } = useContext(ProductContext);
   const [sortDirection, setSortDirection] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [sortedProducts, setSortedProducts] = useState(products);
+  const [sortedProducts] = useState(products);
   const [activeButton, setActiveButton] = useState('');
-  const [selectedProduct] = useState<Product | null>(null);
-  
-
-  // useEffect(() => {
-  //   if (selectedProduct) {
-  //     setSelectedCategories(selectedProduct.categories);
-  //   }
-  // }, [selectedProduct]);
-
-  // useEffect(() => {
-  //   const fetchProducts = async () => {
-  //     let newProducts: Product[] = [];
-
-  //     for (const categoryID of selectedCategories) {
-  //       const response = await fetch(`/api/categories/6472b1d46b886637ceb1daca/products`);
-    
-  //       const productsInCategory = await response.json();
-    
-  //       newProducts = [...newProducts, ...productsInCategory];
-  //   }
-
-  //     const uniqueProducts: Product[] = Array.from(
-  //       new Set(newProducts.map((product: Product) => JSON.stringify(product))),
-  //       (product) => JSON.parse(product as string),
-  //     ) as Product[];
-
-  //     const sorted = [...uniqueProducts];
-
-  //     if (sortDirection === 'ascending') {
-  //       sorted.sort((a, b) => a.price - b.price);
-  //     } else if (sortDirection === 'descending') {
-  //       sorted.sort((a, b) => b.price - a.price);
-  //     }
-
-  //     setSortedProducts(sorted);
-  //   };
-
-  //   if (selectedCategories.length > 0) {
-  //     fetchProducts();
-  //   } else {
-  //     const sorted = [...products];
-  //     if (sortDirection === 'ascending') {
-  //       sorted.sort((a, b) => a.price - b.price);
-  //     } else if (sortDirection === 'descending') {
-  //       sorted.sort((a, b) => b.price - a.price);
-  //     }
-  //     setSortedProducts(sorted);
-  //   }
-  // }, [selectedCategories, sortDirection, products]);
-
 
   function sortProductsByLowestPrice() {
     setSortDirection('ascending');
@@ -80,7 +30,9 @@ function Home() {
     if (selectedCategories.length === 0) {
       return true;
     }
-    return selectedCategories.some((category) => product.categories.some(pc => pc._id === category));
+    return selectedCategories.some((category) =>
+      product.categories.some((pc) => pc._id === category),
+    );
   });
 
   return (

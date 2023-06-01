@@ -58,8 +58,6 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
     fetchProducts();
   }, []);
 
-
-
   async function getProductById(_id: string): Promise<Product | null> {
     try {
       const response = await fetch(`/api/products/${_id}`);

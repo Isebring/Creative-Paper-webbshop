@@ -5,7 +5,7 @@ import { categoryModel } from '../categories/category-model';
 import { ProductModel } from './product-model';
 import {
   productUpdateSchema,
-  productValidationSchema
+  productValidationSchema,
 } from './product-validation';
 
 export async function getAllProducts(req: Request, res: Response) {
@@ -99,8 +99,6 @@ export async function updateProduct(
     console.log('Update product:', { params: req.params, body: req.body });
     const validatedProduct = await productUpdateSchema.validate(req.body);
 
-    const categoryIds: mongoose.Types.ObjectId[] = [];
-
     const updatedProduct = await ProductModel.findByIdAndUpdate(
       productId,
       validatedProduct,
@@ -121,10 +119,10 @@ export async function updateProduct(
     const savedProduct = await newProduct.save();
 
     // Send the new product as a response
-    res.status(200).json({ 
-      updatedProduct, 
-      newProduct: savedProduct, 
-      oldProductId: productId 
+    res.status(200).json({
+      updatedProduct,
+      newProduct: savedProduct,
+      oldProductId: productId,
     });
   } catch (error) {
     next(error);

@@ -5,7 +5,7 @@ import {
   Group,
   MultiSelect,
   SelectItem,
-  TextInput
+  TextInput,
 } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import { useEffect, useState } from 'react';

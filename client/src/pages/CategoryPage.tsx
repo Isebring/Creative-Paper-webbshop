@@ -1,6 +1,5 @@
 import { Button, Container, Group, SimpleGrid } from '@mantine/core';
 import { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { PageHero } from '../components/PageHero';
 import ProductCard from '../components/ProductCard';
 import { Product } from '../contexts/ProductContext';
@@ -12,12 +11,11 @@ export function CategoryPage() {
   const [activeButton, setActiveButton] = useState('');
   const sortedProductsRef = useRef<Product[]>([]);
 
-  const params = useParams();
-  const { _id } = useParams<{ _id: string }>();
-
   const fetchProducts = async () => {
     try {
-      const response = await fetch(`/api/categories/6472b1d46b886637ceb1daca/products`);
+      const response = await fetch(
+        `/api/categories/6472b1d46b886637ceb1daca/products`,
+      );
 
       const data = await response.json();
       console.log(data);
@@ -29,7 +27,6 @@ export function CategoryPage() {
 
   //header: get all categories, map as links
 
-  
   //fetch category
   //save
 
