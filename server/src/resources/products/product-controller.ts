@@ -5,14 +5,11 @@ import { categoryModel } from '../categories/category-model';
 import { ProductModel } from './product-model';
 import {
   productUpdateSchema,
-  productValidationSchema,
+  productValidationSchema
 } from './product-validation';
 
 export async function getAllProducts(req: Request, res: Response) {
-  const products = await ProductModel.find().populate(
-    'categories',
-    'name -_id',
-  );
+  const products = await ProductModel.find().populate('categories');
   res.status(200).json(products);
 }
 
@@ -108,28 +105,19 @@ export async function updateProduct(
     // }
     const categoryIds: mongoose.Types.ObjectId[] = [];
 
-    for (const categoryName of validatedProduct.categories) {
-      const category = await categoryModel.findOne({ name: categoryName });
-      if (category) {
-        const productIdObj = new mongoose.Types.ObjectId(productId);
-        if (!category.products.includes(productIdObj)) {
-          category.products.push(productIdObj);
-          await category.save();
-        }
-        categoryIds.push(category._id);
-        validatedProduct.categories = categoryIds.map(
-          (id: mongoose.Types.ObjectId) => id.toHexString(),
-        );
-      } else {
-        console.log(`Category ${categoryName} not found.`);
-      }
-    }
+    // for (const categoryName of validatedProduct.categories) {
+    //   const category = await categoryModel.findOne({ name: categoryName });
+    //   if (!category) {
+    //     console.log(`Category ${categoryName} not found.`);
+    //     return res.status(400).json(`Category ${categoryName} not found.`);
+    //   }
+    // }
 
     const updatedProduct = await ProductModel.findByIdAndUpdate(
       productId,
       validatedProduct,
       { new: true },
-    ).populate('categories', 'name -_id');
+    ).populate('categories');
     res.status(200).json(updatedProduct);
 
     // Archive the old product

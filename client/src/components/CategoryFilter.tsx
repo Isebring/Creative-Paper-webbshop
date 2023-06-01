@@ -6,13 +6,13 @@ import {
   MultiSelectValueProps,
   rem,
   SelectItem,
-  SelectItemProps,
+  SelectItemProps
 } from '@mantine/core';
 import { forwardRef, useEffect, useState } from 'react';
-import { Product } from '../contexts/ProductContext';
 
-interface Category {
+export interface Category {
   name: string;
+  _id: string;
 }
 
 function Value({
@@ -71,52 +71,39 @@ const customFilter = (value: string, selected: boolean, item: SelectItem) => {
 };
 
 interface CategoryFilterProps {
-  products: Product[];
-  setSelectedCategories: React.Dispatch<React.SetStateAction<string[]>>;
-  selectedCategories: string[];
+  value: string[]; // selected category ids
+  onChange: (categoryIds: string[]) => void;
 }
 
-const CategoryFilter: React.FC<CategoryFilterProps> = ({
-  setSelectedCategories,
-}) => {
-  const [selectedCategories, _setSelectedCategories] = useState<string[]>([]);
-  const [categoryData, setCategoryData] = useState<(string | SelectItem)[]>([]);
+const CategoryFilter: React.FC<CategoryFilterProps> = (props) => {
+  const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
     const fetchCategories = async () => {
       const response = await fetch('/api/categories');
       const categories = await response.json();
-
-      const formattedCategories = categories
-        .filter((category: Category) => typeof category.name === 'string')
-        .map((category: Category) => ({
-          value: category.name,
-          label: category.name,
-        }));
-
-      setCategoryData(formattedCategories);
+      console.log(categories);
+      setCategories(categories);
     };
     fetchCategories();
   }, []);
 
-  const handleSelect = (values: string[]) => {
-    _setSelectedCategories(values);
-    setSelectedCategories(values);
-  };
+  const data = categories.map((category) => ({
+    value: category._id,
+    label: category.name,
+  }));
 
   return (
-    <div>
-      <MultiSelect
-        data={categoryData}
-        valueComponent={Value}
-        itemComponent={Item}
-        searchable
-        value={selectedCategories}
-        onChange={handleSelect}
-        placeholder="Filter by category"
-        filter={customFilter}
-      />
-    </div>
+    <MultiSelect
+      data={data}
+      valueComponent={Value}
+      itemComponent={Item}
+      searchable
+      value={props.value}
+      onChange={props.onChange}
+      placeholder="Filter by category"
+      filter={customFilter}
+    />
   );
 };
 

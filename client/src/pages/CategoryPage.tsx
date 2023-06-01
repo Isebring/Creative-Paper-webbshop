@@ -13,10 +13,11 @@ export function CategoryPage() {
   const sortedProductsRef = useRef<Product[]>([]);
 
   const params = useParams();
+  const { _id } = useParams<{ _id: string }>();
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch('/api/products/by-category/'+ params.id);
+      const response = await fetch(`/api/categories/6472b1d46b886637ceb1daca/products`);
 
       const data = await response.json();
       console.log(data);

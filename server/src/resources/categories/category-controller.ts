@@ -3,9 +3,9 @@ import mongoose from 'mongoose';
 import { ProductModel } from '../products/product-model';
 import { categoryModel } from './category-model';
 
-type ObjectId = mongoose.Types.ObjectId;
+// type ObjectId = mongoose.Types.ObjectId;
 
-const getAllCategories = async (_: Request, res: Response) => {
+export const getAllCategories = async (_: Request, res: Response) => {
   try {
     const categories = await categoryModel.find();
     res.status(200).json(categories);
@@ -18,10 +18,7 @@ const getAllCategories = async (_: Request, res: Response) => {
   }
 };
 
-export { getAllCategories };
-export { getProductsByCategories };
-
-const getProductsByCategories = async (req: Request, res: Response) => {
+export const getProductsByCategories = async (req: Request, res: Response) => {
   const categoryId = req.params.id;
 
   try {

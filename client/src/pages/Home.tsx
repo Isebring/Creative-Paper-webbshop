@@ -13,61 +13,55 @@ function Home() {
   const [sortedProducts, setSortedProducts] = useState(products);
   const [activeButton, setActiveButton] = useState('');
   const [selectedProduct] = useState<Product | null>(null);
+  
 
-  useEffect(() => {
-    if (selectedProduct) {
-      setSelectedCategories(selectedProduct.categories);
-    }
-  }, [selectedProduct]);
+  // useEffect(() => {
+  //   if (selectedProduct) {
+  //     setSelectedCategories(selectedProduct.categories);
+  //   }
+  // }, [selectedProduct]);
 
-  useEffect(() => {
-    if (selectedProduct) {
-      setSelectedCategories(selectedProduct.categories);
-    }
-  }, [selectedProduct]);
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     let newProducts: Product[] = [];
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const response = await fetch('/api/products/by-category', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          categories: selectedCategories,
-        }),
-      });
+  //     for (const categoryID of selectedCategories) {
+  //       const response = await fetch(`/api/categories/6472b1d46b886637ceb1daca/products`);
+    
+  //       const productsInCategory = await response.json();
+    
+  //       newProducts = [...newProducts, ...productsInCategory];
+  //   }
 
-      const newProducts = await response.json();
+  //     const uniqueProducts: Product[] = Array.from(
+  //       new Set(newProducts.map((product: Product) => JSON.stringify(product))),
+  //       (product) => JSON.parse(product as string),
+  //     ) as Product[];
 
-      const uniqueProducts: Product[] = Array.from(
-        new Set(newProducts.map((product: Product) => JSON.stringify(product))),
-        (product) => JSON.parse(product as string),
-      ) as Product[];
+  //     const sorted = [...uniqueProducts];
 
-      const sorted = [...uniqueProducts];
+  //     if (sortDirection === 'ascending') {
+  //       sorted.sort((a, b) => a.price - b.price);
+  //     } else if (sortDirection === 'descending') {
+  //       sorted.sort((a, b) => b.price - a.price);
+  //     }
 
-      if (sortDirection === 'ascending') {
-        sorted.sort((a, b) => a.price - b.price);
-      } else if (sortDirection === 'descending') {
-        sorted.sort((a, b) => b.price - a.price);
-      }
+  //     setSortedProducts(sorted);
+  //   };
 
-      setSortedProducts(sorted);
-    };
+  //   if (selectedCategories.length > 0) {
+  //     fetchProducts();
+  //   } else {
+  //     const sorted = [...products];
+  //     if (sortDirection === 'ascending') {
+  //       sorted.sort((a, b) => a.price - b.price);
+  //     } else if (sortDirection === 'descending') {
+  //       sorted.sort((a, b) => b.price - a.price);
+  //     }
+  //     setSortedProducts(sorted);
+  //   }
+  // }, [selectedCategories, sortDirection, products]);
 
-    if (selectedCategories.length > 0) {
-      fetchProducts();
-    } else {
-      const sorted = [...products];
-      if (sortDirection === 'ascending') {
-        sorted.sort((a, b) => a.price - b.price);
-      } else if (sortDirection === 'descending') {
-        sorted.sort((a, b) => b.price - a.price);
-      }
-      setSortedProducts(sorted);
-    }
-  }, [selectedCategories, sortDirection, products]);
 
   function sortProductsByLowestPrice() {
     setSortDirection('ascending');
@@ -78,6 +72,16 @@ function Home() {
     setSortDirection('descending');
     setActiveButton('highest');
   }
+
+  console.log(products);
+  console.log(selectedCategories);
+
+  const filteredProducts = products.filter((product) => {
+    if (selectedCategories.length === 0) {
+      return true;
+    }
+    return selectedCategories.some((category) => product.categories.some(pc => pc._id === category));
+  });
 
   return (
     <Container size="xl">
@@ -116,9 +120,8 @@ function Home() {
           Sort by highest price
         </Button>
         <CategoryFilter
-          products={products}
-          setSelectedCategories={setSelectedCategories}
-          selectedCategories={selectedCategories}
+          value={selectedCategories}
+          onChange={setSelectedCategories}
         />
       </Group>
       <SimpleGrid
@@ -130,7 +133,7 @@ function Home() {
           { maxWidth: '36rem', cols: 1, spacing: 'sm' },
         ]}
       >
-        {sortedProducts?.map((product) => (
+        {filteredProducts?.map((product) => (
           <ProductCard
             key={product._id}
             productId={product._id}
