@@ -6,18 +6,6 @@ const categoriesSchema = new Schema({
     required: true,
     unique: true,
   },
-  description: {
-    type: String,
-    required: true,
-  },
-  description2: {
-    type: String,
-    required: true,
-  },
-  imageId: {
-    type: Schema.Types.ObjectId,
-    required: true,
-  },
   products: [
     {
       type: mongoose.Schema.Types.ObjectId,

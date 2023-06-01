@@ -5,17 +5,14 @@ import {
   Group,
   MultiSelect,
   SelectItem,
-  TextInput,
+  TextInput
 } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Product } from '../contexts/ProductContext';
-
-interface Category {
-  name: string;
-}
+import { Category } from './CategoryFilter';
 
 interface ProductFormProps {
   onSubmit: (product: Product) => void;
@@ -82,7 +79,7 @@ function ProductForm({ isEditing, product, onSubmit }: ProductFormProps) {
       const formattedCategories = categories
         .filter((category: Category) => typeof category.name === 'string')
         .map((category: Category) => ({
-          value: category.name,
+          value: category._id,
           label: category.name,
         }));
 

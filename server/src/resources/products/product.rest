@@ -3,7 +3,7 @@ GET http://localhost:3000/api/products
 Content-Type:  application/json
 
 ### GET specific
-GET http://localhost:3000/api/products/646c89ff625c6e08624dfe38
+GET http://localhost:3000/api/products/cde321
 Content-Type:  application/json
 
 ### GET created 
@@ -18,7 +18,6 @@ POST http://localhost:3000/api/products
 Content-Type: application/json
 
 {
-  "_id": "cde321",
   "title": "Testprodukt",
   "description": "Info about product",
   "summary": ["1 sak", "2 sak", "3 sak"],
@@ -30,8 +29,6 @@ Content-Type: application/json
   "imageURL": "www.test.se",
   "secondImageId": "25",
   "secondImageURL": "www.test2.se",
-  "rating": "4.5",
-  "usersRated": "7"
 }
 
 ### Delete
@@ -64,7 +61,7 @@ Content-Type: application/json
   "title": "Testprodukten",
   "description": "Info about product okej kul",
   "summary": ["1 sak", "2 sak", "3 sak"],
-  "categories": ["Pens"],
+  "categories": ["Pens", "Notebooks"],
   "price": "900",
   "quantity": "30",
   "stock": "20",
