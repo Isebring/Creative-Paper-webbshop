@@ -1,4 +1,4 @@
-import { Button, Container, Group, SimpleGrid, Title } from '@mantine/core';
+import { Container, Group, SimpleGrid, Title } from '@mantine/core';
 import { useContext, useState } from 'react';
 import CategoryFilter from '../components/CategoryFilter';
 import HeroSlide from '../components/HeroSlide';
@@ -12,16 +12,6 @@ function Home() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [sortedProducts] = useState(products);
   const [activeButton, setActiveButton] = useState('');
-
-  function sortProductsByLowestPrice() {
-    setSortDirection('ascending');
-    setActiveButton('lowest');
-  }
-
-  function sortProductsByHighestPrice() {
-    setSortDirection('descending');
-    setActiveButton('highest');
-  }
 
   console.log(products);
   console.log(selectedCategories);
@@ -47,30 +37,6 @@ function Home() {
         Browse our collection
       </Title>
       <Group spacing={5} mb="md">
-        <Button
-          sx={{
-            border: activeButton === 'lowest' ? '2px solid #5f3dc4' : 'none',
-          }}
-          variant="light"
-          size="xs"
-          radius="sm"
-          onClick={sortProductsByLowestPrice}
-          style={{ fontFamily: 'Poppins, sans-serif' }}
-        >
-          Sort by lowest price
-        </Button>
-        <Button
-          sx={{
-            border: activeButton === 'highest' ? '2px solid #5f3dc4 ' : 'none',
-          }}
-          size="xs"
-          variant="light"
-          radius="sm"
-          onClick={sortProductsByHighestPrice}
-          style={{ fontFamily: 'Poppins, sans-serif' }}
-        >
-          Sort by highest price
-        </Button>
         <CategoryFilter
           value={selectedCategories}
           onChange={setSelectedCategories}
