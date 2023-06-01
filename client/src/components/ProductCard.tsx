@@ -155,7 +155,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
             }}
             data-cy="product-buy-button"
           >
-             {product.stock === 0 ? 'OUT OF STOCK' : 'ADD TO CART'}
+            {product.stock === 0 ? 'OUT OF STOCK' : 'ADD TO CART'}
           </Button>
           <Link to={link}>
             <Button
