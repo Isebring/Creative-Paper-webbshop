@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
-import { NoContentError, NotFoundError } from '../../middlewares/error-handler';
+import { NotFoundError } from '../../middlewares/error-handler';
 import { categoryModel } from '../categories/category-model';
 import { ProductModel } from './product-model';
 import {
@@ -139,8 +139,11 @@ export async function deleteProduct(
     );
 
     await ProductModel.findByIdAndDelete(productId);
-    throw new NoContentError();
+    res.status(204).end();
   } catch (error) {
-    next(error);
+    res.status(500).json({
+      message: 'Error deleting the product',
+      error: (error as Error).message,
+    });
   }
 }
