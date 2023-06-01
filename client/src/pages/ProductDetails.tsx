@@ -8,6 +8,7 @@ import {
   Image,
   Text,
   Title,
+  useMantineColorScheme,
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import {
@@ -32,6 +33,7 @@ function ProductDetails() {
   const { _id } = useParams<{ _id: string }>();
   const { increaseCartQuantity } = useShoppingCart();
   const [product, setProduct] = useState<Product | null>(null);
+  const { colorScheme } = useMantineColorScheme();
 
   const goBack = () => {
     window.history.back();
@@ -72,7 +74,10 @@ function ProductDetails() {
         mb="sm"
         mt="sm"
         onClick={goBack}
-        sx={{ border: '1px solid black', color: 'black' }}
+        sx={{
+          borderColor: colorScheme === 'dark' ? '#ADB5BD' : '#000',
+          color: colorScheme === 'dark' ? '#ADB5BD' : '#000',
+        }}
       >
         Back to Store
       </Button>
@@ -177,6 +182,7 @@ function ProductDetails() {
           </Group>
 
           <Button
+            disabled={product.stock === 0}
             fullWidth
             variant="light"
             mt="md"
@@ -196,6 +202,7 @@ function ProductDetails() {
 
           <Link to="/checkout" style={{ textDecoration: 'none' }}>
             <Button
+              disabled={product.stock === 0}
               fullWidth
               variant="outline"
               mt="md"

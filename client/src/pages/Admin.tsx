@@ -1,4 +1,5 @@
 import { Box, Button, Container, Title, useMantineTheme } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 import { useState } from 'react';
 import AdminOrderTable from '../components/AdminOrderTable';
 import AdminProductManagement from '../components/AdminProductManagement';
@@ -6,6 +7,7 @@ import { AdminUserControl } from '../components/AdminUserControl';
 
 function Admin() {
   const theme = useMantineTheme();
+  const isMobile = useMediaQuery('(max-width: 768px)');
   const [selectedComponent, setSelectedComponent] = useState('component1');
 
   return (
@@ -14,7 +16,7 @@ function Admin() {
       sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
     >
       <Title>Admin</Title>
-      <Box>
+      <Box style={{ textAlign: isMobile ? 'center' : 'initial' }}>
         <Button
           onClick={() => setSelectedComponent('component1')}
           sx={{

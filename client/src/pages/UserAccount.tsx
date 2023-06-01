@@ -4,7 +4,9 @@ import MyOrders from '../components/MyOrders';
 function UserAccount() {
   return (
     <Container>
-      <Title>My Account</Title>
+      <Title align="center" mt="1rem" mb="1rem">
+        My Account
+      </Title>
       <MyOrders />
     </Container>
   );

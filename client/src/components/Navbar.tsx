@@ -147,7 +147,15 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
     );
 
   const items = links.map((link, index) => (
-    <ul key={index}>
+    <ul
+      style={{
+        marginLeft: '1rem',
+        marginRight: '1rem',
+        paddingLeft: '0',
+        textAlign: 'center',
+      }}
+      key={index}
+    >
       <Link
         key={link.label}
         to={link.link}
@@ -247,10 +255,13 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
             </Flex>
           </Link>
 
-          <Flex gap={7} justify="space-between" mr="0.5rem">
+          <Flex gap={15} justify="space-between" mr="0.5rem">
             <ToggleDarkAndLightMode />
             <Box
-              style={{ color: colorScheme === 'dark' ? '#ADB5BD' : '#845EF7' }}
+              sx={{
+                marginLeft: '0.4rem',
+                color: colorScheme === 'dark' ? '#ADB5BD' : '#845EF7',
+              }}
             >
               <UserDropdownMenu />
             </Box>
@@ -258,8 +269,9 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
               <Box
                 onClick={handleLinkClick}
                 data-cy="cart-link"
-                style={{
+                sx={{
                   color: colorScheme === 'dark' ? '#ADB5BD' : '#845EF7',
+                  marginRight: '0.7rem',
                 }}
               >
                 <IconShoppingCart
@@ -271,17 +283,19 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
                   <Box
                     sx={{
                       borderRadius: '10rem',
-                      background: 'black',
-                      color: 'white',
+                      backgroundColor:
+                        colorScheme === 'dark' ? '#ADB5BD' : '#000',
+                      color: colorScheme === 'dark' ? '#000' : '#FFF',
                       width: '1.1rem',
                       height: '1.1rem',
                       position: 'absolute',
                       bottom: 0,
                       right: 0,
                       display: 'flex',
-                      transform: 'translate(-20%, -290%)',
+                      transform: 'translate(-70%, -270%)',
                       justifyContent: 'center',
                       alignItems: 'center',
+                      marginBottom: '0.3rem',
                     }}
                     data-cy="cart-items-count-badge"
                   >
@@ -303,7 +317,15 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
       </Header>
 
       {isDesktop && (
-        <Box style={{ display: 'flex', justifyContent: 'center' }}>{items}</Box>
+        <Box
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          {items}
+        </Box>
       )}
     </>
   );

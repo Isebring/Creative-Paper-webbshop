@@ -31,7 +31,7 @@ function UserDropdownMenu() {
   };
 
   return (
-    <Menu shadow="md" width={200}>
+    <Menu shadow="md" width={240}>
       <Menu.Target>
         <IconUserCircle size="1.8rem" stroke="1.3" cursor="pointer" />
       </Menu.Target>
