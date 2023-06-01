@@ -271,8 +271,9 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
                   <Box
                     sx={{
                       borderRadius: '10rem',
-                      background: 'black',
-                      color: 'white',
+                      backgroundColor:
+                        colorScheme === 'dark' ? '#ADB5BD' : '#000',
+                      color: colorScheme === 'dark' ? '#000' : '#FFF',
                       width: '1.1rem',
                       height: '1.1rem',
                       position: 'absolute',
