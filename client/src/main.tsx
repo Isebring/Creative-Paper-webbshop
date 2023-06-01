@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom/client';
 import {
   createBrowserRouter,
   createRoutesFromElements,
-  Route
+  Route,
 } from 'react-router-dom';
 import App from './App';
 import Protected from './components/Protected';

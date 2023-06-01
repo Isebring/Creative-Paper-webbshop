@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
-import mongoose from 'mongoose';
 import { categoryModel } from '../categories/category-model';
 import { ProductModel } from './product-model';
 import {
