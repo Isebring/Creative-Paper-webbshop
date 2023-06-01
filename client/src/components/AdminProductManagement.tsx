@@ -18,12 +18,18 @@ function AdminProductManagement() {
   return (
     <Container size="xl">
       <Flex direction="column" align="center" mt="xl" mb="sm">
-        <Title align="center">Product Management</Title>
+        <Title align="center" sx={{ marginBottom: '1rem' }}>
+          Product Management
+        </Title>
         <Group position="center">
           <Link to="/admin/products/new" data-cy="admin-add-product">
             <Button
               leftIcon={<IconShieldPlus size="1.2rem" />}
-              sx={{ backgroundColor: 'black', color: 'white' }}
+              sx={{
+                backgroundColor: 'black',
+                color: 'white',
+                marginBottom: '1rem',
+              }}
             >
               {' '}
               Add new Product

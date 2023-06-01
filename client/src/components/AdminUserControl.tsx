@@ -24,12 +24,15 @@ export function AdminUserControl() {
   }, []);
 
   return (
-    <Container size="xl">
+    <Container size="xl" sx={{ paddingLeft: '0', paddingRight: '0' }}>
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
+          justifyContent: 'center',
           alignItems: 'center',
+          paddingLeft: '0',
+          paddingRight: '0',
         }}
       >
         <Title mt="1.5rem">User management</Title>
@@ -38,7 +41,7 @@ export function AdminUserControl() {
             <MediaQuery
               key={user._id}
               query="(max-width: 500px)"
-              styles={{ width: '20rem' }}
+              styles={{ width: '18rem' }}
             >
               <Paper shadow="sm" p="md" m="sm" sx={{ width: '30rem' }}>
                 <Flex

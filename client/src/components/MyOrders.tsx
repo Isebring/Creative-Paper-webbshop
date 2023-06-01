@@ -1,9 +1,18 @@
-import { Box, Divider, List, Table, Text, Image } from '@mantine/core';
+import {
+  Box,
+  Divider,
+  Image,
+  List,
+  Table,
+  Text,
+  useMantineTheme,
+} from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { useEffect } from 'react';
 import { useOrderContext } from '../contexts/UseOrderContext';
 
 function MyOrders() {
+  const theme = useMantineTheme();
   const { getOrdersByUser, orders } = useOrderContext();
   const isDesktop = useMediaQuery('(min-width: 1024px)');
 
@@ -109,7 +118,7 @@ function MyOrders() {
   return isDesktop ? (
     <Table>
       <thead>
-        <tr>
+        <tr style={{ backgroundColor: theme.colors.violet[0] }}>
           <th>Order ID</th>
           <th>Shipping Details</th>
           <th>Total Items</th>

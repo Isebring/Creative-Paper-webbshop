@@ -35,6 +35,10 @@ export const router = createBrowserRouter(
       <Route path="/accessories" element={<Accessories />} />
       <Route path="/products/:_id" element={<ProductDetails />} />
       <Route path="/checkout" element={<Cart />} />
+      <Route path="/confirmation" element={<Confirmation />} />
+      <Route path="/signin" element={<SignIn />} />
+      <Route path="/createaccount" element={<CreateAccount />} />
+      <Route path="/my-account" element={<UserAccount />} />
       <Route
         path="/admin"
         element={
@@ -43,13 +47,22 @@ export const router = createBrowserRouter(
           </Protected>
         }
       />
-      <Route path="/admin/products/:id" element={<EditProduct />} />
-      {/* <Route path="/admin/products/:_id/edit" element={<EditProduct />} /> */}
-      <Route path="/admin/products/new" element={<NewProduct />} />
-      <Route path="/confirmation" element={<Confirmation />} />
-      <Route path="/signin" element={<SignIn />} />
-      <Route path="/createaccount" element={<CreateAccount />} />
-      <Route path="/my-account" element={<UserAccount />} />
+      <Route
+        path="/admin/products/:id"
+        element={
+          <Protected>
+            <EditProduct />
+          </Protected>
+        }
+      />
+      <Route
+        path="/admin/products/new"
+        element={
+          <Protected>
+            <NewProduct />
+          </Protected>
+        }
+      />
     </Route>,
   ),
 );
