@@ -280,7 +280,7 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
                       bottom: 0,
                       right: 0,
                       display: 'flex',
-                      transform: 'translate(-20%, -290%)',
+                      transform: 'translate(-25%, -300%)',
                       justifyContent: 'center',
                       alignItems: 'center',
                     }}

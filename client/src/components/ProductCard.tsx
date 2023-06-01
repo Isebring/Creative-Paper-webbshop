@@ -131,25 +131,31 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
         </Card.Section>
         <Group position="left" mt="md" mb="xs">
           <Button
+            disabled={product.stock === 0}
             variant="light"
             mt="md"
             radius="md"
             style={{
               fontFamily: 'Poppins, sans-serif',
+
               backgroundColor: 'black',
+
               color: 'white',
             }}
             onClick={() => {
               increaseCartQuantity(product._id);
+
               notifications.show({
                 icon: <IconShoppingCartPlus />,
+
                 title: `${product.title}`,
+
                 message: 'has been added',
               });
             }}
             data-cy="product-buy-button"
           >
-            ADD TO CART
+             {product.stock === 0 ? 'OUT OF STOCK' : 'ADD TO CART'}
           </Button>
           <Link to={link}>
             <Button
