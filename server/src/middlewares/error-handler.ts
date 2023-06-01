@@ -1,6 +1,14 @@
 import { ErrorRequestHandler } from 'express';
 import { ValidationError } from 'yup';
 
+export class NoContentError extends Error {
+  statusCode = 204;
+  constructor(message = 'No Content') {
+    super(message);
+    this.name = 'NoContentError';
+  }
+}
+
 export class BadRequestError extends Error {
   statusCode = 400;
   constructor(message = 'Bad Request') {
