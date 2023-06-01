@@ -4,7 +4,7 @@ import { categoryModel } from '../categories/category-model';
 import { ProductModel } from './product-model';
 import {
   productUpdateSchema,
-  productValidationSchema,
+  productValidationSchema
 } from './product-validation';
 
 export async function getAllProducts(req: Request, res: Response) {
@@ -41,35 +41,26 @@ export async function createProduct(
 
   try {
     await productValidationSchema.validate(incomingProduct);
+    const categories = await categoryModel.find({
+      _id: { $in: incomingProduct.categories },
+    });
+
 
     const newProduct = new ProductModel({
       ...incomingProduct,
       _id: new ObjectId(),
-      categories: [],
+      categories: categories,
     });
     const savedProduct = await newProduct.save();
 
-    for (const categoryName of incomingProduct.categories) {
-      const category = await categoryModel.findOne({ name: categoryName });
-      if (category) {
-        category.products.push(savedProduct._id);
-        savedProduct.categories.push(category._id);
-        await category.save();
-      } else {
-        console.log(`Category ${categoryName} not found.`);
-      }
-    }
-
-    await savedProduct.save();
-
     const populatedProduct = await ProductModel.findById(
       savedProduct._id,
-    ).populate('categories', 'name -_id');
+    ).populate('categories');
 
     if (populatedProduct) {
       const responseObj = {
         message: 'Product added',
-        ...savedProduct.toJSON(),
+        ...populatedProduct.toJSON(),
       };
 
       res.set('content-type', 'application/json');
