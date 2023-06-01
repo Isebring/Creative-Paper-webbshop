@@ -1,6 +1,7 @@
 import busboy from 'busboy';
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
+import { NotFoundError } from '../../middlewares/error-handler';
 import { imageBucket } from './image-model';
 
 export async function getImageById(req: Request, res: Response) {
@@ -8,7 +9,7 @@ export async function getImageById(req: Request, res: Response) {
 
   const file = await imageBucket.find({ _id }).next();
   if (!file?.contentType) {
-    return res.status(404).json('Image not found');
+    throw new NotFoundError('Image not found');
   }
 
   res.setHeader('Content-Type', file.contentType);
@@ -40,9 +41,9 @@ export async function deleteImage(req: Request, res: Response) {
 
   const file = await imageBucket.find({ _id }).next();
   if (!file) {
-    return res.status(404).json('Image not found');
+    throw new NotFoundError('Image not found');
   }
 
   await imageBucket.delete(_id);
-  res.status(200).json('Image deleted');
+  res.status(204).json();
 }
