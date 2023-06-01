@@ -28,7 +28,7 @@ This is a webshop where most of the front end already existed. We have rebranded
 
 ### How to build the project:
 
-To start this project you need two terminals, one server and one client. Start the server terminal first, otherwise you may get a proxy error.
+To start this project you need two terminals, one server and one client. Start the server terminal first, otherwise you may get a proxy error. Keep both terminals going when you're in the project.
 
 **For server**
 Open a terminal and run these commands:
