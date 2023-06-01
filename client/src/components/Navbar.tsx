@@ -255,7 +255,7 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
             </Flex>
           </Link>
 
-          <Flex gap={7} justify="space-between" mr="0.5rem">
+          <Flex gap={15} justify="space-between" mr="0.5rem">
             <ToggleDarkAndLightMode />
             <Box
               sx={{
@@ -283,15 +283,16 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
                   <Box
                     sx={{
                       borderRadius: '10rem',
-                      background: 'black',
-                      color: 'white',
+                      backgroundColor:
+                        colorScheme === 'dark' ? '#ADB5BD' : '#000',
+                      color: colorScheme === 'dark' ? '#000' : '#FFF',
                       width: '1.1rem',
                       height: '1.1rem',
                       position: 'absolute',
                       bottom: 0,
                       right: 0,
                       display: 'flex',
-                      transform: 'translate(-20%, -290%)',
+                      transform: 'translate(-25%, -300%)',
                       justifyContent: 'center',
                       alignItems: 'center',
                       marginBottom: '0.3rem',
