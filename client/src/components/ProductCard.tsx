@@ -8,7 +8,7 @@ import {
   List,
   Text,
   Title,
-  useMantineTheme,
+  useMantineColorScheme,
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IconShoppingCartPlus } from '@tabler/icons-react';
@@ -26,9 +26,9 @@ type ProductCardProps = {
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
-  const theme = useMantineTheme();
   const { increaseCartQuantity } = useShoppingCart();
   const { products } = useProductContext();
+  const { colorScheme } = useMantineColorScheme();
 
   if (!product && productId) {
     const foundProduct = products?.find((p) => p._id === productId);
@@ -52,7 +52,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
         shadow="xl"
         withBorder
         data-cy="product"
-        sx={{ backgroundColor: '#F4EEE0' }}
+        sx={{
+          backgroundColor: '#F4EEE0',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+        }}
       >
         <Card.Section>
           <Link to={link} style={{ textDecoration: 'none', color: 'inherit' }}>
@@ -69,6 +74,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
                 style={{ display: 'flex', justifyContent: 'space-between' }}
               >
                 <Text
+                  sx={{
+                    color: colorScheme === 'dark' ? '#000' : 'initial',
+                  }}
                   weight={500}
                   size={29}
                   // transform="uppercase"
@@ -76,16 +84,36 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
                 >
                   {product.title}
                 </Text>
-                <Badge
-                  color="violet"
-                  variant="light"
-                  size="lg"
-                  style={{ fontFamily: 'Poppins, sans-serif' }}
-                >
-                  New!
-                </Badge>
+                {product.stock > 0 ? (
+                  <Badge
+                    sx={{
+                      color: colorScheme === 'dark' ? '#000' : '',
+                    }}
+                    color="violet"
+                    variant="light"
+                    size="lg"
+                    style={{ fontFamily: 'Poppins, sans-serif' }}
+                  >
+                    {product.stock} in stock
+                  </Badge>
+                ) : (
+                  <Badge
+                    sx={{
+                      color: colorScheme === 'dark' ? '#000' : 'red',
+                    }}
+                    color="red"
+                    variant="light"
+                    size="lg"
+                    style={{ fontFamily: 'Poppins, sans-serif' }}
+                  >
+                    Out of Stock
+                  </Badge>
+                )}
               </Group>
               <List
+                sx={{
+                  color: colorScheme === 'dark' ? '#000' : 'initial',
+                }}
                 style={{ fontFamily: 'Poppins, sans-serif', padding: '0.2rem' }}
               >
                 {product.summary &&
@@ -103,38 +131,43 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
         </Card.Section>
         <Group position="left" mt="md" mb="xs">
           <Button
+            disabled={product.stock === 0}
             variant="light"
             mt="md"
             radius="md"
             style={{
               fontFamily: 'Poppins, sans-serif',
+
               backgroundColor: 'black',
+
               color: 'white',
             }}
             onClick={() => {
               increaseCartQuantity(product._id);
+
               notifications.show({
                 icon: <IconShoppingCartPlus />,
+
                 title: `${product.title}`,
+
                 message: 'has been added',
               });
             }}
             data-cy="product-buy-button"
           >
-            ADD TO CART
+            {product.stock === 0 ? 'OUT OF STOCK' : 'ADD TO CART'}
           </Button>
           <Link to={link}>
             <Button
+              sx={{
+                color: colorScheme === 'dark' ? '#000' : 'initial',
+                borderColor: colorScheme === 'dark' ? '#000' : 'initial',
+              }}
               variant="outline"
               mt="md"
               radius="md"
               style={{
                 fontFamily: 'Poppins, sans-serif',
-                border:
-                  theme.colorScheme === 'dark'
-                    ? '1px solid white'
-                    : '1px solid black',
-                color: theme.colorScheme === 'dark' ? 'white' : 'black',
               }}
             >
               MORE INFO
@@ -142,6 +175,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, product }) => {
           </Link>
 
           <Title
+            sx={{
+              color: colorScheme === 'dark' ? '#000' : 'initial',
+            }}
             style={{
               marginLeft: 'auto',
               marginTop: '.5rem',
