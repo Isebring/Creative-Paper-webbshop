@@ -1,14 +1,6 @@
 import { ErrorRequestHandler } from 'express';
 import { ValidationError } from 'yup';
 
-export class NoContentError extends Error {
-  statusCode = 204;
-  constructor(message = 'No Content') {
-    super(message);
-    this.name = 'NoContentError';
-  }
-}
-
 export class BadRequestError extends Error {
   statusCode = 400;
   constructor(message = 'Bad Request') {
@@ -40,6 +32,13 @@ export class ConflictError extends Error {
     this.name = 'ConflictError';
   }
 }
+export class NoContentError extends Error {
+  statusCode = 204;
+  constructor(message = 'No Content') {
+    super(message);
+    this.name = 'NoContentError';
+  }
+}
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
@@ -51,7 +50,8 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
     err instanceof BadRequestError ||
     err instanceof UnauthorizedError ||
     err instanceof NotFoundError ||
-    err instanceof ConflictError
+    err instanceof ConflictError ||
+    err instanceof NoContentError
   ) {
     res.status(err.statusCode).json(err.message);
   } else if (err instanceof Error) {
