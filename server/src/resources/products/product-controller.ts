@@ -4,7 +4,7 @@ import { categoryModel } from '../categories/category-model';
 import { ProductModel } from './product-model';
 import {
   productUpdateSchema,
-  productValidationSchema
+  productValidationSchema,
 } from './product-validation';
 
 export async function getAllProducts(req: Request, res: Response) {
@@ -44,7 +44,6 @@ export async function createProduct(
     const categories = await categoryModel.find({
       _id: { $in: incomingProduct.categories },
     });
-
 
     const newProduct = new ProductModel({
       ...incomingProduct,
