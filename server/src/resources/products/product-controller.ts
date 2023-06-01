@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
+import { NoContentError, NotFoundError } from '../../middlewares/error-handler';
 import { categoryModel } from '../categories/category-model';
 import { ProductModel } from './product-model';
 import {
@@ -20,7 +21,7 @@ export async function getProductById(req: Request, res: Response) {
       select: '-products',
     });
     if (!product) {
-      return res.status(404).json({ message: 'Product not found' });
+      throw new NotFoundError('Product not found');
     }
 
     return res.status(200).json(product);
@@ -118,13 +119,18 @@ export async function updateProduct(
   }
 }
 
-export async function deleteProduct(req: Request, res: Response) {
+export async function deleteProduct(
+  req: Request,
+  res: Response,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  next: NextFunction,
+) {
   try {
     const productId = req.params.id;
     const deletedProduct = await ProductModel.findById(productId);
 
     if (!deletedProduct) {
-      return res.status(404).json('product not found');
+      throw new NotFoundError('Product not found');
     }
 
     await categoryModel.updateMany(
@@ -133,11 +139,8 @@ export async function deleteProduct(req: Request, res: Response) {
     );
 
     await ProductModel.findByIdAndDelete(productId);
-    res.status(204).end();
+    throw new NoContentError();
   } catch (error) {
-    res.status(500).json({
-      message: 'Error deleting the product',
-      error: (error as Error).message,
-    });
+    next(error);
   }
 }
