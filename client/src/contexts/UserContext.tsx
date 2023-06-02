@@ -77,7 +77,7 @@ export const UserProvider = ({ children }: Props) => {
         console.error(error);
         setUser(null);
       } finally {
-        setIsLoading(false); // Set loading state to false once data is loaded
+        setIsLoading(false);
       }
     };
 
