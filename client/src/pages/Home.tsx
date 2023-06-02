@@ -8,10 +8,9 @@ import { ProductContext } from '../contexts/ProductContext';
 
 function Home() {
   const { products } = useContext(ProductContext);
-  const [sortDirection, setSortDirection] = useState('');
+  const [sortDirection] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [sortedProducts] = useState(products);
-  const [activeButton, setActiveButton] = useState('');
 
   console.log(products);
   console.log(selectedCategories);
