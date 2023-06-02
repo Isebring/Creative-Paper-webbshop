@@ -1,38 +1,36 @@
 import { Button, Container, Group, SimpleGrid } from '@mantine/core';
 import { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { PageHero } from '../components/PageHero';
 import ProductCard from '../components/ProductCard';
 import { Product } from '../contexts/ProductContext';
 
-export function CategoryPage() {
+function CategoryPage() {
   const [sortDirection, setSortDirection] = useState('');
   const [selectedCategories] = useState<string[]>(['pens']);
   const [sortedProducts, setSortedProducts] = useState<Product[]>([]);
   const [activeButton, setActiveButton] = useState('');
   const sortedProductsRef = useRef<Product[]>([]);
+  const { _id }: { _id?: string } = useParams();
 
-  const fetchProducts = async () => {
-    try {
-      const response = await fetch(
-        `/api/categories/6472b1d46b886637ceb1daca/products`,
-      );
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch(`/api/categories/${_id}/products`);
+        const data = await response.json();
+        setSortedProducts(data);
+      } catch (error) {
+        console.error('Failed to fetch products:', error);
+      }
+    };
 
-      const data = await response.json();
-      console.log(data);
-      setSortedProducts(data);
-    } catch (error) {
-      console.error('Failed to fetch products:', error);
-    }
-  };
+    fetchProducts();
+  }, [_id]);
 
   //header: get all categories, map as links
 
   //fetch category
   //save
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
 
   useEffect(() => {
     sortedProductsRef.current = sortedProducts;
@@ -65,7 +63,7 @@ export function CategoryPage() {
     /* get category information and change line 1 line 2 in database */
     <Container size="lg">
       <PageHero
-        title="Pens"
+        title={''}
         line1="Your handwriting is like a snowflake;"
         line2="unique."
       />
@@ -117,3 +115,5 @@ export function CategoryPage() {
     </Container>
   );
 }
+
+export default CategoryPage;
