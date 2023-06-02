@@ -20,6 +20,8 @@ import {
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useShoppingCart } from '../contexts/UseShoppingCartContext';
+import useCategories from '../hooks/useCategories';
+import { Category } from './CategoryFilter';
 import UserDropdownMenu from './UserDropdownMenu';
 
 const HEADER_HEIGHT = rem(90);
@@ -111,25 +113,31 @@ const useStyles = createStyles((theme) => ({
     flexDirection: 'row',
   },
 }));
-export interface HeaderResponsiveProps {
-  links: { link: string; label: string }[];
-}
+// export interface HeaderResponsiveProps {
+//   links: { link: string; label: string }[];
+// }
 
-export function HeaderResponsive({ links }: HeaderResponsiveProps) {
+export function HeaderResponsive() {
   const [opened, { toggle, close }] = useDisclosure(false);
-  const [active, setActive] = useState(links[0].link);
   const { classes, cx } = useStyles();
   const { cartQuantity } = useShoppingCart();
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const [logoType, setLogoType] = useState('dark');
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
-
-  // const theme = useMantineTheme();
+  const [active, setActive] = useState('');
+  const categories = useCategories();
 
   const handleToggle = () => {
     toggleColorScheme();
     setLogoType(colorScheme === 'dark' ? 'dark' : 'light');
   };
+
+  useEffect(() => {
+    // If categories is not empty, set the first category's _id as the initial active link
+    if (categories.length > 0) {
+      setActive(`/category/${categories[0]._id}`);
+    }
+  }, [categories]);
 
   const logo =
     logoType === 'dark' ? (
@@ -146,7 +154,7 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
       />
     );
 
-  const items = links.map((link, index) => (
+  const categoryLinks = [
     <ul
       style={{
         marginLeft: '1rem',
@@ -154,40 +162,56 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
         paddingLeft: '0',
         textAlign: 'center',
       }}
-      key={index}
+      key="all"
     >
       <Link
-        key={link.label}
-        to={link.link}
+        to="/all-products"
         className={cx(classes.link, {
-          [classes.linkActive]: active === link.link,
+          [classes.linkActive]: active === '/all-products',
         })}
         onClick={() => {
-          setActive(link.link);
+          handleLinkClick(); // Call the updated handleLinkClick function
           close();
         }}
       >
-        {link.label}
+        All Products
       </Link>
-    </ul>
-  ));
+    </ul>,
+    ...categories.map((category: Category) => (
+      <ul
+        style={{
+          marginLeft: '1rem',
+          marginRight: '1rem',
+          paddingLeft: '0',
+          textAlign: 'center',
+        }}
+        key={category._id}
+      >
+        <Link
+          to={`/category/${category._id}`}
+          className={cx(classes.link, {
+            [classes.linkActive]: active === `/category/${category._id}`,
+          })}
+          onClick={() => {
+            setActive(`/category/${category._id}`);
+            close();
+          }}
+        >
+          {category.name}
+        </Link>
+      </ul>
+    )),
+  ];
 
   const [isBurgerVisible, setIsBurgerVisible] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsBurgerVisible(window.innerWidth < 768);
+      const isDesktop = window.innerWidth >= 768;
+      setIsDesktop(isDesktop);
+      setIsBurgerVisible(!isDesktop);
     };
     handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 768);
-    };
-
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -221,7 +245,7 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
   }
 
   function handleLinkClick() {
-    setActive(links[0].link);
+    setActive('/all-products'); // Update active link to '/all-products'
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
@@ -310,7 +334,7 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
         <Transition transition="pop-top-right" duration={200} mounted={opened}>
           {(styles) => (
             <Paper className={classes.dropdown} withBorder style={styles}>
-              {items}
+              {categoryLinks}
             </Paper>
           )}
         </Transition>
@@ -324,9 +348,11 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
             alignItems: 'center',
           }}
         >
-          {items}
+          {categoryLinks}
         </Box>
       )}
     </>
   );
 }
+
+export default HeaderResponsive;

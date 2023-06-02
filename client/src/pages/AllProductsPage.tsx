@@ -1,22 +1,20 @@
 import { Button, Container, Group, SimpleGrid } from '@mantine/core';
 import { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { PageHero } from '../components/PageHero';
 import ProductCard from '../components/ProductCard';
 import { Product } from '../contexts/ProductContext';
 
-function CategoryPage() {
+function AllProductsPage() {
   const [sortDirection, setSortDirection] = useState('');
   const [selectedCategories] = useState<string[]>(['pens']);
   const [sortedProducts, setSortedProducts] = useState<Product[]>([]);
   const [activeButton, setActiveButton] = useState('');
   const sortedProductsRef = useRef<Product[]>([]);
-  const { _id }: { _id?: string } = useParams();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(`/api/categories/${_id}/products`);
+        const response = await fetch('/api/products');
         const data = await response.json();
         setSortedProducts(data);
       } catch (error) {
@@ -25,12 +23,7 @@ function CategoryPage() {
     };
 
     fetchProducts();
-  }, [_id]);
-
-  //header: get all categories, map as links
-
-  //fetch category
-  //save
+  }, []);
 
   useEffect(() => {
     sortedProductsRef.current = sortedProducts;
@@ -63,7 +56,7 @@ function CategoryPage() {
     /* get category information and change line 1 line 2 in database */
     <Container size="lg">
       <PageHero
-        title={''}
+        title="All Products"
         line1="Your handwriting is like a snowflake;"
         line2="unique."
       />
@@ -116,4 +109,4 @@ function CategoryPage() {
   );
 }
 
-export default CategoryPage;
+export default AllProductsPage;

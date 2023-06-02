@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
+import { NotFoundError } from '../../middlewares/error-handler';
 import { categoryModel } from '../categories/category-model';
 import { ProductModel } from './product-model';
 import {
@@ -7,12 +8,24 @@ import {
   productValidationSchema,
 } from './product-validation';
 
-export async function getAllProducts(req: Request, res: Response) {
-  const products = await ProductModel.find().populate('categories');
-  res.status(200).json(products);
+export async function getAllProducts(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const products = await ProductModel.find().populate('categories');
+    res.status(200).json(products);
+  } catch (error) {
+    next(error);
+  }
 }
 
-export async function getProductById(req: Request, res: Response) {
+export async function getProductById(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     const productId = req.params.id;
     const product = await ProductModel.findById(productId).populate({
@@ -20,13 +33,12 @@ export async function getProductById(req: Request, res: Response) {
       select: '-products',
     });
     if (!product) {
-      return res.status(404).json({ message: 'Product not found' });
+      throw new NotFoundError('Product not found');
     }
 
     return res.status(200).json(product);
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Server error' });
+    next(error);
   }
 }
 
@@ -35,11 +47,11 @@ export async function createProduct(
   res: Response,
   next: NextFunction,
 ) {
-  console.log('Incoming product:', req.body);
-
-  const incomingProduct = req.body;
-
   try {
+    console.log('Incoming product:', req.body);
+
+    const incomingProduct = req.body;
+
     await productValidationSchema.validate(incomingProduct);
     const categories = await categoryModel.find({
       _id: { $in: incomingProduct.categories },
@@ -77,14 +89,14 @@ export async function updateProduct(
   res: Response,
   next: NextFunction,
 ) {
-  const productId = req.params.id;
-  const product = await ProductModel.findById(productId);
-
-  if (!product) {
-    return res.status(404).json(`Product with ID ${productId} not found`);
-  }
-
   try {
+    const productId = req.params.id;
+    const product = await ProductModel.findById(productId);
+
+    if (!product) {
+      throw new NotFoundError(`Product with ID ${productId} not found`);
+    }
+
     console.log('Update product:', { params: req.params, body: req.body });
     const validatedProduct = await productUpdateSchema.validate(req.body);
 
@@ -118,13 +130,17 @@ export async function updateProduct(
   }
 }
 
-export async function deleteProduct(req: Request, res: Response) {
+export async function deleteProduct(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     const productId = req.params.id;
     const deletedProduct = await ProductModel.findById(productId);
 
     if (!deletedProduct) {
-      return res.status(404).json('product not found');
+      throw new NotFoundError('Product not found');
     }
 
     await categoryModel.updateMany(
@@ -135,9 +151,6 @@ export async function deleteProduct(req: Request, res: Response) {
     await ProductModel.findByIdAndDelete(productId);
     res.status(204).end();
   } catch (error) {
-    res.status(500).json({
-      message: 'Error deleting the product',
-      error: (error as Error).message,
-    });
+    next(error);
   }
 }
