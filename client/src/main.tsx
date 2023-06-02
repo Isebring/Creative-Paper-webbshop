@@ -8,8 +8,9 @@ import App from './App';
 import Protected from './components/Protected';
 import './index.css';
 import Admin from './pages/Admin';
+import AllProductsPage from './pages/AllProductsPage';
 import Cart from './pages/Cart';
-import { CategoryPage } from './pages/CategoryPage';
+import CategoryPage from './pages/CategoryPage';
 import Confirmation from './pages/Confirmation';
 import CreateAccount from './pages/CreateAccount';
 import EditProduct from './pages/EditProduct';
@@ -24,6 +25,7 @@ export const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index element={<Home />} />
+      <Route path="/all-products" element={<AllProductsPage />} />
       <Route path="/category/:_id" element={<CategoryPage />} />
       <Route path="/products/:_id" element={<ProductDetails />} />
       <Route path="/checkout" element={<Cart />} />
