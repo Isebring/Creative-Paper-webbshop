@@ -62,14 +62,19 @@ export async function registerUser(
     const user = new UserModel(req.body);
     await user.save();
 
-    res.status(201).json({
-      _id: user._id,
-      email: user.email,
-      isAdmin: user.isAdmin,
-    });
-  } catch (error) {
-    next(error);
+  if (req.session) {
+    req.session.email = user.email;
+    req.session.userId = user.id;
+    req.session.isAdmin = user.isAdmin;
+  } else {
+    throw new Error('Session is not defined');
   }
+
+  res.status(201).json({
+    _id: user._id,
+    email: user.email,
+    isAdmin: user.isAdmin,
+  });
 }
 
 export async function loginUser(

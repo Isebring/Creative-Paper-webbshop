@@ -11,6 +11,7 @@ import {
   useMantineColorScheme,
 } from '@mantine/core';
 import {
+  IconArrowUp,
   IconBrandInstagram,
   IconBrandTwitter,
   IconBrandYoutube,
@@ -91,6 +92,12 @@ const useStyles = createStyles((theme) => ({
 interface FooterCenteredProps {
   links: { link: string; label: string }[];
 }
+function scrollBackToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
+}
 
 export function FooterCentered({ links }: FooterCenteredProps) {
   const { colorScheme } = useMantineColorScheme();
@@ -134,6 +141,15 @@ export function FooterCentered({ links }: FooterCenteredProps) {
         </Box>
 
         <Group spacing="xs" position="right" noWrap mt={10}>
+          <ActionIcon
+            onClick={scrollBackToTop}
+            size="lg"
+            variant="outline"
+            radius="xl"
+            className={classes.actionIcon}
+          >
+            <IconArrowUp size="1.5rem" stroke="1.4" />
+          </ActionIcon>
           <ActionIcon
             size="lg"
             variant="outline"
