@@ -14,5 +14,5 @@ const orderRouter = express
   .get('/api/orders/all', isAdmin, getAllOrders) // Get all orders (admin only)
   .post('/api/orders', createOrder) // Create a new order
   .get('/api/orders/:id', getOrderById) // Get a specific order by ID
-  .put('/api/orders/status/:id', updateOrderStatus); // Update the status of a specific order by ID
+  .put('/api/orders/status/:id', isAdmin, updateOrderStatus); // Update the status of a specific order by ID
 export default orderRouter;
