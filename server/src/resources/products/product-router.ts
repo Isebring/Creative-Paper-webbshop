@@ -1,4 +1,5 @@
 import express from 'express';
+import isAdmin from '../../middlewares/auth-admin';
 import {
   createProduct,
   deleteProduct,
@@ -11,8 +12,8 @@ const productRouter = express
   .Router()
   .get('/api/products', getAllProducts)
   .get('/api/products/:id', getProductById)
-  .post('/api/products', createProduct)
-  .put('/api/products/:id', updateProduct)
-  .delete('/api/products/:id', deleteProduct);
+  .post('/api/products', isAdmin, createProduct)
+  .put('/api/products/:id', isAdmin, updateProduct)
+  .delete('/api/products/:id', isAdmin, deleteProduct);
 
 export default productRouter;

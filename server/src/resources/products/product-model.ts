@@ -11,9 +11,9 @@ const productSchema = new Schema({
     },
   ],
   price: { type: Number, required: true },
-  stock: { type: Number, required: true }, // Ta tillbaka required när det finns
-  imageId: { type: String, required: true }, // Schematypes? Path?
-  secondImageId: { type: String, required: true }, // Schematypes? Path?
+  stock: { type: Number, required: true },
+  imageId: { type: String, required: true },
+  secondImageId: { type: String, required: true },
   rating: { type: Number },
   usersRated: { type: Number },
   isArchived: { type: Boolean, default: false },
