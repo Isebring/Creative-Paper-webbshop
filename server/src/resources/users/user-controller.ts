@@ -41,6 +41,14 @@ export async function registerUser(req: Request, res: Response) {
   const user = new UserModel(req.body);
   await user.save();
 
+  if (req.session) {
+    req.session.email = user.email;
+    req.session.userId = user.id;
+    req.session.isAdmin = user.isAdmin;
+  } else {
+    throw new Error('Session is not defined');
+  }
+
   res.status(201).json({
     _id: user._id,
     email: user.email,
