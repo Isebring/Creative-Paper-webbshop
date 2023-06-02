@@ -52,8 +52,8 @@ Open a second terminal and run these commands:
   - Sidan och alla komponenter är anpassade för mobil, tablet och desktop.
 - [x] Arbetet ska implementeras med en React frontend och en Express backend. (G)
   - Klientsidan är byggd med React och serversidan med Express (se package.json för proof😁)
-- [ ] Express backenden ska ha validering på samtliga endpoints. (G)
-  - FYLL I HÄR
+- [x] Express backenden ska ha validering på samtliga endpoints. (G)
+  - Vi har använt yup och mongoose på samtliga endpoints i backend.
 - [x] Skapa ett ER diagram och koddiagram, detta ska lämnas in vid idégodkännandet (G)
   - (Er diagram)[https://app.diagrams.net/#G1H9vWxCupFweV4WFKyv16Vtd4JEPUrH4g]
   - (Koddiagram)[https://app.diagrams.net/#G1RkXkOFUfs6RfXAlkPBBPh7n9PTMvl4rF]
