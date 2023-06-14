@@ -61,8 +61,8 @@ export async function loginUser(req: Request, res: Response) {
   const { email, password } = req.body;
 
   const user = await UserModel.findOne({ email });
-  if (!user) {
-    throw new UnauthorizedError('Incorrect email');
+  if (!user || !user.password) {
+    throw new UnauthorizedError('Incorrect email or password');
   }
   const isAuth = await argon2.verify(user.password, password);
   if (!isAuth) {
