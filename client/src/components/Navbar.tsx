@@ -18,7 +18,7 @@ import {
   IconSunHigh,
 } from '@tabler/icons-react';
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useShoppingCart } from '../contexts/UseShoppingCartContext';
 import useCategories from '../hooks/useCategories';
 import { Category } from './CategoryFilter';
@@ -113,9 +113,6 @@ const useStyles = createStyles((theme) => ({
     flexDirection: 'row',
   },
 }));
-// export interface HeaderResponsiveProps {
-//   links: { link: string; label: string }[];
-// }
 
 export function HeaderResponsive() {
   const [opened, { toggle, close }] = useDisclosure(false);
@@ -124,13 +121,18 @@ export function HeaderResponsive() {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const [logoType, setLogoType] = useState('dark');
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
-  const [active, setActive] = useState('');
+  const [active, setActive] = useState<string | null>(null);
+  const location = useLocation();
   const categories = useCategories();
 
   const handleToggle = () => {
     toggleColorScheme();
     setLogoType(colorScheme === 'dark' ? 'dark' : 'light');
   };
+
+  useEffect(() => {
+    setActive(location.pathname);
+  }, [location]);
 
   useEffect(() => {
     // If categories is not empty, set the first category's _id as the initial active link
