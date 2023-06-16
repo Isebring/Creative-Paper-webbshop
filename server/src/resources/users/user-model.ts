@@ -1,5 +1,5 @@
 import argon2 from 'argon2';
-import { InferSchemaType, Schema, model } from 'mongoose';
+import mongoose, { InferSchemaType, Schema, model } from 'mongoose';
 
 const userSchema = new Schema(
   {
@@ -27,9 +27,11 @@ const userSchema = new Schema(
 );
 
 userSchema.pre('save', async function (next) {
-  if (this.isModified('password')) {
+  const doc = this as mongoose.Document & { password?: string };
+
+  if (doc.isModified('password') && doc.password) {
     // Hash the password
-    this.password = await argon2.hash(this.password, {
+    doc.password = await argon2.hash(doc.password, {
       memoryCost: 1024,
       timeCost: 2,
     });

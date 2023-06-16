@@ -7,7 +7,8 @@ import { Product } from '../contexts/ProductContext';
 
 function CategoryPage() {
   const [sortDirection, setSortDirection] = useState('');
-  const [selectedCategories] = useState<string[]>(['pens']);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [sortedProducts, setSortedProducts] = useState<Product[]>([]);
   const [activeButton, setActiveButton] = useState('');
   const sortedProductsRef = useRef<Product[]>([]);
